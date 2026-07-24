@@ -188,7 +188,7 @@ export default function Updates() {
 
         {/* Filter chips */}
         <div className="overflow-x-auto scrollbar-hide">
-          <div className="flex gap-2 px-4 pb-3 w-max">
+          <div className="flex justify-center gap-2 px-4 pb-3 min-w-full">
             {FILTERS.map(f => {
               const active = filter === f.value
               const filterLabels: Record<string, string> = {
