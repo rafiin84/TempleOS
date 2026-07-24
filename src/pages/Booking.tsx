@@ -21,7 +21,7 @@ function cn(...c: (string | undefined | false | null)[]): string {
 /* ─── Step indicator ─────────────────────────────────────────────────────── */
 function StepIndicator({ step, labels }: { step: number; labels: string[] }) {
   return (
-    <div className="flex items-center px-4 py-3 overflow-x-auto scrollbar-hide gap-0">
+    <div className="flex items-center justify-center px-4 py-3 overflow-x-auto scrollbar-hide gap-0 max-w-lg mx-auto w-full">
       {labels.map((label, i) => {
         const num    = i + 1
         const active = num === step
@@ -371,7 +371,7 @@ export default function Booking() {
     <div className="min-h-screen bg-background flex flex-col">
 
       {/* ── Step indicator (sticky) ── */}
-      <div className="bg-surface border-b border-[#ECECEC] sticky top-0 z-10 shadow-soft">
+      <div className="bg-surface border-b border-[#ECECEC] sticky top-0 z-10 shadow-soft flex justify-center">
         <StepIndicator step={step} labels={[
           tr.booking.step1, tr.booking.step2, tr.booking.step3, tr.booking.step4,
           tr.booking.step5, tr.booking.step6, tr.booking.step7, tr.booking.step8,
