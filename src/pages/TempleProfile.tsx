@@ -15,6 +15,8 @@ import { templeApi, renovationApi, donationApi } from '@/services/mock/api'
 import { MOCK_TEMPLES } from '@/services/mock/data'
 import { TempleCard } from '@/components/temple/TempleCard'
 import type { Temple, RenovationProject } from '@/types'
+import { useLang } from '@/contexts/LanguageContext'
+import { T } from '@/i18n/translations'
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -150,21 +152,23 @@ const tabVariants = {
 // ─── Tab: Overview ────────────────────────────────────────────────────────────
 
 function OverviewTab({ temple }: { temple: Temple }) {
+  const { lang } = useLang()
+  const tr = T[lang]
   const facts = [
-    { label: 'Year Built',  value: temple.yearBuilt },
-    { label: 'Dynasty',     value: temple.dynasty },
-    { label: 'Style',       value: temple.architecturalStyle },
-    { label: 'Visitors',    value: formatNumber(temple.visitCount) },
-    { label: 'Followers',   value: formatNumber(temple.followCount) },
-    { label: 'Reviews',     value: formatNumber(temple.reviewCount) },
-  ] as const
+    { label: tr.profile.yearBuilt,  value: temple.yearBuilt },
+    { label: tr.profile.dynasty,    value: temple.dynasty },
+    { label: tr.profile.style,      value: temple.architecturalStyle },
+    { label: tr.profile.visitCount, value: formatNumber(temple.visitCount) },
+    { label: tr.profile.followers,  value: formatNumber(temple.followCount) },
+    { label: tr.profile.reviews,    value: formatNumber(temple.reviewCount) },
+  ]
 
   return (
     <div className="p-4 space-y-6">
       {/* Description */}
       <section>
         <h2 className="text-sm font-semibold text-[#111827] mb-2">About</h2>
-        <p className="text-sm text-[#6B7280] leading-relaxed">{temple.description}</p>
+        <p className="text-sm text-[#6B7280] leading-relaxed">{lang === 'ta' ? (temple.descriptionTa || temple.description) : temple.description}</p>
       </section>
 
       {/* Tamil name */}
@@ -205,7 +209,7 @@ function OverviewTab({ temple }: { temple: Temple }) {
       {/* Facilities */}
       {temple.facilities.length > 0 && (
         <section>
-          <h2 className="text-sm font-semibold text-[#111827] mb-3">Facilities</h2>
+          <h2 className="text-sm font-semibold text-[#111827] mb-3">{tr.profile.facilities}</h2>
           <div className="flex flex-wrap gap-2">
             {temple.facilities.map((f) => (
               <span
@@ -226,6 +230,8 @@ function OverviewTab({ temple }: { temple: Temple }) {
 // ─── Tab: History ─────────────────────────────────────────────────────────────
 
 function HistoryTab({ temple }: { temple: Temple }) {
+  const { lang } = useLang()
+  const tr = T[lang]
   return (
     <div className="p-4 space-y-6">
       <section>
@@ -235,7 +241,7 @@ function HistoryTab({ temple }: { temple: Temple }) {
 
       {temple.heritage.dynasties.length > 0 && (
         <section>
-          <h2 className="text-sm font-semibold text-[#111827] mb-2">Ruling Dynasties</h2>
+          <h2 className="text-sm font-semibold text-[#111827] mb-2">{tr.profile.dynasties}</h2>
           <div className="flex flex-wrap gap-2">
             {temple.heritage.dynasties.map((d) => (
               <Badge key={d} variant="primary">{d}</Badge>
@@ -246,7 +252,7 @@ function HistoryTab({ temple }: { temple: Temple }) {
 
       {temple.heritage.timeline.length > 0 && (
         <section>
-          <h2 className="text-sm font-semibold text-[#111827] mb-4">Timeline</h2>
+          <h2 className="text-sm font-semibold text-[#111827] mb-4">{tr.profile.timeline}</h2>
           <div className="relative pl-8">
             {/* Vertical line */}
             <div className="absolute left-[11px] top-2 bottom-2 w-0.5 bg-gradient-to-b from-primary/60 via-primary/30 to-transparent" />
@@ -356,13 +362,15 @@ function GalleryTab({ temple }: { temple: Temple }) {
 // ─── Tab: Timings ─────────────────────────────────────────────────────────────
 
 function TimingsTab({ temple }: { temple: Temple }) {
+  const { lang } = useLang()
+  const tr = T[lang]
   return (
     <div className="p-4 space-y-4">
       <div className="overflow-hidden rounded-xl border border-[#ECECEC] shadow-soft">
         <table className="w-full text-sm">
           <thead>
             <tr className="bg-light-violet">
-              {['Day', 'Morning Session', 'Evening Session'].map((h) => (
+              {['Day', tr.profile.morning, tr.profile.evening].map((h) => (
                 <th
                   key={h}
                   className="text-left px-4 py-3 text-xs font-semibold text-[#111827] uppercase tracking-wide"
@@ -411,6 +419,8 @@ function TimingsTab({ temple }: { temple: Temple }) {
 
 function PoojasTab({ temple }: { temple: Temple }) {
   const navigate = useNavigate()
+  const { lang } = useLang()
+  const tr = T[lang]
 
   return (
     <div className="p-4 space-y-3">
@@ -423,8 +433,8 @@ function PoojasTab({ temple }: { temple: Temple }) {
           <div className="flex items-start gap-3">
             <div className="flex-1 min-w-0">
               <div className="flex items-baseline gap-2 flex-wrap">
-                <h3 className="text-sm font-semibold text-[#111827]">{pooja.name}</h3>
-                <span className="text-xs text-[#6B7280]">{pooja.nameTa}</span>
+                <h3 className="text-sm font-semibold text-[#111827]">{lang === 'ta' ? (pooja.nameTa || pooja.name) : pooja.name}</h3>
+                <span className="text-xs text-[#6B7280]">{lang === 'ta' ? pooja.name : pooja.nameTa}</span>
               </div>
               <p className="text-xs text-primary mt-0.5 font-medium">Deity: {pooja.deity}</p>
               <p className="text-sm text-[#6B7280] mt-1.5 leading-snug">{pooja.description}</p>
@@ -439,7 +449,7 @@ function PoojasTab({ temple }: { temple: Temple }) {
             </div>
             <div className="flex flex-col items-end gap-2 shrink-0">
               <span className="text-base font-bold text-primary">
-                {pooja.price === 0 ? 'Free' : `₹${pooja.price}`}
+                {pooja.price === 0 ? tr.profile.free : `₹${pooja.price}`}
               </span>
               {pooja.isBookable ? (
                 <Button
@@ -449,7 +459,7 @@ function PoojasTab({ temple }: { temple: Temple }) {
                     navigate(`/bookings?templeId=${temple.id}&poojaId=${pooja.id}`)
                   }
                 >
-                  Book
+                  {tr.profile.book}
                 </Button>
               ) : (
                 <span className="text-xs text-[#6B7280] italic">Walk-in only</span>
@@ -472,6 +482,8 @@ const CATEGORY_COLORS: Record<TempleService['category'], string> = {
 
 function ServicesTab({ temple }: { temple: Temple }) {
   const navigate  = useNavigate()
+  const { lang } = useLang()
+  const tr = T[lang]
   const [booked, setBooked] = useState<Set<string>>(new Set())
 
   function handleBook(serviceId: string) {
@@ -522,8 +534,8 @@ function ServicesTab({ temple }: { temple: Temple }) {
                         {/* Content */}
                         <div className="flex-1 min-w-0">
                           <div className="flex items-baseline gap-2 flex-wrap">
-                            <h3 className="text-sm font-semibold text-[#111827]">{service.name}</h3>
-                            <span className="text-xs text-[#6B7280]">{service.nameTa}</span>
+                            <h3 className="text-sm font-semibold text-[#111827]">{lang === 'ta' ? (service.nameTa || service.name) : service.name}</h3>
+                            <span className="text-xs text-[#6B7280]">{lang === 'ta' ? service.name : service.nameTa}</span>
                           </div>
                           <p className="text-sm text-[#6B7280] mt-1.5 leading-snug">
                             {service.description}
@@ -555,7 +567,7 @@ function ServicesTab({ temple }: { temple: Temple }) {
                               onClick={() => !isBooked && handleBook(service.id)}
                               disabled={isBooked}
                             >
-                              {isBooked ? 'Booked' : 'Book'}
+                              {isBooked ? 'Booked' : tr.profile.book}
                             </Button>
                           ) : (
                             <span className="text-xs text-[#6B7280] italic">Walk-in</span>
@@ -580,6 +592,8 @@ const DONATION_PRESETS = [100, 500, 1001, 5001] as const
 const DONATION_PURPOSES = ['Annadanam', 'Renovation', 'General', 'Festival', 'Lamp Oil'] as const
 
 function DonationsTab({ temple }: { temple: Temple }) {
+  const { lang } = useLang()
+  const tr = T[lang]
   const [selectedPreset, setSelectedPreset] = useState<number | null>(null)
   const [customAmount, setCustomAmount]     = useState('')
   const [isCustom, setIsCustom]             = useState(false)
@@ -655,7 +669,7 @@ function DonationsTab({ temple }: { temple: Temple }) {
       <Card>
         <h2 className="font-semibold text-[#111827] mb-4 flex items-center gap-2">
           <IndianRupee size={16} className="text-primary shrink-0" />
-          Make a Donation
+          {tr.profile.donateNow}
         </h2>
 
         {/* Preset amounts */}
@@ -779,7 +793,7 @@ function DonationsTab({ temple }: { temple: Temple }) {
           onClick={handleDonate}
         >
           {effectiveAmount > 0
-            ? `Donate ${formatCurrency(effectiveAmount)}`
+            ? `${tr.profile.donate} ${formatCurrency(effectiveAmount)}`
             : 'Select an Amount'}
         </Button>
       </Card>
@@ -790,6 +804,8 @@ function DonationsTab({ temple }: { temple: Temple }) {
 // ─── Tab: Renovation ──────────────────────────────────────────────────────────
 
 function RenovationTab({ projects }: { projects: RenovationProject[] }) {
+  const { lang } = useLang()
+  const tr = T[lang]
   if (projects.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
@@ -834,13 +850,13 @@ function RenovationTab({ projects }: { projects: RenovationProject[] }) {
           <div className="mb-4">
             <div className="flex justify-between text-xs text-[#6B7280] mb-1.5">
               <span>
-                Raised:{' '}
+                {tr.profile.raisedOf}:{' '}
                 <span className="font-medium text-[#111827]">
                   {formatCurrency(project.raisedAmount)}
                 </span>
               </span>
               <span>
-                Target:{' '}
+                {tr.profile.target}:{' '}
                 <span className="font-medium text-[#111827]">
                   {formatCurrency(project.targetAmount)}
                 </span>
@@ -852,7 +868,7 @@ function RenovationTab({ projects }: { projects: RenovationProject[] }) {
           {/* Milestones */}
           <div className="mb-4">
             <h4 className="text-xs font-semibold text-[#6B7280] uppercase tracking-wide mb-2">
-              Milestones
+              {tr.profile.milestones}
             </h4>
             <div className="space-y-2">
               {project.milestones.map((m) => (
@@ -879,7 +895,7 @@ function RenovationTab({ projects }: { projects: RenovationProject[] }) {
           {project.sponsors.length > 0 && (
             <div>
               <h4 className="text-xs font-semibold text-[#6B7280] uppercase tracking-wide mb-2">
-                Sponsors
+                {tr.profile.sponsors}
               </h4>
               <div className="space-y-2">
                 {project.sponsors.map((s) => (
@@ -904,25 +920,27 @@ function RenovationTab({ projects }: { projects: RenovationProject[] }) {
 // ─── Tab: Heritage ────────────────────────────────────────────────────────────
 
 function HeritageTab({ temple }: { temple: Temple }) {
+  const { lang } = useLang()
+  const tr = T[lang]
   const { heritage } = temple
   const exploreItems = [
     {
       key:       'audio',
-      label:     'Audio Guide',
+      label:     tr.profile.audioGuide,
       desc:      "Guided narration about the temple's history and legends",
       icon:      <Volume2 size={20} className="text-primary" />,
       available: heritage.hasAudioGuide,
     },
     {
       key:       '360',
-      label:     '360° Virtual Tour',
+      label:     tr.profile.tour360,
       desc:      'Walk through the entire temple complex virtually',
       icon:      <RotateCcw size={20} className="text-primary" />,
       available: heritage.has360Tour,
     },
     {
       key:       'drone',
-      label:     'Drone Gallery',
+      label:     tr.profile.droneView,
       desc:      'Stunning aerial photography of the temple complex',
       icon:      <Camera size={20} className="text-primary" />,
       available: heritage.hasDroneGallery,
@@ -933,14 +951,14 @@ function HeritageTab({ temple }: { temple: Temple }) {
     <div className="p-4 space-y-6">
       {/* Architecture */}
       <section>
-        <h2 className="text-sm font-semibold text-[#111827] mb-2">Architecture</h2>
+        <h2 className="text-sm font-semibold text-[#111827] mb-2">{tr.profile.architecture}</h2>
         <p className="text-sm text-[#6B7280] leading-relaxed">{heritage.architecture}</p>
       </section>
 
       {/* Inscriptions */}
       {heritage.inscriptions.length > 0 && (
         <section>
-          <h2 className="text-sm font-semibold text-[#111827] mb-2">Inscriptions</h2>
+          <h2 className="text-sm font-semibold text-[#111827] mb-2">{tr.profile.inscriptions}</h2>
           <ul className="space-y-2">
             {heritage.inscriptions.map((ins, i) => (
               <li key={i} className="flex items-start gap-2 text-sm text-[#6B7280]">
@@ -955,7 +973,7 @@ function HeritageTab({ temple }: { temple: Temple }) {
       {/* Murals */}
       {heritage.murals && (
         <section>
-          <h2 className="text-sm font-semibold text-[#111827] mb-2">Murals &amp; Paintings</h2>
+          <h2 className="text-sm font-semibold text-[#111827] mb-2">{tr.profile.murals}</h2>
           <p className="text-sm text-[#6B7280] leading-relaxed">{heritage.murals}</p>
         </section>
       )}
@@ -963,7 +981,7 @@ function HeritageTab({ temple }: { temple: Temple }) {
       {/* Sculptures */}
       {heritage.sculptures && (
         <section>
-          <h2 className="text-sm font-semibold text-[#111827] mb-2">Sculptures</h2>
+          <h2 className="text-sm font-semibold text-[#111827] mb-2">{tr.profile.sculptures}</h2>
           <p className="text-sm text-[#6B7280] leading-relaxed">{heritage.sculptures}</p>
         </section>
       )}
@@ -1007,13 +1025,15 @@ function HeritageTab({ temple }: { temple: Temple }) {
 
 function NearbyTab({ temple }: { temple: Temple }) {
   const navigate = useNavigate()
+  const { lang } = useLang()
+  const tr = T[lang]
   const nearby   = MOCK_TEMPLES.filter((t) => t.id !== temple.id).slice(0, 3)
 
   return (
     <div className="p-4 space-y-3">
       <div className="flex items-center gap-2 mb-1">
         <MapPin size={15} className="text-primary" />
-        <h2 className="text-sm font-semibold text-[#111827]">Nearby Temples</h2>
+        <h2 className="text-sm font-semibold text-[#111827]">{tr.profile.nearbyTitle}</h2>
       </div>
       {nearby.map((t) => (
         <TempleCard
@@ -1078,26 +1098,26 @@ function TempleProfileSkeleton() {
   )
 }
 
-// ─── Tab definitions ──────────────────────────────────────────────────────────
-
-const TABS = [
-  { label: 'Overview',   value: 'overview'   },
-  { label: 'History',    value: 'history'    },
-  { label: 'Gallery',    value: 'gallery'    },
-  { label: 'Timings',    value: 'timings'    },
-  { label: 'Poojas',     value: 'poojas'     },
-  { label: 'Services',   value: 'services'   },
-  { label: 'Donations',  value: 'donations'  },
-  { label: 'Renovation', value: 'renovation' },
-  { label: 'Heritage',   value: 'heritage'   },
-  { label: 'Nearby',     value: 'nearby'     },
-]
-
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 export default function TempleProfile() {
   const { id }   = useParams<{ id: string }>()
   const navigate = useNavigate()
+  const { lang } = useLang()
+  const tr = T[lang]
+
+  const TABS = [
+    { label: tr.profile.tabOverview,   value: 'overview'   },
+    { label: tr.profile.tabHistory,    value: 'history'    },
+    { label: tr.profile.tabGallery,    value: 'gallery'    },
+    { label: tr.profile.tabTimings,    value: 'timings'    },
+    { label: tr.profile.tabPoojas,     value: 'poojas'     },
+    { label: tr.profile.tabServices,   value: 'services'   },
+    { label: tr.profile.tabDonations,  value: 'donations'  },
+    { label: tr.profile.tabRenovation, value: 'renovation' },
+    { label: tr.profile.tabHeritage,   value: 'heritage'   },
+    { label: tr.profile.tabNearby,     value: 'nearby'     },
+  ]
 
   const [temple, setTemple]                         = useState<Temple | null>(null)
   const [loading, setLoading]                       = useState(true)
@@ -1246,9 +1266,9 @@ export default function TempleProfile() {
         {/* Temple info — anchored to hero bottom */}
         <div className="absolute bottom-0 left-0 right-0 px-4 pb-5 pt-12">
           <h1 className="text-white font-bold text-2xl md:text-3xl leading-tight drop-shadow">
-            {temple.name}
+            {lang === 'ta' ? (temple.nameTa || temple.name) : temple.name}
           </h1>
-          <p className="text-white/80 text-sm mt-0.5">{temple.deity}</p>
+          <p className="text-white/80 text-sm mt-0.5">{lang === 'ta' ? (temple.deityTa || temple.deity) : temple.deity}</p>
           <div className="flex flex-wrap gap-2 mt-2.5">
             <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-white/15 backdrop-blur-sm border border-white/40 text-white text-xs font-medium">
               {temple.dynasty}
@@ -1283,14 +1303,14 @@ export default function TempleProfile() {
             <span
               className={`w-1.5 h-1.5 rounded-full ${temple.isOpen ? 'bg-success animate-pulse' : 'bg-danger'}`}
             />
-            {temple.isOpen ? 'Open Now' : 'Closed'}
+            {temple.isOpen ? tr.common.open : tr.common.closed}
           </span>
         </div>
 
         {/* Row 2: Location + distance */}
         <div className="flex items-center gap-1.5 mt-2.5 text-sm text-[#6B7280]">
           <MapPin size={13} className="text-primary shrink-0" />
-          <span>{temple.city}, {temple.district}, Tamil Nadu</span>
+          <span>{temple.city}, {lang === 'ta' ? (temple.districtTa || temple.district) : temple.district}, Tamil Nadu</span>
           {temple.distanceKm !== undefined && temple.distanceKm > 0 && (
             <>
               <span className="text-[#ECECEC] select-none mx-0.5">·</span>
@@ -1313,7 +1333,7 @@ export default function TempleProfile() {
             onClick={handleFollow}
             className="shrink-0"
           >
-            {isFollowed ? 'Following' : 'Follow'}
+            {isFollowed ? tr.profile.following : tr.profile.follow}
           </Button>
 
           <Button
@@ -1322,7 +1342,7 @@ export default function TempleProfile() {
             onClick={() => setActiveTab('poojas')}
             className="shrink-0"
           >
-            Book Pooja
+            {tr.profile.bookPooja}
           </Button>
 
           <Button
@@ -1332,7 +1352,7 @@ export default function TempleProfile() {
             onClick={() => setActiveTab('donations')}
             className="shrink-0"
           >
-            Donate
+            {tr.profile.donate}
           </Button>
 
           <Button
@@ -1342,7 +1362,7 @@ export default function TempleProfile() {
             onClick={handleNavigate}
             className="shrink-0"
           >
-            Navigate
+            {tr.profile.directions}
           </Button>
 
           <Button
@@ -1352,7 +1372,7 @@ export default function TempleProfile() {
             onClick={handleShare}
             className="shrink-0"
           >
-            Share
+            {tr.profile.share}
           </Button>
         </div>
       </div>

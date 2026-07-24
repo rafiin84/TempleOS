@@ -11,6 +11,8 @@ import type { Temple, District } from '@/types';
 import { templeApi, districtApi } from '@/services/mock/api';
 import { Button, Badge } from '@/components/ui';
 import { TempleCard } from '@/components/temple';
+import { useLang } from '@/contexts/LanguageContext';
+import { T } from '@/i18n/translations';
 
 /* ─── helpers ──────────────────────────────────────────────────────────────── */
 function cn(...classes: (string | undefined | null | false)[]): string {
@@ -330,6 +332,8 @@ function AiPanel({
   onClose: () => void;
   onSearch: (q: string) => void;
 }) {
+  const { lang } = useLang();
+  const tr = T[lang];
   const [aiQuery, setAiQuery] = useState('');
   const [thinking, setThinking] = useState(false);
   const [response, setResponse] = useState<string | null>(null);
@@ -389,7 +393,7 @@ function AiPanel({
               <Sparkles size={16} className="text-white" />
             </div>
             <div>
-              <p className="text-sm font-bold text-[#111827]">AI Temple Search</p>
+              <p className="text-sm font-bold text-[#111827]">{tr.explore.aiModalTitle}</p>
               <p className="text-xs text-[#6B7280]">Describe what you're looking for</p>
             </div>
           </div>
@@ -466,11 +470,12 @@ function AiPanel({
               type="text"
               value={aiQuery}
               onChange={(e) => setAiQuery(e.target.value)}
-              placeholder="e.g. Shiva temples near Thanjavur open now..."
+              placeholder={tr.explore.aiModalPlaceholder}
               className="flex-1 py-3 text-sm text-[#111827] bg-transparent placeholder-[#6B7280] focus:outline-none"
             />
             <button
               type="submit"
+              title={tr.explore.aiModalBtn}
               disabled={!aiQuery.trim() || thinking}
               className={cn(
                 'w-8 h-8 rounded-lg flex items-center justify-center transition-colors duration-150 shrink-0',
@@ -498,6 +503,8 @@ function EmptyState({
   category: string;
   onClear: () => void;
 }) {
+  const { lang } = useLang();
+  const tr = T[lang];
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -515,7 +522,7 @@ function EmptyState({
         </div>
       </div>
 
-      <h3 className="text-base font-bold text-[#111827] mb-1">No temples found</h3>
+      <h3 className="text-base font-bold text-[#111827] mb-1">{tr.explore.noResults}</h3>
 
       <p className="text-sm text-[#6B7280] mb-1 max-w-xs">
         {query && category
@@ -527,7 +534,7 @@ function EmptyState({
           : 'No temples match the current filters'}
       </p>
       <p className="text-xs text-[#6B7280] mb-6 max-w-xs">
-        Try adjusting your search or clearing the filters to browse all temples.
+        {tr.explore.noResultsSub}
       </p>
 
       <div className="flex items-center gap-2">
@@ -575,6 +582,8 @@ function ViewBtn({
 export default function Explore() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
+  const { lang } = useLang();
+  const tr = T[lang];
 
   // URL-persisted state
   const [searchInput, setSearchInput] = useState(searchParams.get('search') ?? '');
@@ -675,7 +684,7 @@ export default function Explore() {
               type="text"
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
-              placeholder="Search temples, deities, districts..."
+              placeholder={tr.explore.searchPlaceholder}
               className="flex-1 py-2.5 text-sm text-[#111827] bg-transparent placeholder-[#6B7280] focus:outline-none"
             />
             <AnimatePresence>
@@ -702,7 +711,7 @@ export default function Explore() {
                 exit={{ opacity: 0, x: -8 }}
                 className="hidden md:block text-xs text-[#6B7280] shrink-0 whitespace-nowrap"
               >
-                <span className="font-semibold text-[#111827]">{temples.length}</span> result{temples.length !== 1 ? 's' : ''}
+                <span className="font-semibold text-[#111827]">{temples.length}</span> {tr.explore.results}
               </motion.span>
             )}
           </AnimatePresence>
@@ -731,8 +740,8 @@ export default function Explore() {
 
           {/* View toggle */}
           <div className="flex items-center gap-0.5 bg-[#FAFAFC] border border-[#ECECEC] rounded-lg p-1 shrink-0">
-            <ViewBtn mode="grid"  current={viewMode} onClick={() => setViewMode('grid')}  icon={LayoutGrid} label="Grid" />
-            <ViewBtn mode="list"  current={viewMode} onClick={() => setViewMode('list')}  icon={List}        label="List" />
+            <ViewBtn mode="grid"  current={viewMode} onClick={() => setViewMode('grid')}  icon={LayoutGrid} label={tr.explore.grid} />
+            <ViewBtn mode="list"  current={viewMode} onClick={() => setViewMode('list')}  icon={List}        label={tr.explore.list} />
             <ViewBtn mode="map"   current={viewMode} onClick={() => setViewMode('map')}   icon={Map}         label="Map"  />
           </div>
         </div>
@@ -758,7 +767,7 @@ export default function Explore() {
                     )}
                   >
                     <span className="text-sm leading-none">{emoji}</span>
-                    {label}
+                    {label === 'All' ? tr.explore.all : label}
                   </motion.button>
                 );
               })}
@@ -779,7 +788,7 @@ export default function Explore() {
                     : 'border-[#ECECEC] text-[#6B7280] hover:border-primary/40',
                 )}
               >
-                <option value="">All Districts</option>
+                <option value="">{tr.explore.filterDistrict}</option>
                 {districtOptions.map((d) => (
                   <option key={d.id} value={d.name}>
                     {d.name}
@@ -978,7 +987,7 @@ export default function Explore() {
         className="fixed bottom-20 md:bottom-6 right-4 z-40 flex items-center gap-2.5 bg-primary text-white px-5 py-3 rounded-full shadow-elevated text-sm font-semibold"
       >
         <Sparkles size={16} />
-        Ask AI
+        {tr.explore.aiAsk}
         <div className="w-2 h-2 rounded-full bg-white/60 animate-pulse" />
       </motion.button>
 

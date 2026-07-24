@@ -5,6 +5,8 @@ import { userApi, bookingApi, donationApi } from '@/services/mock/api'
 import { MOCK_TEMPLES } from '@/services/mock/data'
 import type { User, Booking, Donation, BookingStatus } from '@/types'
 import { Avatar, Badge, Button, Tabs, ProgressBar } from '@/components/ui'
+import { useLang } from '@/contexts/LanguageContext'
+import { T } from '@/i18n/translations'
 import { QRCard, BookingCard } from '@/components/temple'
 
 /* ─── Helpers ─────────────────────────────────────────────────────────────────── */
@@ -20,15 +22,6 @@ function formatDate(dateStr: string): string {
     day: 'numeric', month: 'short', year: 'numeric',
   })
 }
-
-const MY_TABS = [
-  { label: 'Upcoming',   value: 'upcoming'   },
-  { label: 'QR Tickets', value: 'qr-tickets' },
-  { label: 'Passport',   value: 'passport'   },
-  { label: 'Donations',  value: 'donations'  },
-  { label: 'Following',  value: 'following'  },
-  { label: 'Journey',    value: 'journey'    },
-]
 
 /* ─── Journey chart data ──────────────────────────────────────────────────────── */
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul']
@@ -51,12 +44,24 @@ function isUpcoming(b: Booking): boolean {
 
 /* ─── Main Component ─────────────────────────────────────────────────────────── */
 export default function MyTemple() {
+  const { lang } = useLang()
+  const tr = T[lang]
+
   const [user, setUser] = useState<User | null>(null)
   const [bookings, setBookings] = useState<Booking[]>([])
   const [donations, setDonations] = useState<Donation[]>([])
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState('upcoming')
   const [bookingFilter, setBookingFilter] = useState<BookingFilter>('all')
+
+  const myTabs = [
+    { label: tr.myTemple.tabBookings,  value: 'upcoming'   },
+    { label: 'QR Tickets',             value: 'qr-tickets' },
+    { label: tr.myTemple.tabPassport,  value: 'passport'   },
+    { label: tr.myTemple.tabDonations, value: 'donations'  },
+    { label: tr.myTemple.tabFollowing, value: 'following'  },
+    { label: tr.myTemple.tabHistory,   value: 'journey'    },
+  ]
 
   useEffect(() => {
     Promise.all([
@@ -123,10 +128,10 @@ export default function MyTemple() {
           {/* Stats row */}
           <div className="flex gap-4 overflow-x-auto scrollbar-hide pb-1">
             {[
-              { label: 'Visits',     value: user?.passportEntries.length ?? 0 },
-              { label: 'Donated',    value: formatCurrency(totalDonated) },
-              { label: 'Following',  value: user?.following.length ?? 0 },
-              { label: 'Routes',     value: '1 started' },
+              { label: tr.myTemple.visited,   value: user?.passportEntries.length ?? 0 },
+              { label: tr.myTemple.donations, value: formatCurrency(totalDonated) },
+              { label: tr.myTemple.following, value: user?.following.length ?? 0 },
+              { label: 'Routes',              value: '1 started' },
             ].map(stat => (
               <div
                 key={stat.label}
@@ -143,7 +148,7 @@ export default function MyTemple() {
       {/* ── Tabs ── */}
       <div className="max-w-2xl mx-auto">
         <Tabs
-          tabs={MY_TABS}
+          tabs={myTabs}
           value={activeTab}
           onChange={setActiveTab}
           className="px-4"
@@ -174,7 +179,7 @@ export default function MyTemple() {
               {filteredBookings.length === 0 ? (
                 <div className="text-center py-16">
                   <Calendar size={40} className="mx-auto mb-3 text-[#ECECEC]" />
-                  <p className="text-sm text-[#6B7280] mb-4">No upcoming bookings</p>
+                  <p className="text-sm text-[#6B7280] mb-4">{tr.myTemple.noBookings}</p>
                   <Link to="/bookings">
                     <Button variant="primary" size="sm">Book a Pooja</Button>
                   </Link>
@@ -224,7 +229,7 @@ export default function MyTemple() {
               </Link>
 
               {/* Recent stamps grid */}
-              <h3 className="text-sm font-semibold text-[#111827] mb-3">Recent Stamps</h3>
+              <h3 className="text-sm font-semibold text-[#111827] mb-3">{tr.passport.recentStamps}</h3>
               <div className="grid grid-cols-4 gap-3">
                 {user?.passportEntries.slice(0, 4).map(entry => (
                   <div key={entry.templeId} className="flex flex-col items-center gap-1.5">
@@ -259,7 +264,7 @@ export default function MyTemple() {
               {/* Donation list */}
               {donations.length === 0 ? (
                 <div className="text-center py-12">
-                  <p className="text-sm text-[#6B7280]">No donations yet</p>
+                  <p className="text-sm text-[#6B7280]">{tr.myTemple.noDonations}</p>
                 </div>
               ) : (
                 <div className="space-y-3">
@@ -306,7 +311,7 @@ export default function MyTemple() {
             <div>
               {followedTemples.length === 0 ? (
                 <div className="text-center py-16">
-                  <p className="text-sm text-[#6B7280] mb-4">Not following any temples yet</p>
+                  <p className="text-sm text-[#6B7280] mb-4">{tr.myTemple.noFollowing}</p>
                   <Link to="/explore">
                     <Button variant="primary" size="sm">Explore Temples</Button>
                   </Link>

@@ -10,6 +10,8 @@ import type { Temple, Festival, PilgrimageRoute, District } from '@/types';
 import { templeApi, festivalApi, routeApi, districtApi } from '@/services/mock/api';
 import { Badge } from '@/components/ui';
 import { TempleCard } from '@/components/temple';
+import { useLang } from '@/contexts/LanguageContext';
+import { T } from '@/i18n/translations';
 
 /* ─── Utility ─────────────────────────────────────────────────────────────── */
 function cn(...classes: (string | undefined | null | false)[]): string {
@@ -47,12 +49,6 @@ const DEITY_GRID = [
   { label: 'Heritage',    emoji: '🗺️', category: 'Heritage',    bgClass: 'bg-primary-50', emojiSize: 'text-3xl' },
 ];
 
-const STATS = [
-  { value: '38,407', label: 'Temples',   sub: 'across Tamil Nadu' },
-  { value: '32',     label: 'Districts', sub: 'fully covered' },
-  { value: '₹45 Cr', label: 'Donated',  sub: 'by devotees' },
-  { value: '1.24 Cr',label: 'Visits',   sub: 'and counting' },
-];
 
 /* ─── Reusable Section Header ─────────────────────────────────────────────── */
 function SectionHeader({
@@ -64,6 +60,8 @@ function SectionHeader({
   title: string;
   href?: string;
 }) {
+  const { lang } = useLang();
+  const tr = T[lang];
   return (
     <motion.div
       variants={fadeUp}
@@ -87,7 +85,7 @@ function SectionHeader({
           to={href}
           className="flex items-center gap-1 text-sm font-semibold text-primary hover:text-primary-600 transition-colors shrink-0 ml-4 pb-0.5"
         >
-          View All
+          {tr.home.viewAll}
           <ArrowRight size={14} />
         </Link>
       )}
@@ -198,6 +196,8 @@ function FestivalSkeleton() {
 
 /* ─── District Card ──────────────────────────────────────────────────────── */
 function DistrictCard({ district, onClick }: { district: District; onClick: () => void }) {
+  const { lang } = useLang();
+  const tr = T[lang];
   const [imgErr, setImgErr] = useState(false);
 
   return (
@@ -221,14 +221,14 @@ function DistrictCard({ district, onClick }: { district: District; onClick: () =
 
       {/* Content */}
       <div className="absolute bottom-0 left-0 right-0 p-4">
-        <p className="text-white font-bold text-base leading-tight">{district.name}</p>
+        <p className="text-white font-bold text-base leading-tight">{lang === 'ta' ? (district.nameTa || district.name) : district.name}</p>
         <p className="text-white/65 text-[11px] font-medium mt-0.5">{district.nameTa}</p>
         <div className="mt-2">
           <span
             className="inline-block text-white text-[10px] font-semibold px-2.5 py-1 rounded-full"
             style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(4px)' }}
           >
-            {district.templeCount.toLocaleString()} temples
+            {district.templeCount.toLocaleString()} {tr.home.temples}
           </span>
         </div>
       </div>
@@ -238,6 +238,8 @@ function DistrictCard({ district, onClick }: { district: District; onClick: () =
 
 /* ─── Route Card ─────────────────────────────────────────────────────────── */
 function RouteCard({ route, onClick }: { route: PilgrimageRoute; onClick: () => void }) {
+  const { lang } = useLang();
+  const tr = T[lang];
   const [imgErr, setImgErr] = useState(false);
 
   return (
@@ -265,7 +267,7 @@ function RouteCard({ route, onClick }: { route: PilgrimageRoute; onClick: () => 
             className="text-white text-[10px] font-bold px-2.5 py-1 rounded-full"
             style={{ background: 'rgba(0,0,0,0.35)', backdropFilter: 'blur(4px)' }}
           >
-            {route.durationDays} days
+            {route.durationDays} {tr.home.days}
           </span>
         </div>
 
@@ -279,7 +281,7 @@ function RouteCard({ route, onClick }: { route: PilgrimageRoute; onClick: () => 
       <div className="p-4 space-y-3">
         <div>
           <p className="font-bold text-[#111827] text-sm leading-snug line-clamp-1">
-            {route.name}
+            {lang === 'ta' ? (route.nameTa || route.name) : route.name}
           </p>
           <p className="text-[11px] text-[#6B7280] mt-0.5">{route.nameTa}</p>
         </div>
@@ -288,11 +290,11 @@ function RouteCard({ route, onClick }: { route: PilgrimageRoute; onClick: () => 
         <div className="flex items-center gap-3 text-xs text-[#6B7280]">
           <span className="flex items-center gap-1">
             <MapPin size={10} className="text-primary" />
-            {route.templeCount} temples
+            {route.templeCount} {tr.home.temples}
           </span>
           <span className="flex items-center gap-1">
             <RouteIcon size={10} />
-            {route.distanceKm} km
+            {route.distanceKm} {tr.home.km}
           </span>
           <span className="flex items-center gap-1">
             <Clock size={10} />
@@ -304,7 +306,7 @@ function RouteCard({ route, onClick }: { route: PilgrimageRoute; onClick: () => 
         {route.completedBy !== undefined && (
           <div className="flex items-center gap-1.5 text-[11px] text-[#6B7280] pt-2.5 border-t border-[#ECECEC]">
             <Users size={10} className="text-primary" />
-            <span>{route.completedBy.toLocaleString()} devotees completed</span>
+            <span>{route.completedBy.toLocaleString()} {tr.home.devotees}</span>
           </div>
         )}
       </div>
@@ -314,6 +316,8 @@ function RouteCard({ route, onClick }: { route: PilgrimageRoute; onClick: () => 
 
 /* ─── Main Component ─────────────────────────────────────────────────────── */
 export default function Home() {
+  const { lang } = useLang();
+  const tr = T[lang];
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery]       = useState('');
   const [searchFocused, setSearchFocused]   = useState(false);
@@ -327,6 +331,13 @@ export default function Home() {
   const [loadingFestivals, setLoadingFestivals] = useState(true);
   const [loadingDistricts, setLoadingDistricts] = useState(true);
   const [loadingRoutes,    setLoadingRoutes]    = useState(true);
+
+  const stats = [
+    { value: tr.home.statsTemplesVal,   label: tr.home.statsTemplesLabel,   sub: tr.home.statsTemplesSub   },
+    { value: tr.home.statsDistrictsVal, label: tr.home.statsDistrictsLabel, sub: tr.home.statsDistrictsSub },
+    { value: tr.home.statsDonatedVal,   label: tr.home.statsDonatedLabel,   sub: tr.home.statsDonatedSub   },
+    { value: tr.home.statsVisitsVal,    label: tr.home.statsVisitsLabel,    sub: tr.home.statsVisitsSub    },
+  ];
 
   useEffect(() => {
     templeApi.getFeatured().then((data) => {
@@ -393,7 +404,7 @@ export default function Home() {
             }}
           >
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            Official HR&amp;CE Digital Platform · Tamil Nadu
+            {tr.home.tagline}
           </motion.div>
 
           {/* Tamil headline */}
@@ -422,7 +433,7 @@ export default function Home() {
             className="text-xl md:text-2xl font-medium text-white/90 leading-snug"
             style={{ textShadow: '0 1px 8px rgba(0,0,0,0.3)' }}
           >
-            Discover Tamil Nadu&apos;s Sacred Temples
+            {tr.home.subtitle}
           </motion.p>
 
           {/* Stats line */}
@@ -433,11 +444,11 @@ export default function Home() {
             custom={0.24}
             className="flex items-center justify-center gap-2 text-sm text-white/70 mt-3 flex-wrap"
           >
-            <span>38,407 temples</span>
+            <span>{tr.home.stats1}</span>
             <span className="w-1 h-1 rounded-full bg-white/30 inline-block" />
-            <span>32 districts</span>
+            <span>{tr.home.stats2}</span>
             <span className="w-1 h-1 rounded-full bg-white/30 inline-block" />
-            <span>One platform</span>
+            <span>{tr.home.stats3}</span>
           </motion.div>
 
           {/* Search bar */}
@@ -469,14 +480,14 @@ export default function Home() {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onFocus={() => setSearchFocused(true)}
                 onBlur={() => setSearchFocused(false)}
-                placeholder="Search temples, deities, festivals..."
+                placeholder={tr.home.searchPlaceholder}
                 className="flex-1 px-4 py-4 text-sm md:text-base text-[#111827] placeholder-[#9CA3AF] bg-transparent focus:outline-none"
               />
               <button
                 type="submit"
                 className="m-2 bg-primary text-white text-sm font-semibold px-6 py-3 rounded-lg hover:bg-primary-600 active:bg-primary-700 transition-colors duration-150 shrink-0 select-none"
               >
-                Search
+                {tr.home.searchBtn}
               </button>
             </div>
           </motion.form>
@@ -528,14 +539,14 @@ export default function Home() {
                     <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500" />
                   </span>
                   <h2 className="text-2xl md:text-[28px] font-bold text-[#111827]">
-                    Live Now
+                    {tr.home.liveFestivals}
                   </h2>
                 </div>
                 <Link
                   to="/explore"
                   className="flex items-center gap-1 text-sm font-semibold text-primary hover:text-primary-600 transition-colors"
                 >
-                  View All <ArrowRight size={14} />
+                  {tr.home.seeAll} <ArrowRight size={14} />
                 </Link>
               </div>
 
@@ -557,8 +568,8 @@ export default function Home() {
       <section className="py-14 bg-white">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
           <SectionHeader
-            eyebrow="Top Picks"
-            title="Featured Temples"
+            eyebrow={tr.home.featuredEyebrow}
+            title={tr.home.featuredTemples}
             href="/explore"
           />
 
@@ -592,8 +603,8 @@ export default function Home() {
       <section className="py-14 bg-background">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
           <SectionHeader
-            eyebrow="Discover"
-            title="Explore by District"
+            eyebrow={tr.home.districtsEyebrow}
+            title={tr.home.exploreDistricts}
             href="/explore"
           />
 
@@ -637,8 +648,8 @@ export default function Home() {
       <section className="py-14 bg-white">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
           <SectionHeader
-            eyebrow="Sacred Journeys"
-            title="Pilgrimage Routes"
+            eyebrow={tr.home.routesEyebrow}
+            title={tr.home.pilgrimageRoutes}
             href="/explore"
           />
 
@@ -669,8 +680,8 @@ export default function Home() {
       <section className="py-14 bg-background">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
           <SectionHeader
-            eyebrow="Browse"
-            title="Explore by Deity"
+            eyebrow={tr.home.deityEyebrow}
+            title={tr.home.browseDeity}
           />
 
           <div className="grid grid-cols-4 md:grid-cols-8 gap-2.5 md:gap-3">
@@ -737,12 +748,12 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center text-[11px] font-bold text-white/40 uppercase tracking-[0.16em] mb-10"
           >
-            By the numbers
+            {tr.home.statsBanner}
           </motion.p>
 
           {/* Stats grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 text-center">
-            {STATS.map((stat, i) => (
+            {stats.map((stat, i) => (
               <motion.div
                 key={stat.label}
                 variants={fadeUp}

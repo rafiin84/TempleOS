@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
+import { LanguageProvider } from '@/contexts/LanguageContext'
 import PublicLayout from '@/layouts/PublicLayout'
 import AdminLayout from '@/layouts/AdminLayout'
 
@@ -37,6 +38,7 @@ function PageLoader() {
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
+      <LanguageProvider>
       <BrowserRouter>
         <Suspense fallback={<PageLoader />}>
           <Routes>
@@ -58,6 +60,7 @@ export default function App() {
           </Routes>
         </Suspense>
       </BrowserRouter>
+      </LanguageProvider>
     </QueryClientProvider>
   )
 }

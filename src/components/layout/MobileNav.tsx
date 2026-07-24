@@ -1,28 +1,28 @@
 import { NavLink } from 'react-router-dom';
 import { House, Compass, Bell, CalendarDays, User } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
+import { useLang } from '@/contexts/LanguageContext';
+import { T } from '@/i18n/translations';
 
 type ClassValue = string | undefined | null | false;
 function cn(...classes: ClassValue[]): string {
   return classes.filter(Boolean).join(' ');
 }
 
-interface NavItem {
-  label: string;
-  to: string;
-  icon: LucideIcon;
-  end?: boolean;
-}
+interface NavItem { to: string; icon: LucideIcon; end?: boolean; key: string }
 
 const NAV_ITEMS: NavItem[] = [
-  { label: 'Home',      to: '/',           icon: House,        end: true },
-  { label: 'Explore',   to: '/explore',    icon: Compass                 },
-  { label: 'Updates',   to: '/updates',    icon: Bell                    },
-  { label: 'Bookings',  to: '/bookings',   icon: CalendarDays            },
-  { label: 'My Temple', to: '/my-temple',  icon: User                    },
+  { key: 'home',      to: '/',          icon: House,        end: true },
+  { key: 'explore',   to: '/explore',   icon: Compass                 },
+  { key: 'updates',   to: '/updates',   icon: Bell                    },
+  { key: 'bookings',  to: '/bookings',  icon: CalendarDays            },
+  { key: 'myTemple',  to: '/my-temple', icon: User                    },
 ];
 
 export default function MobileNav() {
+  const { lang } = useLang();
+  const tr = T[lang].nav;
+
   return (
     <nav
       className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-surface border-t border-[#ECECEC]"
@@ -30,7 +30,7 @@ export default function MobileNav() {
       aria-label="Mobile navigation"
     >
       <div className="h-[60px] flex items-stretch">
-        {NAV_ITEMS.map(({ label, to, icon: Icon, end }) => (
+        {NAV_ITEMS.map(({ key, to, icon: Icon, end }) => (
           <NavLink
             key={to}
             to={to}
@@ -46,18 +46,9 @@ export default function MobileNav() {
           >
             {({ isActive }) => (
               <>
-                <Icon
-                  size={22}
-                  strokeWidth={isActive ? 2.2 : 1.8}
-                  aria-hidden="true"
-                />
-                <span
-                  className={cn(
-                    'text-[10px] font-medium leading-none tracking-tight',
-                    isActive ? 'text-primary' : 'text-[#6B7280]',
-                  )}
-                >
-                  {label}
+                <Icon size={22} strokeWidth={isActive ? 2.2 : 1.8} aria-hidden="true" />
+                <span className={cn('text-[10px] font-medium leading-none tracking-tight', isActive ? 'text-primary' : 'text-[#6B7280]')}>
+                  {tr[key as keyof typeof tr]}
                 </span>
               </>
             )}

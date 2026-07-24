@@ -5,6 +5,8 @@ import { Lock, Star, MapPin, Heart, Route, Trophy, ChevronRight } from 'lucide-r
 import { userApi } from '@/services/mock/api'
 import type { User } from '@/types'
 import { ProgressBar, Badge, Button } from '@/components/ui'
+import { useLang } from '@/contexts/LanguageContext'
+import { T } from '@/i18n/translations'
 
 /* ─── Helpers ────────────────────────────────────────────────────────────────── */
 
@@ -143,6 +145,9 @@ function Stamp({ src, name, date, visited }: StampProps) {
 
 /* ─── Main Component ─────────────────────────────────────────────────────────── */
 export default function TemplePassport() {
+  const { lang } = useLang()
+  const tr = T[lang]
+
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
 
@@ -196,7 +201,7 @@ export default function TemplePassport() {
 
         <div className="relative max-w-lg mx-auto">
           <p className="text-xs uppercase tracking-[0.2em] text-white/60 font-medium mb-4">
-            Tamil Nadu Temple Passport
+            {tr.passport.title}
           </p>
           <h1 className="text-3xl font-black mb-1">{user?.name}</h1>
           {user?.nameTa && (
@@ -227,7 +232,7 @@ export default function TemplePassport() {
       <div className="max-w-2xl mx-auto px-4 pt-8 space-y-10">
         {/* ── Collections ── */}
         <section>
-          <h2 className="text-base font-bold text-[#111827] mb-4">Your Collections</h2>
+          <h2 className="text-base font-bold text-[#111827] mb-4">{tr.passport.collections}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {COLLECTIONS.map(c => (
               <CollectionCard key={c.title} {...c} />
@@ -239,7 +244,7 @@ export default function TemplePassport() {
         <section>
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-base font-bold text-[#111827]">
-              Your Stamps
+              {tr.passport.stamps}
               <span className="ml-2 text-sm font-normal text-[#6B7280]">
                 ({visitCount} temples visited)
               </span>
@@ -266,7 +271,7 @@ export default function TemplePassport() {
 
         {/* ── Achievements ── */}
         <section>
-          <h2 className="text-base font-bold text-[#111827] mb-4">Achievements</h2>
+          <h2 className="text-base font-bold text-[#111827] mb-4">{tr.passport.achievements}</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
             {ACHIEVEMENTS.map(a => (
               <Achievement key={a.label} {...a} />

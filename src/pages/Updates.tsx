@@ -5,6 +5,8 @@ import { feedApi } from '@/services/mock/api'
 import type { FeedItem } from '@/types'
 import { FeedCard } from '@/components/temple'
 import { Skeleton } from '@/components/ui'
+import { useLang } from '@/contexts/LanguageContext'
+import { T } from '@/i18n/translations'
 
 /* ─── Filter types ─────────────────────────────────────────────────────────── */
 type FilterType = 'all' | 'festival' | 'announcement' | 'heritage' | 'booking-open' | 'crowd-alert'
@@ -81,6 +83,8 @@ function EmptyState({ filter, onClear }: { filter: FilterType; onClear: () => vo
 
 /* ─── Main page ────────────────────────────────────────────────────────────── */
 export default function Updates() {
+  const { lang } = useLang()
+  const tr = T[lang]
   const [allItems, setAllItems]       = useState<FeedItem[]>([])
   const [loading, setLoading]         = useState(true)
   const [loadingMore, setLoadingMore] = useState(false)
@@ -165,8 +169,8 @@ export default function Updates() {
       <div className="sticky top-0 z-20 bg-surface border-b border-[#ECECEC] shadow-soft">
         <div className="max-w-feed mx-auto px-4 pt-4 pb-2 flex items-center justify-between">
           <div>
-            <h1 className="text-xl font-bold text-[#111827]">Updates</h1>
-            <p className="text-[11px] text-[#6B7280] mt-0.5">Temple news &amp; announcements</p>
+            <h1 className="text-xl font-bold text-[#111827]">{tr.updates.title}</h1>
+            <p className="text-[11px] text-[#6B7280] mt-0.5">{tr.updates.subtitle}</p>
           </div>
 
           <button
@@ -187,6 +191,16 @@ export default function Updates() {
           <div className="flex gap-2 px-4 pb-3 w-max">
             {FILTERS.map(f => {
               const active = filter === f.value
+              const filterLabels: Record<string, string> = {
+                all: tr.updates.all,
+                festival: tr.updates.festival,
+                announcement: tr.updates.alert,
+                heritage: tr.updates.heritage,
+                renovation: tr.updates.renovation,
+                'booking-open': tr.updates.booking,
+                'crowd-alert': tr.updates.alert,
+              }
+              const label = filterLabels[f.value] ?? f.label
               return (
                 <button
                   key={f.value}
@@ -199,7 +213,7 @@ export default function Updates() {
                   ].join(' ')}
                 >
                   {f.icon && <span>{f.icon}</span>}
-                  {f.label}
+                  {label}
                 </button>
               )
             })}
@@ -224,21 +238,26 @@ export default function Updates() {
         ) : (
           <>
             <AnimatePresence mode="popLayout" initial={false}>
-              {filtered.map((item, idx) => (
-                <motion.div
-                  key={`${filter}-${item.id}`}
-                  layout
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{
-                    opacity: 1,
-                    y: 0,
-                    transition: { duration: 0.22, delay: Math.min(idx * 0.045, 0.22) },
-                  }}
-                  exit={{ opacity: 0, scale: 0.97, transition: { duration: 0.15 } }}
-                >
-                  <FeedCard item={item} />
-                </motion.div>
-              ))}
+              {filtered.map((item, idx) => {
+                const displayItem = lang === 'ta'
+                  ? { ...item, title: item.titleTa || item.title, body: item.bodyTa || item.body }
+                  : item
+                return (
+                  <motion.div
+                    key={`${filter}-${item.id}`}
+                    layout
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{
+                      opacity: 1,
+                      y: 0,
+                      transition: { duration: 0.22, delay: Math.min(idx * 0.045, 0.22) },
+                    }}
+                    exit={{ opacity: 0, scale: 0.97, transition: { duration: 0.15 } }}
+                  >
+                    <FeedCard item={displayItem} />
+                  </motion.div>
+                )
+              })}
             </AnimatePresence>
 
             {/* Infinite scroll sentinel — always rendered when feed is visible */}

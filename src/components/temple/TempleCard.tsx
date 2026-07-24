@@ -4,6 +4,8 @@ import { MapPin, Users, Clock, Navigation } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
 import { StarRating } from '@/components/ui/StarRating';
 import type { Temple, CrowdLevel } from '@/types';
+import { useLang } from '@/contexts/LanguageContext';
+import { T } from '@/i18n/translations';
 
 type ClassValue = string | undefined | null | false;
 function cn(...classes: ClassValue[]): string {
@@ -25,8 +27,13 @@ function crowdBadgeVariant(level: CrowdLevel) {
   }
 }
 
-function crowdLabel(level: CrowdLevel) {
-  return level === 'Very High' ? 'Very Busy' : `${level} Crowd`;
+function crowdLabel(level: CrowdLevel, card: typeof T['en']['card']) {
+  switch (level) {
+    case 'Low':       return card.quiet;
+    case 'Moderate':  return card.moderate;
+    case 'High':
+    case 'Very High': return card.busy;
+  }
 }
 
 function CoverImage({
@@ -59,6 +66,8 @@ function CoverImage({
 
 /* ─── Grid Variant ─────────────────────────────────────────────────────────── */
 function GridCard({ temple, onClick }: { temple: Temple; onClick?: () => void }) {
+  const { lang } = useLang();
+  const tr = T[lang];
   return (
     <motion.div
       onClick={onClick}
@@ -76,13 +85,13 @@ function GridCard({ temple, onClick }: { temple: Temple; onClick?: () => void })
         {/* Overlay badges */}
         <div className="absolute top-2.5 left-2.5 flex flex-wrap gap-1.5">
           <Badge variant={temple.isOpen ? 'success' : 'danger'} size="sm">
-            {temple.isOpen ? '● Open' : '● Closed'}
+            {temple.isOpen ? tr.card.open : tr.card.closed}
           </Badge>
         </div>
         <div className="absolute top-2.5 right-2.5">
           <Badge variant={crowdBadgeVariant(temple.crowdLevel)} size="sm">
             <Users size={9} className="mr-0.5 inline" />
-            {crowdLabel(temple.crowdLevel)}
+            {crowdLabel(temple.crowdLevel, tr.card)}
           </Badge>
         </div>
         {/* Gradient scrim */}
@@ -93,14 +102,14 @@ function GridCard({ temple, onClick }: { temple: Temple; onClick?: () => void })
       <div className="p-4 flex flex-col gap-2">
         <div>
           <h3 className="font-semibold text-[#111827] text-sm leading-snug line-clamp-1">
-            {temple.name}
+            {lang === 'ta' ? (temple.nameTa || temple.name) : temple.name}
           </h3>
           <p className="text-xs text-[#6B7280] mt-0.5">{temple.deity}</p>
         </div>
 
         <div className="flex items-center gap-1 text-xs text-[#6B7280]">
           <MapPin size={11} className="shrink-0 text-primary" />
-          <span className="line-clamp-1">{temple.district}</span>
+          <span className="line-clamp-1">{lang === 'ta' ? (temple.districtTa || temple.district) : temple.district}</span>
           {temple.distanceKm !== undefined && (
             <>
               <span className="mx-1 text-[#ECECEC]">·</span>
@@ -120,6 +129,8 @@ function GridCard({ temple, onClick }: { temple: Temple; onClick?: () => void })
 
 /* ─── List Variant ─────────────────────────────────────────────────────────── */
 function ListCard({ temple, onClick }: { temple: Temple; onClick?: () => void }) {
+  const { lang } = useLang();
+  const tr = T[lang];
   return (
     <motion.div
       onClick={onClick}
@@ -140,16 +151,16 @@ function ListCard({ temple, onClick }: { temple: Temple; onClick?: () => void })
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0">
             <h3 className="font-semibold text-[#111827] text-sm leading-snug line-clamp-1">
-              {temple.name}
+              {lang === 'ta' ? (temple.nameTa || temple.name) : temple.name}
             </h3>
             <p className="text-xs text-[#6B7280] mt-0.5">{temple.deity}</p>
           </div>
           <div className="flex flex-col items-end gap-1 shrink-0">
             <Badge variant={temple.isOpen ? 'success' : 'danger'} size="sm">
-              {temple.isOpen ? '● Open' : '● Closed'}
+              {temple.isOpen ? tr.card.open : tr.card.closed}
             </Badge>
             <Badge variant={crowdBadgeVariant(temple.crowdLevel)} size="sm">
-              {crowdLabel(temple.crowdLevel)}
+              {crowdLabel(temple.crowdLevel, tr.card)}
             </Badge>
           </div>
         </div>
@@ -157,7 +168,7 @@ function ListCard({ temple, onClick }: { temple: Temple; onClick?: () => void })
         {/* Location */}
         <div className="flex items-center gap-1 text-xs text-[#6B7280]">
           <MapPin size={11} className="shrink-0 text-primary" />
-          <span>{temple.district}, Tamil Nadu</span>
+          <span>{lang === 'ta' ? (temple.districtTa || temple.district) : temple.district}, Tamil Nadu</span>
           {temple.distanceKm !== undefined && (
             <>
               <span className="mx-1">·</span>
@@ -186,6 +197,8 @@ function ListCard({ temple, onClick }: { temple: Temple; onClick?: () => void })
 
 /* ─── Compact Variant ──────────────────────────────────────────────────────── */
 function CompactCard({ temple, onClick }: { temple: Temple; onClick?: () => void }) {
+  const { lang } = useLang();
+  const tr = T[lang];
   return (
     <motion.div
       onClick={onClick}
@@ -202,10 +215,10 @@ function CompactCard({ temple, onClick }: { temple: Temple; onClick?: () => void
 
       {/* Info */}
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-semibold text-[#111827] line-clamp-1">{temple.name}</p>
+        <p className="text-sm font-semibold text-[#111827] line-clamp-1">{lang === 'ta' ? (temple.nameTa || temple.name) : temple.name}</p>
         <div className="flex items-center gap-1 text-xs text-[#6B7280] mt-0.5">
           <MapPin size={10} className="shrink-0 text-primary" />
-          <span className="line-clamp-1">{temple.district}</span>
+          <span className="line-clamp-1">{lang === 'ta' ? (temple.districtTa || temple.district) : temple.district}</span>
           {temple.distanceKm !== undefined && (
             <span className="shrink-0 ml-1">&middot; {temple.distanceKm.toFixed(1)} km</span>
           )}
@@ -219,7 +232,7 @@ function CompactCard({ temple, onClick }: { temple: Temple; onClick?: () => void
           <span>{temple.rating.toFixed(1)}</span>
         </div>
         <Badge variant={temple.isOpen ? 'success' : 'danger'} size="sm">
-          {temple.isOpen ? 'Open' : 'Closed'}
+          {temple.isOpen ? tr.common.open : tr.common.closed}
         </Badge>
       </div>
     </motion.div>

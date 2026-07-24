@@ -10,20 +10,19 @@ import { templeApi, bookingApi } from '@/services/mock/api'
 import type { Temple, Pooja, Slot, Booking } from '@/types'
 import { Button, Badge, Skeleton, Input, Tabs } from '@/components/ui'
 import { TempleCard, QRCard } from '@/components/temple'
+import { useLang } from '@/contexts/LanguageContext'
+import { T } from '@/i18n/translations'
 
 /* ─── cn helper ───────────────────────────────────────────────────────────── */
 function cn(...c: (string | undefined | false | null)[]): string {
   return c.filter(Boolean).join(' ')
 }
 
-/* ─── Step labels ─────────────────────────────────────────────────────────── */
-const STEP_LABELS = ['Temple', 'Service', 'Date', 'Slot', 'Persons', 'Review', 'Payment', 'Ticket']
-
 /* ─── Step indicator ─────────────────────────────────────────────────────── */
-function StepIndicator({ step }: { step: number }) {
+function StepIndicator({ step, labels }: { step: number; labels: string[] }) {
   return (
     <div className="flex items-center px-4 py-3 overflow-x-auto scrollbar-hide gap-0">
-      {STEP_LABELS.map((label, i) => {
+      {labels.map((label, i) => {
         const num    = i + 1
         const active = num === step
         const done   = num < step
@@ -50,7 +49,7 @@ function StepIndicator({ step }: { step: number }) {
             </div>
 
             {/* Connector bar */}
-            {i < STEP_LABELS.length - 1 && (
+            {i < labels.length - 1 && (
               <motion.div
                 animate={{ backgroundColor: done ? '#C4B5FD' : '#ECECEC' }}
                 transition={{ duration: 0.3 }}
@@ -194,13 +193,13 @@ function CalendarPicker({ value, onChange }: { value: string; onChange: (d: stri
 }
 
 /* ─── Back button ─────────────────────────────────────────────────────────── */
-function BackButton({ onClick }: { onClick: () => void }) {
+function BackButton({ onClick, label = 'Back' }: { onClick: () => void; label?: string }) {
   return (
     <button
       onClick={onClick}
       className="inline-flex items-center gap-1 text-sm text-[#6B7280] mb-4 hover:text-primary transition-colors"
     >
-      <ChevronLeft size={16} /> Back
+      <ChevronLeft size={16} /> {label}
     </button>
   )
 }
@@ -211,6 +210,8 @@ type PaymentMethod = 'upi' | 'card' | 'netbanking'
 /* ─── Main component ──────────────────────────────────────────────────────── */
 export default function Booking() {
   const [searchParams] = useSearchParams()
+  const { lang } = useLang()
+  const tr = T[lang]
 
   /* Step state */
   const [step, setStep]           = useState(1)
@@ -371,7 +372,10 @@ export default function Booking() {
 
       {/* ── Step indicator (sticky) ── */}
       <div className="bg-surface border-b border-[#ECECEC] sticky top-0 z-10 shadow-soft">
-        <StepIndicator step={step} />
+        <StepIndicator step={step} labels={[
+          tr.booking.step1, tr.booking.step2, tr.booking.step3, tr.booking.step4,
+          tr.booking.step5, tr.booking.step6, tr.booking.step7, tr.booking.step8,
+        ]} />
       </div>
 
       {/* ── Animated step panels ── */}
@@ -393,7 +397,7 @@ export default function Booking() {
               ═══════════════════════════════════════════════════════════ */}
               {step === 1 && (
                 <div>
-                  <h2 className="text-lg font-bold text-[#111827] mb-5">Choose a Temple</h2>
+                  <h2 className="text-lg font-bold text-[#111827] mb-5">{tr.booking.selectTempleTitle}</h2>
 
                   <Input
                     placeholder="Search temples, deities, districts…"
@@ -427,7 +431,7 @@ export default function Booking() {
               ═══════════════════════════════════════════════════════════ */}
               {step === 2 && temple && (
                 <div>
-                  <BackButton onClick={back} />
+                  <BackButton onClick={back} label={tr.booking.back} />
 
                   {/* Temple context */}
                   <div className="flex items-center gap-3 mb-5 p-3 bg-surface rounded-xl border border-[#ECECEC] shadow-soft">
@@ -436,11 +440,11 @@ export default function Booking() {
                     </div>
                     <div className="min-w-0">
                       <p className="text-[10px] text-[#6B7280] uppercase tracking-wide font-medium">Booking for</p>
-                      <p className="text-sm font-bold text-[#111827] leading-snug line-clamp-1">{temple.name}</p>
+                      <p className="text-sm font-bold text-[#111827] leading-snug line-clamp-1">{lang === 'ta' ? (temple.nameTa || temple.name) : temple.name}</p>
                     </div>
                   </div>
 
-                  <h2 className="text-lg font-bold text-[#111827] mb-4">Select Service</h2>
+                  <h2 className="text-lg font-bold text-[#111827] mb-4">{tr.booking.selectPoojaTitle}</h2>
 
                   <div className="space-y-3">
                     {temple.poojas.filter(p => p.isBookable).map(p => {
@@ -458,7 +462,7 @@ export default function Booking() {
                           <div className="flex items-start justify-between gap-3">
                             <div className="flex-1 min-w-0">
                               <div className="flex items-center gap-2">
-                                <p className="text-sm font-semibold text-[#111827]">{p.name}</p>
+                                <p className="text-sm font-semibold text-[#111827]">{lang === 'ta' ? (p.nameTa || p.name) : p.name}</p>
                                 {selected && (
                                   <span className="w-4 h-4 rounded-full bg-primary flex items-center justify-center shrink-0">
                                     <Check size={9} className="text-white" />
@@ -482,7 +486,7 @@ export default function Booking() {
 
                             <div className="text-right shrink-0">
                               <p className="text-base font-black text-primary">₹{p.price}</p>
-                              <p className="text-[10px] text-[#6B7280] mt-0.5">per person</p>
+                              <p className="text-[10px] text-[#6B7280] mt-0.5">{tr.booking.perPerson}</p>
                             </div>
                           </div>
                         </motion.div>
@@ -492,7 +496,7 @@ export default function Booking() {
 
                   {poojaId && (
                     <Button variant="primary" size="lg" className="w-full mt-6" onClick={() => advance()}>
-                      Continue <ChevronRight size={16} />
+                      {tr.booking.next} <ChevronRight size={16} />
                     </Button>
                   )}
                 </div>
@@ -503,8 +507,8 @@ export default function Booking() {
               ═══════════════════════════════════════════════════════════ */}
               {step === 3 && (
                 <div>
-                  <BackButton onClick={back} />
-                  <h2 className="text-lg font-bold text-[#111827] mb-5">Select Date</h2>
+                  <BackButton onClick={back} label={tr.booking.back} />
+                  <h2 className="text-lg font-bold text-[#111827] mb-5">{tr.booking.selectDateTitle}</h2>
 
                   <div className="bg-surface rounded-xl border border-[#ECECEC] shadow-soft p-4 mb-4">
                     <CalendarPicker value={date} onChange={setDate} />
@@ -528,7 +532,7 @@ export default function Booking() {
                     disabled={!date}
                     onClick={() => advance()}
                   >
-                    Continue <ChevronRight size={16} />
+                    {tr.booking.next} <ChevronRight size={16} />
                   </Button>
                 </div>
               )}
@@ -538,12 +542,12 @@ export default function Booking() {
               ═══════════════════════════════════════════════════════════ */}
               {step === 4 && (
                 <div>
-                  <BackButton onClick={back} />
-                  <h2 className="text-lg font-bold text-[#111827] mb-1">Choose a Slot</h2>
+                  <BackButton onClick={back} label={tr.booking.back} />
+                  <h2 className="text-lg font-bold text-[#111827] mb-1">{tr.booking.selectSlotTitle}</h2>
 
                   <div className="flex items-center gap-1.5 text-xs text-[#6B7280] mb-5">
                     <MapPin size={11} className="text-primary shrink-0" />
-                    <span className="line-clamp-1">{temple?.name}</span>
+                    <span className="line-clamp-1">{lang === 'ta' ? (temple?.nameTa || temple?.name) : temple?.name}</span>
                     <span className="text-[#ECECEC]">·</span>
                     <span className="shrink-0">{date ? friendlyDate(date) : ''}</span>
                   </div>
@@ -600,7 +604,7 @@ export default function Booking() {
 
                   {slotId && (
                     <Button variant="primary" size="lg" className="w-full mt-6" onClick={() => advance()}>
-                      Continue <ChevronRight size={16} />
+                      {tr.booking.next} <ChevronRight size={16} />
                     </Button>
                   )}
                 </div>
@@ -611,8 +615,8 @@ export default function Booking() {
               ═══════════════════════════════════════════════════════════ */}
               {step === 5 && (
                 <div>
-                  <BackButton onClick={back} />
-                  <h2 className="text-lg font-bold text-[#111827] mb-8">Number of Persons</h2>
+                  <BackButton onClick={back} label={tr.booking.back} />
+                  <h2 className="text-lg font-bold text-[#111827] mb-8">{tr.booking.personsTitle}</h2>
 
                   <div className="flex items-center justify-center gap-8 mb-4">
                     <motion.button
@@ -674,7 +678,7 @@ export default function Booking() {
                   </div>
 
                   <Button variant="primary" size="lg" className="w-full" onClick={() => advance()}>
-                    Continue <ChevronRight size={16} />
+                    {tr.booking.next} <ChevronRight size={16} />
                   </Button>
                 </div>
               )}
@@ -684,8 +688,8 @@ export default function Booking() {
               ═══════════════════════════════════════════════════════════ */}
               {step === 6 && (
                 <div>
-                  <BackButton onClick={back} />
-                  <h2 className="text-lg font-bold text-[#111827] mb-5">Review Booking</h2>
+                  <BackButton onClick={back} label={tr.booking.back} />
+                  <h2 className="text-lg font-bold text-[#111827] mb-5">{tr.booking.reviewTitle}</h2>
 
                   <div className="bg-surface rounded-xl border border-[#ECECEC] shadow-soft overflow-hidden mb-5">
                     {/* Temple cover */}
@@ -706,8 +710,8 @@ export default function Booking() {
 
                     <div className="divide-y divide-[#ECECEC]">
                       {[
-                        { label: 'Temple',  value: temple?.name,             editStep: 1 },
-                        { label: 'Service', value: pooja?.name,              editStep: 2 },
+                        { label: 'Temple',  value: lang === 'ta' ? (temple?.nameTa || temple?.name) : temple?.name, editStep: 1 },
+                        { label: 'Service', value: lang === 'ta' ? (pooja?.nameTa  || pooja?.name)  : pooja?.name,  editStep: 2 },
                         { label: 'Date',    value: date ? friendlyDate(date) : '', editStep: 3 },
                         { label: 'Slot',    value: slot?.time,               editStep: 4 },
                         { label: 'Persons', value: `${persons} ${persons === 1 ? 'person' : 'persons'}`, editStep: 5 },
@@ -726,7 +730,7 @@ export default function Booking() {
 
                       <div className="flex items-center justify-between px-4 py-4">
                         <div>
-                          <p className="text-xs text-[#6B7280]">Total Amount</p>
+                          <p className="text-xs text-[#6B7280]">{tr.booking.totalAmount}</p>
                           <p className="text-[11px] text-[#6B7280] mt-0.5">
                             ₹{unitPrice} × {persons} {persons === 1 ? 'person' : 'persons'}
                           </p>
@@ -739,7 +743,7 @@ export default function Booking() {
                   </div>
 
                   <Button variant="primary" size="lg" className="w-full" onClick={() => advance()}>
-                    Proceed to Pay
+                    {tr.booking.confirm}
                   </Button>
                 </div>
               )}
@@ -749,7 +753,7 @@ export default function Booking() {
               ═══════════════════════════════════════════════════════════ */}
               {step === 7 && (
                 <div>
-                  <BackButton onClick={back} />
+                  <BackButton onClick={back} label={tr.booking.back} />
 
                   <div className="mb-6">
                     <h2 className="text-lg font-bold text-[#111827]">Payment</h2>
@@ -926,7 +930,7 @@ export default function Booking() {
                     <div className="w-16 h-16 rounded-full bg-green-50 border-2 border-green-200 flex items-center justify-center mx-auto mb-3">
                       <Check size={26} className="text-green-600" />
                     </div>
-                    <h2 className="text-xl font-bold text-[#111827]">Booking Confirmed!</h2>
+                    <h2 className="text-xl font-bold text-[#111827]">{tr.booking.confirmTitle}</h2>
                     <p className="text-sm text-[#6B7280] mt-1">Your pooja slot has been reserved</p>
                   </motion.div>
 
@@ -958,7 +962,7 @@ export default function Booking() {
                       icon={<Download size={15} />}
                       onClick={() => alert('Ticket saved!')}
                     >
-                      Save
+                      {tr.booking.downloadQR}
                     </Button>
                     <Button
                       variant="outline"
@@ -971,7 +975,7 @@ export default function Booking() {
                   </div>
 
                   <Link to="/my-temple" className="text-sm text-primary hover:underline font-medium">
-                    View in My Temple
+                    {tr.booking.viewBookings}
                   </Link>
 
                   <button
