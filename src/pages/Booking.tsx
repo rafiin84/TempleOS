@@ -475,8 +475,12 @@ export default function Booking() {
                                   </span>
                                 )}
                               </div>
-                              <p className="text-[11px] text-[#6B7280] mt-0.5">{p.nameTa}</p>
-                              <p className="text-xs text-[#6B7280] mt-1 line-clamp-2">{p.description}</p>
+                              {lang === 'en' && p.nameTa && (
+                                <p className="text-[11px] text-[#6B7280] mt-0.5">{p.nameTa}</p>
+                              )}
+                              <p className="text-xs text-[#6B7280] mt-1 line-clamp-2">
+                                {lang === 'ta' ? (p.descriptionTa || p.description) : p.description}
+                              </p>
 
                               <div className="flex items-center gap-4 mt-2.5">
                                 <span className="inline-flex items-center gap-1 text-xs text-[#6B7280]">

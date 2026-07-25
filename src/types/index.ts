@@ -70,6 +70,7 @@ export interface Pooja {
   duration: string
   price: number
   description: string
+  descriptionTa?: string
   isBookable: boolean
 }
 
