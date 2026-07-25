@@ -131,7 +131,7 @@ export function FeedCard({ item }: FeedCardProps) {
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.22, ease: 'easeOut' }}
-      className="w-full max-w-feed mx-auto bg-surface rounded-xl shadow-card border border-[#ECECEC] overflow-hidden"
+      className="w-full bg-surface rounded-xl shadow-card border border-[#ECECEC] overflow-hidden"
     >
       {/* Coloured accent bar */}
       <div className={cn('h-0.5 w-full', config.accent)} />
