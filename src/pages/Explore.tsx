@@ -792,7 +792,7 @@ export default function Explore() {
                 <option value="">{tr.explore.filterDistrict}</option>
                 {districtOptions.map((d) => (
                   <option key={d.id} value={d.name}>
-                    {d.name}
+                    {lang === 'ta' ? (d.nameTa || d.name) : d.name}
                   </option>
                 ))}
               </select>
