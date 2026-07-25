@@ -116,7 +116,7 @@ function FeedImage({ src, alt }: { src: string; alt: string }) {
   const [err, setErr] = useState(false);
   if (err) return null;
   return (
-    <div className="mt-3 rounded-xl overflow-hidden aspect-video bg-[#ECECEC]">
+    <div className="mt-3 rounded-xl overflow-hidden aspect-[16/7] bg-[#ECECEC]">
       <img
         src={src}
         alt={alt}
