@@ -17,13 +17,15 @@ interface TabsProps {
   value: string;
   onChange: (value: string) => void;
   className?: string;
+  wrap?: boolean;
 }
 
-export function Tabs({ tabs, value, onChange, className }: TabsProps) {
+export function Tabs({ tabs, value, onChange, className, wrap }: TabsProps) {
   return (
     <div
       className={cn(
-        'flex items-end gap-0 border-b border-[#ECECEC] overflow-x-auto',
+        'flex items-end gap-0 border-b border-[#ECECEC]',
+        wrap ? 'flex-wrap' : 'overflow-x-auto',
         className,
       )}
     >
@@ -34,9 +36,11 @@ export function Tabs({ tabs, value, onChange, className }: TabsProps) {
             key={tab.value}
             onClick={() => onChange(tab.value)}
             className={cn(
-              'relative px-4 py-2.5 text-sm font-medium whitespace-nowrap shrink-0',
-              'transition-colors duration-150 outline-none',
+              'relative py-2 transition-colors duration-150 outline-none',
               'focus-visible:ring-2 focus-visible:ring-primary/30 rounded-t-sm',
+              wrap
+                ? 'px-2.5 text-xs font-medium flex-1 min-w-[18%] text-center'
+                : 'px-4 text-sm font-medium whitespace-nowrap shrink-0',
               isActive ? 'text-primary' : 'text-[#6B7280] hover:text-[#111827]',
             )}
           >

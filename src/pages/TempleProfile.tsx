@@ -1463,7 +1463,7 @@ export default function TempleProfile() {
       {/* ─────────────── STICKY TABS ──────────────────────────────────────── */}
       <div className="sticky top-0 z-20 bg-white shadow-soft">
         <div className="max-w-4xl mx-auto">
-          <Tabs tabs={TABS} value={activeTab} onChange={setActiveTab} />
+          <Tabs tabs={TABS} value={activeTab} onChange={setActiveTab} wrap />
         </div>
       </div>
 
