@@ -13,6 +13,7 @@ export interface Temple {
   description: string
   descriptionTa: string
   history: string
+  historyTa?: string
   coverImage: string
   images: string[]
   rating: number
@@ -56,6 +57,7 @@ export type CrowdLevel = 'Low' | 'Moderate' | 'High' | 'Very High'
 
 export interface Timing {
   day: string
+  dayTa?: string
   morning: string
   evening: string
   closed?: boolean
@@ -78,9 +80,13 @@ export interface Heritage {
   timeline: TimelineEvent[]
   dynasties: string[]
   architecture: string
+  architectureTa?: string
   inscriptions: string[]
+  inscriptionsTa?: string[]
   murals: string
+  muralsTa?: string
   sculptures: string
+  sculpturesTa?: string
   hasAudioGuide: boolean
   has360Tour: boolean
   hasDroneGallery: boolean
@@ -89,6 +95,7 @@ export interface Heritage {
 export interface TimelineEvent {
   year: string
   event: string
+  eventTa?: string
 }
 
 export interface FeedItem {

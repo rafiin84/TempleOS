@@ -17,6 +17,7 @@ export const MOCK_TEMPLES: Temple[] = [
     description: 'A UNESCO World Heritage Site and masterpiece of Dravidian architecture built by Raja Raja Chola I in the 11th century.',
     descriptionTa: 'ராஜராஜ சோழன் 11ஆம் நூற்றாண்டில் கட்டிய யுனெஸ்கோ உலக பாரம்பரிய தளம்.',
     history: 'Built by King Raja Raja Chola I between 1003 and 1010 CE. The vimana (temple tower) rises to 66 metres and is one of the tallest in India. The temple is dedicated to Shiva and is known for its grand scale and fine art.',
+    historyTa: 'கி.பி. 1003 முதல் 1010 வரை மன்னன் ராஜராஜ சோழன் I கட்டினார். விமானம் (கோயில் கோபுரம்) 66 மீட்டர் உயரம் உயர்கிறது மற்றும் இந்தியாவிலேயே மிக உயரமானவற்றில் ஒன்று. கோயில் சிவனுக்கு அர்ப்பணிக்கப்பட்டுள்ளது மற்றும் அதன் பெரிய அளவு மற்றும் நுண்ணிய கலைக்கு பிரபலமாக உள்ளது.',
     coverImage: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Brihadisvara_Temple_during_Maha_Shivaratri-WUS03611_%28edit%29.jpg/1280px-Brihadisvara_Temple_during_Maha_Shivaratri-WUS03611_%28edit%29.jpg',
     images: [
       'https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Brihadisvara_Temple_during_Maha_Shivaratri-WUS03611_%28edit%29.jpg/1280px-Brihadisvara_Temple_during_Maha_Shivaratri-WUS03611_%28edit%29.jpg',
@@ -30,8 +31,8 @@ export const MOCK_TEMPLES: Temple[] = [
     visitCount: 1250000,
     followCount: 89420,
     timings: [
-      { day: 'Monday - Friday', morning: '6:00 AM – 12:30 PM', evening: '4:00 PM – 8:30 PM' },
-      { day: 'Saturday & Sunday', morning: '6:00 AM – 1:00 PM', evening: '3:30 PM – 9:00 PM' },
+      { day: 'Monday - Friday', dayTa: 'திங்கள் - வெள்ளி', morning: '6:00 AM – 12:30 PM', evening: '4:00 PM – 8:30 PM' },
+      { day: 'Saturday & Sunday', dayTa: 'சனி & ஞாயிறு', morning: '6:00 AM – 1:00 PM', evening: '3:30 PM – 9:00 PM' },
     ],
     poojas: [
       { id: 'p1', name: 'Thiruvanandal', nameTa: 'திருவானந்தல்', time: '6:00 AM', deity: 'Shiva', duration: '45 min', price: 50, description: 'Morning ritual with flowers and lamps', descriptionTa: 'பூக்கள் மற்றும் விளக்குகளுடன் காலை வழிபாடு', isBookable: true },
@@ -43,16 +44,20 @@ export const MOCK_TEMPLES: Temple[] = [
     categories: ['Shiva', 'Heritage', 'Padal Petra Sthalam'],
     heritage: {
       timeline: [
-        { year: '1003 CE', event: 'Construction begins under Raja Raja Chola I' },
-        { year: '1010 CE', event: 'Temple consecration ceremony' },
-        { year: '1987', event: 'UNESCO World Heritage Site designation' },
-        { year: '2010', event: 'Millennium celebration of the temple' },
+        { year: '1003 CE', event: 'Construction begins under Raja Raja Chola I', eventTa: 'ராஜராஜ சோழன் I கீழ் கட்டுமானம் தொடங்கியது' },
+        { year: '1010 CE', event: 'Temple consecration ceremony', eventTa: 'கோயில் கும்பாபிஷேக விழா' },
+        { year: '1987', event: 'UNESCO World Heritage Site designation', eventTa: 'யுனெஸ்கோ உலக பாரம்பரிய தளம் பட்டியலில் சேர்க்கப்பட்டது' },
+        { year: '2010', event: 'Millennium celebration of the temple', eventTa: 'கோயிலின் ஆயிரமாண்டு கொண்டாட்டம்' },
       ],
       dynasties: ['Chola', 'Vijayanagara', 'Maratha', 'Thanjavur Nayak'],
       architecture: 'Dravidian style with a 66-metre vimana, the Kumbam (capstone) weighing approximately 80 tonnes. Features intricate stone carvings of Nataraja, Dakshinamurthy and Bhikshatana.',
+      architectureTa: '66 மீட்டர் உயர விமானத்துடன் திராவிட பாணி, கும்பம் (நடுக்கல்) தோராயமாக 80 டன் எடை கொண்டது. நடராஜர், தக்ஷிணாமூர்த்தி மற்றும் பிட்சாடனரின் நுண்ணிய கல் சிற்பங்களை கொண்டுள்ளது.',
       inscriptions: ['Tamil inscriptions by Raja Raja Chola I', 'Sanskrit grants on temple walls', 'Revenue records carved in stone'],
+      inscriptionsTa: ['ராஜராஜ சோழன் I யால் தமிழ் கல்வெட்டுகள்', 'கோயில் சுவர்களில் சமஸ்கிருத மானியங்கள்', 'கல்லில் வெட்டப்பட்ட வருவாய் பதிவுகள்'],
       murals: 'Chola-period frescoes depicting scenes from mythology, now partially visible after restoration work.',
+      muralsTa: 'புராண காட்சிகளை சித்தரிக்கும் சோழர் கால ஓவியங்கள், புனரமைப்பு பணிக்கு பிறகு இப்போது பகுதியளவு தெரியும்.',
       sculptures: 'Over 250 unique stone sculptures including a massive Nandi (2.5m x 3m) carved from a single granite block.',
+      sculpturesTa: 'ஒற்றை கிரானைட் தொகுதியிலிருந்து வெட்டப்பட்ட பெரிய நந்தி (2.5மீ x 3மீ) உட்பட 250க்கும் மேற்பட்ட தனித்துவமான கல் சிற்பங்கள்.',
       hasAudioGuide: true,
       has360Tour: true,
       hasDroneGallery: true,
@@ -83,6 +88,7 @@ export const MOCK_TEMPLES: Temple[] = [
     description: 'An ancient temple located on the southern bank of the Vaigai River. One of the most important pilgrimage sites in India.',
     descriptionTa: 'வைகை நதியின் தென்கரையில் அமைந்த பழமையான கோயில். இந்தியாவின் முக்கியமான தலங்களில் ஒன்று.',
     history: 'The current structure was mostly rebuilt by Viswanatha Nayak in the 16th century. The temple complex covers 14 acres with 14 gateway towers (gopurams), the tallest being 51.9 metres.',
+    historyTa: 'தற்போதைய கட்டமைப்பு பெரும்பாலும் 16ஆம் நூற்றாண்டில் விஸ்வநாத நாயக்கரால் கட்டப்பட்டது. கோயில் வளாகம் 14 ஏக்கர் பரப்பில் 14 நுழைவாயில் கோபுரங்களுடன் (கோபுரங்கள்) உள்ளது, உயரமானது 51.9 மீட்டர்.',
     coverImage: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/An_aerial_view_of_Madurai_city_from_atop_of_Meenakshi_Amman_temple.jpg/1280px-An_aerial_view_of_Madurai_city_from_atop_of_Meenakshi_Amman_temple.jpg',
     images: [
       'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/An_aerial_view_of_Madurai_city_from_atop_of_Meenakshi_Amman_temple.jpg/1280px-An_aerial_view_of_Madurai_city_from_atop_of_Meenakshi_Amman_temple.jpg',
@@ -94,7 +100,7 @@ export const MOCK_TEMPLES: Temple[] = [
     visitCount: 2800000,
     followCount: 156000,
     timings: [
-      { day: 'All Days', morning: '5:00 AM – 12:30 PM', evening: '4:00 PM – 10:00 PM' },
+      { day: 'All Days', dayTa: 'அனைத்து நாட்களும்', morning: '5:00 AM – 12:30 PM', evening: '4:00 PM – 10:00 PM' },
     ],
     poojas: [
       { id: 'p1', name: 'Thiruvanandal', nameTa: 'திருவானந்தல்', time: '5:00 AM', deity: 'Meenakshi', duration: '45 min', price: 100, description: 'Dawn ritual', descriptionTa: 'விடியல் வழிபாடு', isBookable: true },
@@ -104,15 +110,19 @@ export const MOCK_TEMPLES: Temple[] = [
     categories: ['Amman', 'Heritage', 'Padal Petra Sthalam'],
     heritage: {
       timeline: [
-        { year: '6th century BCE', event: 'Original temple mentioned in Sangam literature' },
-        { year: '16th century', event: 'Major reconstruction by Nayak rulers' },
-        { year: '2000', event: 'Renovation of the Golden Lotus tank' },
+        { year: '6th century BCE', event: 'Original temple mentioned in Sangam literature', eventTa: 'சங்க இலக்கியத்தில் குறிப்பிடப்பட்ட ஆதி கோயில்' },
+        { year: '16th century', event: 'Major reconstruction by Nayak rulers', eventTa: 'நாயக்க மன்னர்களால் பெரிய புனரமைப்பு' },
+        { year: '2000', event: 'Renovation of the Golden Lotus tank', eventTa: 'தங்க தாமரை குளம் புனரமைப்பு' },
       ],
       dynasties: ['Pandya', 'Madurai Nayak', 'Vijayanagara'],
       architecture: 'Dravidian style with 14 gopurams covered in thousands of coloured stucco figures of deities, demons and mythical animals.',
+      architectureTa: 'தெய்வங்கள், அரக்கர்கள் மற்றும் புராண விலங்குகளின் ஆயிரக்கணக்கான வண்ண சாந்து சிலைகளால் மூடப்பட்ட 14 கோபுரங்களுடன் திராவிட பாணி.',
       inscriptions: ['Pandya inscriptions', 'Nayak-period grants', 'Tamil devotional verses on pillars'],
+      inscriptionsTa: ['பாண்டிய கல்வெட்டுகள்', 'நாயக்கர் கால மானியங்கள்', 'தூண்களில் தமிழ் பக்தி பாடல்கள்'],
       murals: 'Vijayanagara-period murals in the mandapams depicting scenes from the Puranas.',
+      muralsTa: 'புராணங்களிலிருந்து காட்சிகளை சித்தரிக்கும் மண்டபங்களில் விஜயநகர் கால ஓவியங்கள்.',
       sculptures: 'Over 33,000 sculptures in the temple complex including the famous 1000-pillared hall.',
+      sculpturesTa: 'புகழ்பெற்ற 1000 தூண்களுடன் கோயில் வளாகத்தில் 33,000க்கும் மேற்பட்ட சிற்பங்கள்.',
       hasAudioGuide: true,
       has360Tour: true,
       hasDroneGallery: false,
@@ -143,6 +153,7 @@ export const MOCK_TEMPLES: Temple[] = [
     description: 'One of the twelve Jyotirlinga temples and part of the Char Dham pilgrimage. Famous for its 1200-metre long outer corridor.',
     descriptionTa: 'பன்னிரண்டு ஜோதிர்லிங்க கோயில்களில் ஒன்று. 1200 மீட்டர் நீளமான வெளி கோபுர வழிகாட்டியால் புகழ்பெற்றது.',
     history: 'Built over several centuries, the temple features the world\'s longest temple corridor — 1212 metres — lined with 1212 granite pillars. It is one of the four sacred abodes (Char Dham) in Hindu pilgrimage.',
+    historyTa: 'பல நூற்றாண்டுகளில் கட்டப்பட்ட இந்த கோயில் உலகின் மிக நீண்ட கோயில் தாழ்வாரம் — 1212 மீட்டர் — 1212 கிரானைட் தூண்களுடன் உள்ளது. இது இந்து யாத்திரையில் நான்கு புனித இருப்பிடங்களில் ஒன்று (சார் தாம்).',
     coverImage: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Ramanathaswamy_temple7.JPG/1280px-Ramanathaswamy_temple7.JPG',
     images: [
       'https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Ramanathaswamy_temple7.JPG/1280px-Ramanathaswamy_temple7.JPG',
@@ -154,7 +165,7 @@ export const MOCK_TEMPLES: Temple[] = [
     visitCount: 3200000,
     followCount: 204000,
     timings: [
-      { day: 'All Days', morning: '5:00 AM – 1:00 PM', evening: '3:00 PM – 9:00 PM' },
+      { day: 'All Days', dayTa: 'அனைத்து நாட்களும்', morning: '5:00 AM – 1:00 PM', evening: '3:00 PM – 9:00 PM' },
     ],
     poojas: [
       { id: 'p1', name: 'Thiruvanandal', nameTa: 'திருவானந்தல்', time: '5:00 AM', deity: 'Ramanathaswamy', duration: '45 min', price: 50, description: 'Morning prayer', descriptionTa: 'காலை வழிபாடு', isBookable: true },
@@ -164,15 +175,19 @@ export const MOCK_TEMPLES: Temple[] = [
     categories: ['Shiva', 'Heritage', 'Divya Desam'],
     heritage: {
       timeline: [
-        { year: '12th century', event: 'Original shrine established' },
-        { year: '17th century', event: 'Long corridor constructed by Setupathi kings' },
-        { year: '1897', event: 'Gopuram construction completed' },
+        { year: '12th century', event: 'Original shrine established', eventTa: 'ஆதி கோயில் நிறுவப்பட்டது' },
+        { year: '17th century', event: 'Long corridor constructed by Setupathi kings', eventTa: 'சேதுபதி மன்னர்களால் நீண்ட தாழ்வாரம் கட்டப்பட்டது' },
+        { year: '1897', event: 'Gopuram construction completed', eventTa: 'கோபுர கட்டுமானம் நிறைவடைந்தது' },
       ],
       dynasties: ['Pandya', 'Setupathi', 'Vijayanagara'],
       architecture: 'Dravidian with the world\'s longest temple corridor. The 1212 granite pillars are carved with intricate sculptures.',
+      architectureTa: 'உலகின் மிக நீண்ட கோயில் தாழ்வாரத்துடன் திராவிட. 1212 கிரானைட் தூண்கள் நுண்ணிய சிற்பங்களுடன் வடிக்கப்பட்டுள்ளன.',
       inscriptions: ['Sanskrit and Tamil inscriptions from multiple dynasties'],
+      inscriptionsTa: ['பல வம்சங்களிலிருந்து சமஸ்கிருத மற்றும் தமிழ் கல்வெட்டுகள்'],
       murals: 'Colonial-period paintings in the mandapams.',
+      muralsTa: 'மண்டபங்களில் காலனி கால ஓவியங்கள்.',
       sculptures: '1212 sculptured pillars lining the outer corridor.',
+      sculpturesTa: 'வெளி தாழ்வாரத்தை வரிசையிடும் 1212 சிற்பமிழந்த தூண்கள்.',
       hasAudioGuide: true,
       has360Tour: false,
       hasDroneGallery: false,
@@ -203,6 +218,7 @@ export const MOCK_TEMPLES: Temple[] = [
     description: 'A 7th-century Dravidian temple in the heart of Mylapore, Chennai. One of the finest examples of Dravidian architecture.',
     descriptionTa: 'சென்னையின் மயிலாப்பூரில் 7ஆம் நூற்றாண்டு திராவிட கோயில்.',
     history: 'Originally built in the 7th century, the present structure dates to the 16th century after the original was demolished during Portuguese occupation. The gopuram was added in the 19th century.',
+    historyTa: 'முதலில் 7ஆம் நூற்றாண்டில் கட்டப்பட்டது, போர்த்துகீசர் ஆக்கிரமிப்பின் போது அசல் கோயில் இடிக்கப்பட்ட பிறகு தற்போதைய கட்டமைப்பு 16ஆம் நூற்றாண்டிலிருந்து உள்ளது. கோபுரம் 19ஆம் நூற்றாண்டில் சேர்க்கப்பட்டது.',
     coverImage: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Kapaleeswarar1.jpg/1280px-Kapaleeswarar1.jpg',
     images: [
       'https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Kapaleeswarar1.jpg/1280px-Kapaleeswarar1.jpg',
@@ -214,7 +230,7 @@ export const MOCK_TEMPLES: Temple[] = [
     visitCount: 890000,
     followCount: 67000,
     timings: [
-      { day: 'All Days', morning: '5:00 AM – 12:00 PM', evening: '4:00 PM – 9:30 PM' },
+      { day: 'All Days', dayTa: 'அனைத்து நாட்களும்', morning: '5:00 AM – 12:00 PM', evening: '4:00 PM – 9:30 PM' },
     ],
     poojas: [
       { id: 'p1', name: 'Thiruvanandal', nameTa: 'திருவானந்தல்', time: '5:00 AM', deity: 'Kapaleeshwarar', duration: '30 min', price: 50, description: 'Morning prayer', descriptionTa: 'காலை வழிபாடு', isBookable: true },
@@ -224,15 +240,19 @@ export const MOCK_TEMPLES: Temple[] = [
     categories: ['Shiva', 'Heritage', 'Padal Petra Sthalam'],
     heritage: {
       timeline: [
-        { year: '7th century', event: 'Original temple built' },
-        { year: '16th century', event: 'Rebuilt after Portuguese destruction' },
-        { year: '1906', event: 'Gopuram renovation' },
+        { year: '7th century', event: 'Original temple built', eventTa: 'ஆதி கோயில் கட்டப்பட்டது' },
+        { year: '16th century', event: 'Rebuilt after Portuguese destruction', eventTa: 'போர்த்துகீசர் அழிவிற்கு பிறகு கட்டப்பட்டது' },
+        { year: '1906', event: 'Gopuram renovation', eventTa: 'கோபுர புனரமைப்பு' },
       ],
       dynasties: ['Pallava', 'Vijayanagara'],
       architecture: 'Dravidian with a 37-metre tall gopuram decorated with painted stucco sculptures.',
+      architectureTa: '37 மீட்டர் உயர கோபுரம் வண்ண சாந்து சிற்பங்களால் அலங்கரிக்கப்பட்ட திராவிட பாணி.',
       inscriptions: ['Pallava-era stone inscriptions'],
+      inscriptionsTa: ['பல்லவர் கால கல் கல்வெட்டுகள்'],
       murals: '60 paintings depicting the story of Thirugnanasambandar and the Punnai tree miracle.',
+      muralsTa: 'திருஞானசம்பந்தர் மற்றும் புன்னை மரம் அதிசயத்தின் கதையை சித்தரிக்கும் 60 ஓவியங்கள்.',
       sculptures: 'Intricate stucco figures on all four gopurams.',
+      sculpturesTa: 'நான்கு கோபுரங்களிலும் நுண்ணிய சாந்து சிலைகள்.',
       hasAudioGuide: false,
       has360Tour: false,
       hasDroneGallery: false,
@@ -263,6 +283,7 @@ export const MOCK_TEMPLES: Temple[] = [
     description: 'One of the six abodes (Arupadai Veedu) of Lord Murugan, situated atop the Sivagiri hill in Palani.',
     descriptionTa: 'பழனியில் சிவகிரி மலையில் அமைந்த முருகனின் ஆறு வீடுகளில் (ஆறுபடை வீடு) ஒன்று.',
     history: 'One of the most important Murugan temples in Tamil Nadu, the temple is located on Sivagiri hill. Devotees can reach it by foot via 693 steps, rope car, or winch car.',
+    historyTa: 'தமிழ்நாட்டில் மிக முக்கியமான முருகன் கோயில்களில் ஒன்று, கோயில் சிவகிரி மலையில் அமைந்துள்ளது. பக்தர்கள் 693 படிகள், கயிறு கார் அல்லது வின்ச் கார் மூலம் சென்றடையலாம்.',
     coverImage: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Palanihills.JPG/1280px-Palanihills.JPG',
     images: [
       'https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Palanihills.JPG/1280px-Palanihills.JPG',
@@ -274,7 +295,7 @@ export const MOCK_TEMPLES: Temple[] = [
     visitCount: 2100000,
     followCount: 178000,
     timings: [
-      { day: 'All Days', morning: '6:00 AM – 1:00 PM', evening: '3:00 PM – 8:30 PM' },
+      { day: 'All Days', dayTa: 'அனைத்து நாட்களும்', morning: '6:00 AM – 1:00 PM', evening: '3:00 PM – 8:30 PM' },
     ],
     poojas: [
       { id: 'p1', name: 'Kavadi Pooja', nameTa: 'காவடி பூஜை', time: '7:00 AM', deity: 'Murugan', duration: '30 min', price: 200, description: 'Special kavadi offering', descriptionTa: 'சிறப்பு காவடி நேர்த்திக்கடன்', isBookable: true },
@@ -284,15 +305,19 @@ export const MOCK_TEMPLES: Temple[] = [
     categories: ['Murugan', 'Arupadai Veedu', 'Hill Temple'],
     heritage: {
       timeline: [
-        { year: 'Ancient', event: 'Mentioned in Sangam literature' },
-        { year: '19th century', event: 'Steps (693) constructed' },
-        { year: '1965', event: 'Rope car installed' },
+        { year: 'Ancient', event: 'Mentioned in Sangam literature', eventTa: 'சங்க இலக்கியத்தில் குறிப்பிடப்பட்டுள்ளது' },
+        { year: '19th century', event: 'Steps (693) constructed', eventTa: 'படிகள் (693) கட்டப்பட்டன' },
+        { year: '1965', event: 'Rope car installed', eventTa: 'கயிறு கார் நிறுவப்பட்டது' },
       ],
       dynasties: ['Pandya', 'Chera'],
       architecture: 'Simple Dravidian style atop a natural granite hill. The main shrine is carved into the rock.',
+      architectureTa: 'இயற்கை கிரானைட் மலை மீது எளிய திராவிட பாணி. முக்கிய கோயில் பாறையில் வெட்டப்பட்டுள்ளது.',
       inscriptions: ['Tamil Sangam-period references'],
+      inscriptionsTa: ['தமிழ் சங்க காலக் குறிப்புகள்'],
       murals: '',
+      muralsTa: '',
       sculptures: 'Famous idol of Murugan carved from Nava Pashanam (9 sacred materials).',
+      sculpturesTa: 'நவ பஷணம் (9 புனித பொருட்கள்) இலிருந்து வடிவமைக்கப்பட்ட முருகன் புகழ்பெற்ற சிலை.',
       hasAudioGuide: false,
       has360Tour: false,
       hasDroneGallery: true,

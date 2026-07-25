@@ -52,6 +52,39 @@ function facilityIcon(name: string): string {
   return FACILITY_ICONS[name] ?? '✓'
 }
 
+const DYNASTY_TA: Record<string, string> = {
+  'Chola':          'சோழர்',
+  'Vijayanagara':   'விஜயநகர்',
+  'Maratha':        'மராட்டியர்',
+  'Thanjavur Nayak':'தஞ்சாவூர் நாயக்கர்',
+  'Pandya':         'பாண்டியர்',
+  'Madurai Nayak':  'மதுரை நாயக்கர்',
+  'Setupathi':      'சேதுபதி',
+  'Pallava':        'பல்லவர்',
+  'Chera':          'சேரர்',
+}
+
+const DEITY_TA: Record<string, string> = {
+  'Shiva':            'சிவன்',
+  'Vishnu':           'விஷ்ணு',
+  'Murugan':          'முருகன்',
+  'Amman':            'அம்மன்',
+  'Ganesha':          'கணேசன்',
+  'Vinayakar':        'விநாயகர்',
+  'Meenakshi':        'மீனாட்சி',
+  'Ramanathaswamy':   'இராமநாதஸ்வாமி',
+  'Kapaleeshwarar':   'கபாலீஸ்வரர்',
+  'Navagraha':        'நவகிரகம்',
+}
+
+const DONATION_PURPOSE_TA: Record<string, string> = {
+  'Annadanam':  'அன்னதானம்',
+  'Renovation': 'புனரமைப்பு',
+  'General':    'பொது',
+  'Festival':   'திருவிழா',
+  'Lamp Oil':   'தீப எண்ணெய்',
+}
+
 const FACILITY_TA: Record<string, string> = {
   'Prasad Counter':              'பிரசாத கவுண்டர்',
   'Wheelchair Access':           'சக்கர நாற்காலி அணுகல்',
@@ -91,15 +124,16 @@ function crowdBadgeVariant(level: string): 'success' | 'warning' | 'danger' {
 // ─── Services data ────────────────────────────────────────────────────────────
 
 interface TempleService {
-  id:          string
-  name:        string
-  nameTa:      string
-  description: string
-  price:       number
-  duration:    string
-  icon:        React.ReactNode
-  category:    'Ritual' | 'Charitable' | 'Offering'
-  isBookable:  boolean
+  id:            string
+  name:          string
+  nameTa:        string
+  description:   string
+  descriptionTa: string
+  price:         number
+  duration:      string
+  icon:          React.ReactNode
+  category:      'Ritual' | 'Charitable' | 'Offering'
+  isBookable:    boolean
 }
 
 const TEMPLE_SERVICES: TempleService[] = [
@@ -108,6 +142,7 @@ const TEMPLE_SERVICES: TempleService[] = [
     name: 'Abhishekam',
     nameTa: 'அபிஷேகம்',
     description: 'Sacred bathing ritual of the deity with milk, honey, rose water, sandalwood paste and sacred water. Done by a trained priest.',
+    descriptionTa: 'பால், தேன், ரோஜா நீர், சந்தன கஷாயம் மற்றும் புனித நீரால் தெய்வத்தை திருமஞ்சனம் செய்வது. பயிற்சி பெற்ற அர்ச்சகரால் செய்யப்படுகிறது.',
     price: 500,
     duration: '45 min',
     icon: <Droplets size={20} className="text-primary" />,
@@ -119,6 +154,7 @@ const TEMPLE_SERVICES: TempleService[] = [
     name: 'Annadanam',
     nameTa: 'அன்னதானம்',
     description: 'Sponsor a free meal for pilgrims and devotees visiting the temple. A noble act of charity that feeds hundreds every day.',
+    descriptionTa: 'கோயிலுக்கு வரும் யாத்ரீகர்கள் மற்றும் பக்தர்களுக்கு இலவச சாப்பாடு வழங்குவதற்கு ஆதரவு செய்யுங்கள். ஒவ்வொரு நாளும் நூற்றுக்கணக்கானவர்களுக்கு உணவளிக்கும் புண்ணிய செயல்.',
     price: 1001,
     duration: '1 day',
     icon: <Utensils size={20} className="text-primary" />,
@@ -130,6 +166,7 @@ const TEMPLE_SERVICES: TempleService[] = [
     name: 'Archanai',
     nameTa: 'அர்ச்சனை',
     description: 'Personalised prayer offering where the priest chants your name, birth star, and gotra while offering flowers to the deity.',
+    descriptionTa: 'பூக்களை தெய்வத்திற்கு அர்ப்பணிக்கும்போது அர்ச்சகர் உங்கள் பெயர், ஜன்ம நட்சத்திரம் மற்றும் கோத்திரம் ஓதும் தனிப்பட்ட வழிபாடு.',
     price: 51,
     duration: '15 min',
     icon: <Flame size={20} className="text-primary" />,
@@ -141,6 +178,7 @@ const TEMPLE_SERVICES: TempleService[] = [
     name: 'Homam / Yagnam',
     nameTa: 'ஹோமம் / யாகம்',
     description: 'Sacred fire ritual performed to invoke divine blessings for prosperity, health, and protection. Conducted in the homa kundam.',
+    descriptionTa: 'செழிப்பு, ஆரோக்கியம் மற்றும் பாதுகாப்பிற்காக தெய்வீக ஆசீர்வாதம் வேண்டி நடத்தப்படும் புனித அக்னி வழிபாடு. ஹோம குண்டத்தில் நடத்தப்படுகிறது.',
     price: 2100,
     duration: '2 hrs',
     icon: <Wind size={20} className="text-primary" />,
@@ -152,6 +190,7 @@ const TEMPLE_SERVICES: TempleService[] = [
     name: 'Deepa Aradhana',
     nameTa: 'தீப ஆராதனை',
     description: 'Waving of lit oil lamps before the deity accompanied by bell ringing and recitation of hymns. The most auspicious evening ritual.',
+    descriptionTa: 'தெய்வத்திற்கு முன் மணி ஒலிக்கும் மற்றும் கீர்த்தனைகள் ஓதும்போது ஒளிரும் விளக்குகளை அசைப்பது. மிக மங்களகரமான மாலை வழிபாடு.',
     price: 150,
     duration: '20 min',
     icon: <Sparkles size={20} className="text-primary" />,
@@ -163,6 +202,7 @@ const TEMPLE_SERVICES: TempleService[] = [
     name: 'Vastra Alankaram',
     nameTa: 'வஸ்த்ர அலங்காரம்',
     description: 'Donation of garments, silk sarees, or dhotis to adorn the deity. The cloth is blessed and can be taken back as prasad.',
+    descriptionTa: 'தெய்வத்தை அலங்கரிக்க ஆடைகள், பட்டு சேலைகள் அல்லது வேட்டிகளை தானம் செய்வது. ஆடை ஆசீர்வதிக்கப்பட்டு பிரசாதமாக திரும்பப் பெறலாம்.',
     price: 750,
     duration: '-',
     icon: <ShoppingBag size={20} className="text-primary" />,
@@ -266,7 +306,7 @@ function HistoryTab({ temple }: { temple: Temple }) {
     <div className="p-4 space-y-6">
       <section>
         <h2 className="text-sm font-semibold text-[#111827] mb-2">{tr.profile.tabHistory}</h2>
-        <p className="text-sm text-[#6B7280] leading-relaxed">{temple.history}</p>
+        <p className="text-sm text-[#6B7280] leading-relaxed">{lang === 'ta' ? (temple.historyTa || temple.history) : temple.history}</p>
       </section>
 
       {temple.heritage.dynasties.length > 0 && (
@@ -274,7 +314,7 @@ function HistoryTab({ temple }: { temple: Temple }) {
           <h2 className="text-sm font-semibold text-[#111827] mb-2">{tr.profile.dynasties}</h2>
           <div className="flex flex-wrap gap-2">
             {temple.heritage.dynasties.map((d) => (
-              <Badge key={d} variant="primary">{d}</Badge>
+              <Badge key={d} variant="primary">{lang === 'ta' ? (DYNASTY_TA[d] || d) : d}</Badge>
             ))}
           </div>
         </section>
@@ -300,7 +340,7 @@ function HistoryTab({ temple }: { temple: Temple }) {
                   <Badge variant="primary" size="sm" className="mb-1.5">
                     {event.year}
                   </Badge>
-                  <p className="text-sm text-[#111827] leading-relaxed">{event.event}</p>
+                  <p className="text-sm text-[#111827] leading-relaxed">{lang === 'ta' ? (event.eventTa || event.event) : event.event}</p>
                 </motion.div>
               ))}
             </div>
@@ -414,7 +454,7 @@ function TimingsTab({ temple }: { temple: Temple }) {
             {temple.timings.map((timing, i) => (
               <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-[#FAFAFC]'}>
                 <td className="px-4 py-3 font-medium text-[#111827] leading-snug">
-                  {timing.day}
+                  {lang === 'ta' ? (timing.dayTa || timing.day) : timing.day}
                 </td>
                 <td className="px-4 py-3 text-[#6B7280]">
                   {timing.closed
@@ -466,8 +506,8 @@ function PoojasTab({ temple }: { temple: Temple }) {
                 <h3 className="text-sm font-semibold text-[#111827]">{lang === 'ta' ? (pooja.nameTa || pooja.name) : pooja.name}</h3>
                 <span className="text-xs text-[#6B7280]">{lang === 'ta' ? pooja.name : pooja.nameTa}</span>
               </div>
-              <p className="text-xs text-primary mt-0.5 font-medium">{tr.profile.deityLabel}: {pooja.deity}</p>
-              <p className="text-sm text-[#6B7280] mt-1.5 leading-snug">{pooja.description}</p>
+              <p className="text-xs text-primary mt-0.5 font-medium">{tr.profile.deityLabel}: {lang === 'ta' ? (DEITY_TA[pooja.deity] || pooja.deity) : pooja.deity}</p>
+              <p className="text-sm text-[#6B7280] mt-1.5 leading-snug">{lang === 'ta' ? (pooja.descriptionTa || pooja.description) : pooja.description}</p>
               <div className="flex items-center gap-3 mt-2 text-xs text-[#6B7280]">
                 <span className="flex items-center gap-1">
                   <Clock size={11} className="text-primary" /> {pooja.time}
@@ -573,7 +613,7 @@ function ServicesTab({ temple }: { temple: Temple }) {
                             <span className="text-xs text-[#6B7280]">{lang === 'ta' ? service.name : service.nameTa}</span>
                           </div>
                           <p className="text-sm text-[#6B7280] mt-1.5 leading-snug">
-                            {service.description}
+                            {lang === 'ta' ? (service.descriptionTa || service.description) : service.description}
                           </p>
                           <div className="flex items-center gap-3 mt-2 text-xs text-[#6B7280]">
                             {service.duration !== '-' && (
@@ -683,9 +723,10 @@ function DonationsTab({ temple }: { temple: Temple }) {
             </div>
             <h3 className="font-semibold text-[#111827] text-lg mb-1">{tr.profile.donationSuccess}</h3>
             <p className="text-sm text-[#6B7280] mb-1">
-              Your contribution of{' '}
-              <strong className="text-[#111827]">{formatCurrency(effectiveAmount)}</strong>{' '}
-              towards <strong className="text-[#111827]">{purpose}</strong> has been received.
+              {lang === 'ta'
+                ? <>உங்கள் <strong className="text-[#111827]">{formatCurrency(effectiveAmount)}</strong> நன்கொடை <strong className="text-[#111827]">{DONATION_PURPOSE_TA[purpose] || purpose}</strong> க்கு வெற்றிகரமாக பெறப்பட்டது.</>
+                : <>Your contribution of{' '}<strong className="text-[#111827]">{formatCurrency(effectiveAmount)}</strong>{' '}towards <strong className="text-[#111827]">{purpose}</strong> has been received.</>
+              }
             </p>
             {receiptNo && (
               <p className="text-xs text-[#6B7280] mb-5">{tr.profile.receipt}: <span className="font-mono text-primary">{receiptNo}</span></p>
@@ -770,7 +811,7 @@ function DonationsTab({ temple }: { temple: Temple }) {
             className="w-full h-10 px-3 rounded-md border border-[#ECECEC] bg-white text-sm text-[#111827] outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors cursor-pointer"
           >
             {DONATION_PURPOSES.map((p) => (
-              <option key={p} value={p}>{p}</option>
+              <option key={p} value={p}>{lang === 'ta' ? (DONATION_PURPOSE_TA[p] || p) : p}</option>
             ))}
           </select>
         </div>
@@ -808,7 +849,7 @@ function DonationsTab({ temple }: { temple: Temple }) {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-[#6B7280]">{tr.profile.purpose}</span>
-                  <span className="font-semibold text-[#111827]">{purpose}</span>
+                  <span className="font-semibold text-[#111827]">{lang === 'ta' ? (DONATION_PURPOSE_TA[purpose] || purpose) : purpose}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-[#6B7280]">{tr.profile.summaryAnonymous}</span>
@@ -829,7 +870,7 @@ function DonationsTab({ temple }: { temple: Temple }) {
         >
           {effectiveAmount > 0
             ? `${tr.profile.donate} ${formatCurrency(effectiveAmount)}`
-            : 'Select an Amount'}
+            : tr.profile.selectAmount}
         </Button>
       </Card>
     </div>
@@ -992,7 +1033,7 @@ function HeritageTab({ temple }: { temple: Temple }) {
       {/* Architecture */}
       <section>
         <h2 className="text-sm font-semibold text-[#111827] mb-2">{tr.profile.architecture}</h2>
-        <p className="text-sm text-[#6B7280] leading-relaxed">{heritage.architecture}</p>
+        <p className="text-sm text-[#6B7280] leading-relaxed">{lang === 'ta' ? (heritage.architectureTa || heritage.architecture) : heritage.architecture}</p>
       </section>
 
       {/* Inscriptions */}
@@ -1003,7 +1044,7 @@ function HeritageTab({ temple }: { temple: Temple }) {
             {heritage.inscriptions.map((ins, i) => (
               <li key={i} className="flex items-start gap-2 text-sm text-[#6B7280]">
                 <ChevronRight size={14} className="text-primary shrink-0 mt-0.5" />
-                {ins}
+                {lang === 'ta' ? (heritage.inscriptionsTa?.[i] || ins) : ins}
               </li>
             ))}
           </ul>
@@ -1014,7 +1055,7 @@ function HeritageTab({ temple }: { temple: Temple }) {
       {heritage.murals && (
         <section>
           <h2 className="text-sm font-semibold text-[#111827] mb-2">{tr.profile.murals}</h2>
-          <p className="text-sm text-[#6B7280] leading-relaxed">{heritage.murals}</p>
+          <p className="text-sm text-[#6B7280] leading-relaxed">{lang === 'ta' ? (heritage.muralsTa || heritage.murals) : heritage.murals}</p>
         </section>
       )}
 
@@ -1022,7 +1063,7 @@ function HeritageTab({ temple }: { temple: Temple }) {
       {heritage.sculptures && (
         <section>
           <h2 className="text-sm font-semibold text-[#111827] mb-2">{tr.profile.sculptures}</h2>
-          <p className="text-sm text-[#6B7280] leading-relaxed">{heritage.sculptures}</p>
+          <p className="text-sm text-[#6B7280] leading-relaxed">{lang === 'ta' ? (heritage.sculpturesTa || heritage.sculptures) : heritage.sculptures}</p>
         </section>
       )}
 
