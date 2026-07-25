@@ -42,6 +42,38 @@ export default function Header() {
   ];
 
   return (
+    <>
+    {/* ── Mobile top bar ── */}
+    <div className="md:hidden sticky top-0 z-40 bg-surface border-b border-[#ECECEC] h-14 flex items-center justify-between px-4">
+      <Link to="/" aria-label="TempleOS home">
+        <TempleOSLogo />
+      </Link>
+      <div className="flex items-center gap-2">
+        {/* Language toggle pill */}
+        <button
+          type="button"
+          onClick={toggle}
+          aria-label={`Switch to ${lang === 'en' ? 'Tamil' : 'English'}`}
+          className="relative inline-flex items-center h-8 rounded-full border border-[#ECECEC] bg-[#F5F3FF] p-1 gap-0"
+        >
+          <span className={cn(
+            'relative z-10 px-2.5 py-0.5 rounded-full text-[11px] font-semibold transition-colors duration-200',
+            lang === 'ta' ? 'text-white' : 'text-[#6B7280]',
+          )}>த</span>
+          <span className={cn(
+            'relative z-10 px-2.5 py-0.5 rounded-full text-[11px] font-semibold transition-colors duration-200',
+            lang === 'en' ? 'text-white' : 'text-[#6B7280]',
+          )}>EN</span>
+          <span
+            className="absolute top-1 bottom-1 w-[calc(50%-4px)] rounded-full bg-primary transition-all duration-200"
+            style={{ left: lang === 'ta' ? '4px' : 'calc(50%)' }}
+          />
+        </button>
+        <Button variant="primary" size="sm">{tr.nav.signIn}</Button>
+      </div>
+    </div>
+
+    {/* ── Desktop header ── */}
     <header className="hidden md:flex sticky top-0 z-40 bg-surface border-b border-[#ECECEC] h-16 items-center px-6 gap-6">
 
       <Link to="/" aria-label="TempleOS home" className="shrink-0">
@@ -110,5 +142,6 @@ export default function Header() {
       </div>
 
     </header>
+    </>
   );
 }
