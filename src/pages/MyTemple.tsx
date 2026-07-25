@@ -92,7 +92,7 @@ export default function MyTemple() {
   const maxVisits = Math.max(...monthlyVisits, 1)
 
   const joinedDate = user
-    ? new Date(user.joinedAt).toLocaleDateString('en-IN', { month: 'long', year: 'numeric' })
+    ? new Date(user.joinedAt).toLocaleDateString(lang === 'ta' ? 'ta-IN' : 'en-IN', { month: 'long', year: 'numeric' })
     : ''
 
   if (loading) {

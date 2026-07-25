@@ -1294,7 +1294,8 @@ export default function TempleProfile() {
       </div>
 
       {/* ─────────────── DETAIL BAR ───────────────────────────────────────── */}
-      <div className="bg-white px-4 py-4 border-b border-[#ECECEC]">
+      <div className="bg-white border-b border-[#ECECEC]">
+      <div className="max-w-4xl mx-auto px-4 py-4">
 
         {/* Row 1: Rating | Crowd | Open/Closed */}
         <div className="flex items-center gap-3 flex-wrap">
@@ -1386,14 +1387,17 @@ export default function TempleProfile() {
           </Button>
         </div>
       </div>
+      </div>
 
       {/* ─────────────── STICKY TABS ──────────────────────────────────────── */}
       <div className="sticky top-0 z-20 bg-white shadow-soft">
-        <Tabs tabs={TABS} value={activeTab} onChange={setActiveTab} />
+        <div className="max-w-4xl mx-auto">
+          <Tabs tabs={TABS} value={activeTab} onChange={setActiveTab} />
+        </div>
       </div>
 
       {/* ─────────────── TAB CONTENT ──────────────────────────────────────── */}
-      <div className="pb-16">
+      <div className="pb-16 max-w-4xl mx-auto">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}

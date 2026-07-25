@@ -30,14 +30,14 @@ function useDebounce<T>(value: T, delay: number): T {
 
 /* ─── Constants ─────────────────────────────────────────────────────────────── */
 const FILTER_CHIPS = [
-  { label: 'All',         emoji: '🏛️' },
-  { label: 'Shiva',       emoji: '🔱' },
-  { label: 'Vishnu',      emoji: '🪷' },
-  { label: 'Murugan',     emoji: '🦚' },
-  { label: 'Amman',       emoji: '🙏' },
-  { label: 'Navagraha',   emoji: '⭐' },
-  { label: 'Divya Desam', emoji: '📿' },
-  { label: 'Heritage',    emoji: '🗺️' },
+  { label: 'All',         labelTa: 'அனைத்தும்',      emoji: '🏛️' },
+  { label: 'Shiva',       labelTa: 'சிவன்',           emoji: '🔱' },
+  { label: 'Vishnu',      labelTa: 'விஷ்ணு',          emoji: '🪷' },
+  { label: 'Murugan',     labelTa: 'முருகன்',         emoji: '🦚' },
+  { label: 'Amman',       labelTa: 'அம்மன்',          emoji: '🙏' },
+  { label: 'Navagraha',   labelTa: 'நவகிரகம்',        emoji: '⭐' },
+  { label: 'Divya Desam', labelTa: 'திவ்ய தேசம்',     emoji: '📿' },
+  { label: 'Heritage',    labelTa: 'பாரம்பரியம்',     emoji: '🗺️' },
 ];
 
 const AI_EXAMPLE_QUERIES = [
@@ -752,8 +752,9 @@ export default function Explore() {
 
             {/* Scrollable category chips */}
             <div className="flex-1 flex gap-1.5 overflow-x-auto scrollbar-hide pb-0.5 min-w-0">
-              {FILTER_CHIPS.map(({ label, emoji }) => {
+              {FILTER_CHIPS.map(({ label, labelTa, emoji }) => {
                 const isActive = label === 'All' ? !category : category === label;
+                const displayLabel = lang === 'ta' ? labelTa : (label === 'All' ? tr.explore.all : label);
                 return (
                   <motion.button
                     key={label}
@@ -767,7 +768,7 @@ export default function Explore() {
                     )}
                   >
                     <span className="text-sm leading-none">{emoji}</span>
-                    {label === 'All' ? tr.explore.all : label}
+                    {displayLabel}
                   </motion.button>
                 );
               })}

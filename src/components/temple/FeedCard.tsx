@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
 import type { FeedItem } from '@/types';
+import { useLang } from '@/contexts/LanguageContext';
 
 type ClassValue = string | undefined | null | false;
 function cn(...classes: ClassValue[]): string {
@@ -20,13 +21,21 @@ function cn(...classes: ClassValue[]): string {
 
 /* ─── Helpers ──────────────────────────────────────────────────────────────── */
 
-function formatPostedAt(dateStr: string): string {
+function formatPostedAt(dateStr: string, lang: 'en' | 'ta'): string {
   const date = new Date(dateStr);
   const now  = new Date();
   const diffMs   = now.getTime() - date.getTime();
   const diffMins  = Math.floor(diffMs / 60_000);
   const diffHours = Math.floor(diffMs / 3_600_000);
   const diffDays  = Math.floor(diffMs / 86_400_000);
+
+  if (lang === 'ta') {
+    if (diffMins < 1)   return 'இப்போதுதான்';
+    if (diffMins < 60)  return `${diffMins} நிமிடம் முன்`;
+    if (diffHours < 24) return `${diffHours} மணி முன்`;
+    if (diffDays === 1) return 'நேற்று';
+    return date.toLocaleDateString('ta-IN', { month: 'short', day: 'numeric' });
+  }
 
   if (diffMins < 1)   return 'Just now';
   if (diffMins < 60)  return `${diffMins}m ago`;
@@ -45,56 +54,57 @@ type FeedType = FeedItem['type'];
 
 interface TypeConfig {
   label:   string;
+  labelTa: string;
   icon:    React.ReactNode;
   variant: 'default' | 'primary' | 'success' | 'warning' | 'danger' | 'ghost';
-  accent:  string; // tailwind bg for left border accent
+  accent:  string;
 }
 
 const TYPE_CONFIG: Record<FeedType, TypeConfig> = {
   announcement: {
-    label:   'Announcement',
+    label: 'Announcement', labelTa: 'அறிவிப்பு',
     icon:    <Megaphone   size={12} />,
     variant: 'primary',
     accent:  'bg-primary',
   },
   festival: {
-    label:   'Festival',
+    label: 'Festival', labelTa: 'திருவிழா',
     icon:    <Sparkles    size={12} />,
     variant: 'warning',
     accent:  'bg-warning',
   },
   'booking-open': {
-    label:   'Booking Open',
+    label: 'Booking Open', labelTa: 'பதிவு தொடங்கியது',
     icon:    <CalendarCheck size={12} />,
     variant: 'success',
     accent:  'bg-success',
   },
   photo: {
-    label:   'Photo',
+    label: 'Photo', labelTa: 'படம்',
     icon:    <ImageIcon   size={12} />,
     variant: 'ghost',
     accent:  'bg-[#6B7280]',
   },
   video: {
-    label:   'Video',
+    label: 'Video', labelTa: 'வீடியோ',
     icon:    <ImageIcon   size={12} />,
     variant: 'ghost',
     accent:  'bg-[#6B7280]',
   },
   heritage: {
-    label:   'Heritage',
+    label: 'Heritage', labelTa: 'பாரம்பரியம்',
     icon:    <Landmark    size={12} />,
     variant: 'primary',
     accent:  'bg-violet-400',
   },
   'crowd-alert': {
-    label:   'Crowd Alert',
+    label: 'Crowd Alert', labelTa: 'கூட்ட எச்சரிக்கை',
     icon:    <AlertTriangle size={12} />,
     variant: 'danger',
     accent:  'bg-danger',
   },
   renovation: {
-    label:   'Renovation',
+    label: 'Renovation', labelTa: 'புதுப்பிப்பு',
     icon:    <HardHat     size={12} />,
     variant: 'default',
     accent:  'bg-[#6B7280]',
@@ -123,8 +133,11 @@ interface FeedCardProps {
 }
 
 export function FeedCard({ item }: FeedCardProps) {
+  const { lang } = useLang();
   const config = TYPE_CONFIG[item.type] ?? TYPE_CONFIG.announcement;
-  const templeName = item.temple?.name ?? item.templeName;
+  const templeName = lang === 'ta'
+    ? (item.temple?.nameTa || item.temple?.name || item.templeName)
+    : (item.temple?.name ?? item.templeName);
 
   return (
     <motion.div
@@ -143,7 +156,7 @@ export function FeedCard({ item }: FeedCardProps) {
             <Badge variant={config.variant} size="sm">
               <span className="flex items-center gap-1">
                 {config.icon}
-                {config.label}
+                {lang === 'ta' ? config.labelTa : config.label}
               </span>
             </Badge>
             {templeName && (
@@ -159,7 +172,7 @@ export function FeedCard({ item }: FeedCardProps) {
             )}
           </div>
           <time className="text-[11px] text-[#6B7280] shrink-0 tabular-nums">
-            {formatPostedAt(item.postedAt)}
+            {formatPostedAt(item.postedAt, lang)}
           </time>
         </div>
 
