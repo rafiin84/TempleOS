@@ -46,7 +46,7 @@ const WORKS = [
     sub: 'Gopuram conservation · Madurai',
     subTa: 'கோபுர பாதுகாப்பு · மதுரை',
     status: 'completed',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Meenakshi_Amman_Temple_at_night.jpg/1280px-Meenakshi_Amman_Temple_at_night.jpg',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/An_aerial_view_of_Madurai_city_from_atop_of_Meenakshi_Amman_temple.jpg/1280px-An_aerial_view_of_Madurai_city_from_atop_of_Meenakshi_Amman_temple.jpg',
   },
   {
     id: 2,
