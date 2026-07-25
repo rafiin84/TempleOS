@@ -1,8 +1,9 @@
 import { NavLink, Link } from 'react-router-dom';
-import { Globe, Building2 } from 'lucide-react';
+import { Globe } from 'lucide-react';
 import { Button } from '@/components/ui';
 import { useLang } from '@/contexts/LanguageContext';
 import { T } from '@/i18n/translations';
+import { useFontSize, type FontSize } from '@/contexts/FontSizeContext';
 
 type ClassValue = string | undefined | null | false;
 function cn(...classes: ClassValue[]): string {
@@ -29,6 +30,42 @@ function TempleOSLogo() {
   );
 }
 
+const FONT_STEPS: { value: FontSize; label: string; textSize: string }[] = [
+  { value: 'sm', label: 'A', textSize: 'text-[11px]' },
+  { value: 'md', label: 'A', textSize: 'text-[14px]' },
+  { value: 'lg', label: 'A', textSize: 'text-[18px]' },
+]
+
+function FontSizeControl({ compact = false }: { compact?: boolean }) {
+  const { fontSize, setFontSize } = useFontSize()
+  return (
+    <div className={cn(
+      'flex items-center rounded-full border border-[#ECECEC] bg-[#FAFAFC] overflow-hidden',
+      compact ? 'h-8' : 'h-9',
+    )}>
+      {FONT_STEPS.map(({ value, label, textSize }, i) => (
+        <button
+          key={value}
+          type="button"
+          onClick={() => setFontSize(value)}
+          aria-label={`Font size ${value}`}
+          className={cn(
+            'flex items-center justify-center font-bold transition-colors duration-150 leading-none select-none',
+            compact ? 'w-7' : 'w-8',
+            textSize,
+            i !== FONT_STEPS.length - 1 ? 'border-r border-[#ECECEC]' : '',
+            fontSize === value
+              ? 'bg-primary text-white'
+              : 'text-[#6B7280] hover:bg-light-violet hover:text-primary',
+          )}
+        >
+          {label}
+        </button>
+      ))}
+    </div>
+  )
+}
+
 export default function Header() {
   const { lang, toggle } = useLang();
   const tr = T[lang];
@@ -49,6 +86,7 @@ export default function Header() {
         <TempleOSLogo />
       </Link>
       <div className="flex items-center gap-2">
+        <FontSizeControl compact />
         {/* Language toggle pill */}
         <button
           type="button"
@@ -111,7 +149,8 @@ export default function Header() {
         ))}
       </nav>
 
-      <div className="flex-none flex items-center gap-1">
+      <div className="flex-none flex items-center gap-2">
+        <FontSizeControl />
         {/* Language toggle pill */}
         <button
           type="button"

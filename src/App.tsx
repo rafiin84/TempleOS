@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 import { LanguageProvider } from '@/contexts/LanguageContext'
+import { FontSizeProvider } from '@/contexts/FontSizeContext'
 import PublicLayout from '@/layouts/PublicLayout'
 import AdminLayout from '@/layouts/AdminLayout'
 
@@ -38,6 +39,7 @@ function PageLoader() {
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
+      <FontSizeProvider>
       <LanguageProvider>
       <BrowserRouter>
         <Suspense fallback={<PageLoader />}>
@@ -61,6 +63,7 @@ export default function App() {
         </Suspense>
       </BrowserRouter>
       </LanguageProvider>
+      </FontSizeProvider>
     </QueryClientProvider>
   )
 }
