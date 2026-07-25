@@ -104,7 +104,7 @@ function GridCard({ temple, onClick }: { temple: Temple; onClick?: () => void })
           <h3 className="font-semibold text-[#111827] text-sm leading-snug line-clamp-1">
             {lang === 'ta' ? (temple.nameTa || temple.name) : temple.name}
           </h3>
-          <p className="text-xs text-[#6B7280] mt-0.5">{temple.deity}</p>
+          <p className="text-xs text-[#6B7280] mt-0.5">{lang === 'ta' ? (temple.deityTa || temple.deity) : temple.deity}</p>
         </div>
 
         <div className="flex items-center gap-1 text-xs text-[#6B7280]">
@@ -153,7 +153,7 @@ function ListCard({ temple, onClick }: { temple: Temple; onClick?: () => void })
             <h3 className="font-semibold text-[#111827] text-sm leading-snug line-clamp-1">
               {lang === 'ta' ? (temple.nameTa || temple.name) : temple.name}
             </h3>
-            <p className="text-xs text-[#6B7280] mt-0.5">{temple.deity}</p>
+            <p className="text-xs text-[#6B7280] mt-0.5">{lang === 'ta' ? (temple.deityTa || temple.deity) : temple.deity}</p>
           </div>
           <div className="flex flex-col items-end gap-1 shrink-0">
             <Badge variant={temple.isOpen ? 'success' : 'danger'} size="sm">
@@ -168,12 +168,12 @@ function ListCard({ temple, onClick }: { temple: Temple; onClick?: () => void })
         {/* Location */}
         <div className="flex items-center gap-1 text-xs text-[#6B7280]">
           <MapPin size={11} className="shrink-0 text-primary" />
-          <span>{lang === 'ta' ? (temple.districtTa || temple.district) : temple.district}, Tamil Nadu</span>
+          <span>{lang === 'ta' ? (temple.districtTa || temple.district) : temple.district}, {tr.common.tamilNadu}</span>
           {temple.distanceKm !== undefined && (
             <>
               <span className="mx-1">·</span>
               <Navigation size={10} className="shrink-0" />
-              <span>{temple.distanceKm.toFixed(1)} km away</span>
+              <span>{temple.distanceKm.toFixed(1)} {tr.profile.nearbyKm}</span>
             </>
           )}
         </div>

@@ -108,6 +108,8 @@ interface StampProps {
 
 function Stamp({ src, name, date, visited }: StampProps) {
   const [imgErr, setImgErr] = useState(false)
+  const { lang } = useLang()
+  const tr = T[lang]
 
   if (!visited) {
     return (
@@ -115,7 +117,7 @@ function Stamp({ src, name, date, visited }: StampProps) {
         <div className="w-14 h-14 rounded-full border-2 border-dashed border-[#ECECEC] flex items-center justify-center bg-[#FAFAFC]">
           <span className="text-[#ECECEC] text-lg font-bold">?</span>
         </div>
-        <p className="text-[9px] text-[#ECECEC] text-center">Unvisited</p>
+        <p className="text-[9px] text-[#ECECEC] text-center">{tr.passport.unvisited}</p>
       </div>
     )
   }
@@ -168,13 +170,18 @@ export default function TemplePassport() {
     { title: 'Padal Petra Sthalam',    total: 276, completed: 3, emoji: '📜' },
   ]
 
-  const ACHIEVEMENTS: AchievementProps[] = [
-    { icon: '🏛️', label: 'First Step',      description: 'Visited first temple',    unlocked: visitCount >= 1 },
-    { icon: '⭐', label: 'Explorer',         description: '5 temples visited',       unlocked: visitCount >= 5 },
-    { icon: '🕉️', label: 'Devotee',          description: '10 temples visited',      unlocked: visitCount >= 10 },
-    { icon: '💰', label: 'Generous Soul',    description: 'Made a donation',         unlocked: totalDonated > 0 },
-    { icon: '🗺️', label: 'Pilgrim',          description: 'Started a route',         unlocked: true },
-    { icon: '🏆', label: 'Master Devotee',   description: '50 temples visited',      unlocked: visitCount >= 50 },
+  interface AchievementData extends AchievementProps {
+    labelTa?: string
+    descTa?: string
+  }
+
+  const ACHIEVEMENTS: AchievementData[] = [
+    { icon: '🏛️', label: 'First Step',      description: 'Visited first temple',  unlocked: visitCount >= 1,    labelTa: 'முதல் அடி',        descTa: 'முதல் கோயிலை பார்வையிட்டீர்கள்' },
+    { icon: '⭐', label: 'Explorer',         description: '5 temples visited',     unlocked: visitCount >= 5,    labelTa: 'ஆய்வாளர்',         descTa: '5 கோயில்களை பார்வையிட்டீர்கள்' },
+    { icon: '🕉️', label: 'Devotee',          description: '10 temples visited',    unlocked: visitCount >= 10,   labelTa: 'பக்தர்',           descTa: '10 கோயில்களை பார்வையிட்டீர்கள்' },
+    { icon: '💰', label: 'Generous Soul',    description: 'Made a donation',       unlocked: totalDonated > 0,   labelTa: 'தாராள மனம்',      descTa: 'நன்கொடை வழங்கினீர்கள்' },
+    { icon: '🗺️', label: 'Pilgrim',          description: 'Started a route',       unlocked: true,               labelTa: 'யாத்திரிகன்',     descTa: 'ஒரு பாதையை தொடங்கினீர்கள்' },
+    { icon: '🏆', label: 'Master Devotee',   description: '50 temples visited',    unlocked: visitCount >= 50,   labelTa: 'மகா பக்தர்',      descTa: '50 கோயில்களை பார்வையிட்டீர்கள்' },
   ]
 
   if (loading) {
@@ -207,23 +214,23 @@ export default function TemplePassport() {
           {user?.nameTa && (
             <p className="text-base text-white/70 font-medium mb-1">{user.nameTa}</p>
           )}
-          <p className="text-xs text-white/50 mb-8">Official HR&amp;CE Devotee Passport</p>
+          <p className="text-xs text-white/50 mb-8">{tr.passport.subtitle}</p>
 
           {/* Stats */}
           <div className="flex gap-6 flex-wrap">
             <div className="text-center">
               <p className="text-2xl font-black">{visitCount}</p>
-              <p className="text-[11px] text-white/60 uppercase tracking-wider">Temples</p>
+              <p className="text-[11px] text-white/60 uppercase tracking-wider">{tr.common.temples}</p>
             </div>
             <div className="w-px bg-white/20" />
             <div className="text-center">
               <p className="text-2xl font-black">0</p>
-              <p className="text-[11px] text-white/60 uppercase tracking-wider">Routes</p>
+              <p className="text-[11px] text-white/60 uppercase tracking-wider">{tr.passport.routes}</p>
             </div>
             <div className="w-px bg-white/20" />
             <div className="text-center">
               <p className="text-2xl font-black">{formatCurrency(totalDonated)}</p>
-              <p className="text-[11px] text-white/60 uppercase tracking-wider">Donated</p>
+              <p className="text-[11px] text-white/60 uppercase tracking-wider">{tr.home.statsDonatedLabel}</p>
             </div>
           </div>
         </div>
@@ -246,7 +253,7 @@ export default function TemplePassport() {
             <h2 className="text-base font-bold text-[#111827]">
               {tr.passport.stamps}
               <span className="ml-2 text-sm font-normal text-[#6B7280]">
-                ({visitCount} temples visited)
+                ({visitCount} {tr.passport.templesVisited})
               </span>
             </h2>
           </div>
@@ -274,7 +281,13 @@ export default function TemplePassport() {
           <h2 className="text-base font-bold text-[#111827] mb-4">{tr.passport.achievements}</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
             {ACHIEVEMENTS.map(a => (
-              <Achievement key={a.label} {...a} />
+              <Achievement
+                key={a.label}
+                icon={a.icon}
+                label={lang === 'ta' ? (a.labelTa || a.label) : a.label}
+                description={lang === 'ta' ? (a.descTa || a.description) : a.description}
+                unlocked={a.unlocked}
+              />
             ))}
           </div>
         </section>

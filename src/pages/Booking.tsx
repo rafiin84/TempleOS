@@ -114,6 +114,8 @@ function friendlyDate(dateStr: string): string {
 
 /* ─── Calendar-style date picker ─────────────────────────────────────────── */
 function CalendarPicker({ value, onChange }: { value: string; onChange: (d: string) => void }) {
+  const { lang } = useLang()
+  const tr = T[lang]
   const dates    = generateNext30Days()
   const todayStr = toDateStr(todayAtMidnight())
 
@@ -182,7 +184,7 @@ function CalendarPicker({ value, onChange }: { value: string; onChange: (d: stri
                         'text-[8px] font-semibold leading-none mt-0.5',
                         isSelected ? 'text-white/80' : 'text-primary',
                       )}>
-                        Today
+                        {tr.booking.today}
                       </span>
                     )}
                   </button>
@@ -404,7 +406,7 @@ export default function Booking() {
                   <h2 className="text-lg font-bold text-[#111827] mb-5">{tr.booking.selectTempleTitle}</h2>
 
                   <Input
-                    placeholder="Search temples, deities, districts…"
+                    placeholder={tr.explore.searchPlaceholder}
                     prefix={<Search size={15} />}
                     value={searchQuery}
                     onChange={e => setSearchQuery(e.target.value)}
@@ -414,7 +416,7 @@ export default function Booking() {
                   {templesLoading ? (
                     <Skeleton variant="card" count={3} />
                   ) : filteredTemples.length === 0 ? (
-                    <p className="text-sm text-[#6B7280] text-center py-10">No temples found</p>
+                    <p className="text-sm text-[#6B7280] text-center py-10">{tr.explore.noResults}</p>
                   ) : (
                     <div className="space-y-3">
                       {filteredTemples.map(t => (
@@ -443,7 +445,7 @@ export default function Booking() {
                       <img src={temple.coverImage} alt={temple.name} className="w-full h-full object-cover" />
                     </div>
                     <div className="min-w-0">
-                      <p className="text-[10px] text-[#6B7280] uppercase tracking-wide font-medium">Booking for</p>
+                      <p className="text-[10px] text-[#6B7280] uppercase tracking-wide font-medium">{tr.booking.bookingFor}</p>
                       <p className="text-sm font-bold text-[#111827] leading-snug line-clamp-1">{lang === 'ta' ? (temple.nameTa || temple.name) : temple.name}</p>
                     </div>
                   </div>
@@ -599,7 +601,7 @@ export default function Booking() {
                             </div>
 
                             <p className={cn('text-[10px] mt-1', full ? 'text-danger font-semibold' : 'text-[#6B7280]')}>
-                              {full ? 'Full' : `${s.available}/${s.total} left`}
+                              {full ? tr.booking.slotFull : `${s.available}/${s.total} ${tr.booking.slotLeft}`}
                             </p>
                             <p className="text-xs font-bold text-primary mt-1">₹{s.price}</p>
                           </button>
@@ -663,20 +665,20 @@ export default function Booking() {
                     </motion.button>
                   </div>
 
-                  <p className="text-center text-xs text-[#6B7280] mb-6">Max 10 persons per booking</p>
+                  <p className="text-center text-xs text-[#6B7280] mb-6">{tr.booking.maxPersons}</p>
 
                   {/* Price breakdown */}
                   <div className="bg-light-violet rounded-xl p-4 mb-6 space-y-2">
                     <div className="flex justify-between text-sm">
-                      <span className="text-[#6B7280]">Price per person</span>
+                      <span className="text-[#6B7280]">{tr.booking.pricePerPerson}</span>
                       <span className="font-semibold text-[#111827]">₹{unitPrice}</span>
                     </div>
                     <div className="flex justify-between text-sm">
-                      <span className="text-[#6B7280]">Persons</span>
+                      <span className="text-[#6B7280]">{tr.booking.persons}</span>
                       <span className="font-semibold text-[#111827]">× {persons}</span>
                     </div>
                     <div className="border-t border-primary/20 pt-2 flex justify-between items-center">
-                      <span className="text-sm font-bold text-[#111827]">Total</span>
+                      <span className="text-sm font-bold text-[#111827]">{tr.booking.total}</span>
                       <span className="text-xl font-black text-primary">
                         ₹{totalAmount.toLocaleString('en-IN')}
                       </span>
@@ -716,11 +718,11 @@ export default function Booking() {
 
                     <div className="divide-y divide-[#ECECEC]">
                       {[
-                        { label: 'Temple',  value: lang === 'ta' ? (temple?.nameTa || temple?.name) : temple?.name, editStep: 1 },
-                        { label: 'Service', value: lang === 'ta' ? (pooja?.nameTa  || pooja?.name)  : pooja?.name,  editStep: 2 },
-                        { label: 'Date',    value: date ? friendlyDate(date) : '', editStep: 3 },
-                        { label: 'Slot',    value: slot?.time,               editStep: 4 },
-                        { label: 'Persons', value: `${persons} ${persons === 1 ? 'person' : 'persons'}`, editStep: 5 },
+                        { label: tr.booking.reviewTemple,  value: lang === 'ta' ? (temple?.nameTa || temple?.name) : temple?.name, editStep: 1 },
+                        { label: tr.booking.reviewService, value: lang === 'ta' ? (pooja?.nameTa  || pooja?.name)  : pooja?.name,  editStep: 2 },
+                        { label: tr.booking.reviewDate,    value: date ? friendlyDate(date) : '', editStep: 3 },
+                        { label: tr.booking.reviewSlot,    value: slot?.time,               editStep: 4 },
+                        { label: tr.booking.reviewPersons, value: `${persons} ${persons === 1 ? tr.booking.person : tr.booking.persons}`, editStep: 5 },
                       ].map(row => (
                         <div key={row.label} className="flex items-center gap-3 px-4 py-3">
                           <p className="text-xs text-[#6B7280] w-14 shrink-0">{row.label}</p>
@@ -729,7 +731,7 @@ export default function Booking() {
                             onClick={() => { setDirection(-1); setStep(row.editStep) }}
                             className="text-xs text-primary hover:underline font-medium shrink-0"
                           >
-                            Edit
+                            {tr.booking.edit}
                           </button>
                         </div>
                       ))}
@@ -738,7 +740,7 @@ export default function Booking() {
                         <div>
                           <p className="text-xs text-[#6B7280]">{tr.booking.totalAmount}</p>
                           <p className="text-[11px] text-[#6B7280] mt-0.5">
-                            ₹{unitPrice} × {persons} {persons === 1 ? 'person' : 'persons'}
+                            ₹{unitPrice} × {persons} {persons === 1 ? tr.booking.person : tr.booking.persons}
                           </p>
                         </div>
                         <p className="text-2xl font-black text-primary">
@@ -762,7 +764,7 @@ export default function Booking() {
                   <BackButton onClick={back} label={tr.booking.back} />
 
                   <div className="mb-6">
-                    <h2 className="text-lg font-bold text-[#111827]">Payment</h2>
+                    <h2 className="text-lg font-bold text-[#111827]">{tr.booking.payment}</h2>
                     <p className="text-3xl font-black text-primary mt-1">
                       ₹{totalAmount.toLocaleString('en-IN')}
                     </p>
@@ -789,7 +791,7 @@ export default function Booking() {
                         className="space-y-4"
                       >
                         <Input
-                          label="UPI ID"
+                          label={tr.booking.upiId}
                           placeholder="yourname@upi"
                           value={upiId}
                           onChange={e => setUpiId(e.target.value)}
@@ -821,7 +823,7 @@ export default function Booking() {
                             </svg>
                           </div>
                           <p className="text-xs text-[#6B7280] text-center">
-                            Scan with any UPI app to pay ₹{totalAmount.toLocaleString('en-IN')}
+                            {tr.booking.scanUpi} ₹{totalAmount.toLocaleString('en-IN')}
                           </p>
                         </div>
                       </motion.div>
@@ -837,7 +839,7 @@ export default function Booking() {
                         className="space-y-3"
                       >
                         <Input
-                          label="Card Number"
+                          label={tr.booking.cardNumber}
                           placeholder="1234 5678 9012 3456"
                           value={cardNumber}
                           onChange={e => setCardNumber(e.target.value)}
@@ -846,7 +848,7 @@ export default function Booking() {
                         />
                         <div className="grid grid-cols-2 gap-3">
                           <Input
-                            label="Expiry"
+                            label={tr.booking.expiry}
                             placeholder="MM / YY"
                             value={cardExpiry}
                             onChange={e => setCardExpiry(e.target.value)}
@@ -912,7 +914,7 @@ export default function Booking() {
                     loading={paying}
                     onClick={handlePay}
                   >
-                    Pay ₹{totalAmount.toLocaleString('en-IN')}
+                    {tr.booking.pay} ₹{totalAmount.toLocaleString('en-IN')}
                   </Button>
 
                   <p className="text-center text-[10px] text-[#6B7280] mt-3">
@@ -937,7 +939,7 @@ export default function Booking() {
                       <Check size={26} className="text-green-600" />
                     </div>
                     <h2 className="text-xl font-bold text-[#111827]">{tr.booking.confirmTitle}</h2>
-                    <p className="text-sm text-[#6B7280] mt-1">Your pooja slot has been reserved</p>
+                    <p className="text-sm text-[#6B7280] mt-1">{tr.booking.slotReserved}</p>
                   </motion.div>
 
                   {/* QR ticket */}
@@ -976,7 +978,7 @@ export default function Booking() {
                       icon={<Share2 size={15} />}
                       onClick={() => alert('Share coming soon!')}
                     >
-                      Share
+                      {tr.common.share}
                     </Button>
                   </div>
 
@@ -988,7 +990,7 @@ export default function Booking() {
                     onClick={resetFlow}
                     className="text-xs text-[#6B7280] hover:text-primary transition-colors"
                   >
-                    Book another pooja
+                    {tr.booking.bookAnother}
                   </button>
                 </div>
               )}

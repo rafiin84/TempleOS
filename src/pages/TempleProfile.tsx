@@ -167,7 +167,7 @@ function OverviewTab({ temple }: { temple: Temple }) {
     <div className="p-4 space-y-6">
       {/* Description */}
       <section>
-        <h2 className="text-sm font-semibold text-[#111827] mb-2">About</h2>
+        <h2 className="text-sm font-semibold text-[#111827] mb-2">{tr.profile.about}</h2>
         <p className="text-sm text-[#6B7280] leading-relaxed">{lang === 'ta' ? (temple.descriptionTa || temple.description) : temple.description}</p>
       </section>
 
@@ -175,7 +175,7 @@ function OverviewTab({ temple }: { temple: Temple }) {
       <section className="flex items-center gap-3 p-3 rounded-xl bg-light-violet border border-primary/10">
         <Info size={16} className="text-primary shrink-0" />
         <div className="min-w-0">
-          <p className="text-xs text-[#6B7280] mb-0.5">Tamil Name</p>
+          <p className="text-xs text-[#6B7280] mb-0.5">{tr.profile.tamilName}</p>
           <p className="text-sm font-semibold text-primary">{temple.nameTa}</p>
           <p className="text-xs text-[#6B7280] mt-0.5">{temple.deityTa}</p>
         </div>
@@ -183,7 +183,7 @@ function OverviewTab({ temple }: { temple: Temple }) {
 
       {/* Quick facts */}
       <section>
-        <h2 className="text-sm font-semibold text-[#111827] mb-3">Quick Facts</h2>
+        <h2 className="text-sm font-semibold text-[#111827] mb-3">{tr.profile.quickFacts}</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
           {facts.map((f) => (
             <Card key={f.label} className="text-center !p-3">
@@ -197,7 +197,7 @@ function OverviewTab({ temple }: { temple: Temple }) {
       {/* Categories */}
       {temple.categories.length > 0 && (
         <section>
-          <h2 className="text-sm font-semibold text-[#111827] mb-2">Categories</h2>
+          <h2 className="text-sm font-semibold text-[#111827] mb-2">{tr.profile.categories}</h2>
           <div className="flex flex-wrap gap-2">
             {temple.categories.map((c) => (
               <Badge key={c} variant="primary">{c}</Badge>
@@ -235,7 +235,7 @@ function HistoryTab({ temple }: { temple: Temple }) {
   return (
     <div className="p-4 space-y-6">
       <section>
-        <h2 className="text-sm font-semibold text-[#111827] mb-2">History</h2>
+        <h2 className="text-sm font-semibold text-[#111827] mb-2">{tr.profile.tabHistory}</h2>
         <p className="text-sm text-[#6B7280] leading-relaxed">{temple.history}</p>
       </section>
 
@@ -370,7 +370,7 @@ function TimingsTab({ temple }: { temple: Temple }) {
         <table className="w-full text-sm">
           <thead>
             <tr className="bg-light-violet">
-              {['Day', tr.profile.morning, tr.profile.evening].map((h) => (
+              {[tr.profile.day, tr.profile.morning, tr.profile.evening].map((h) => (
                 <th
                   key={h}
                   className="text-left px-4 py-3 text-xs font-semibold text-[#111827] uppercase tracking-wide"
@@ -388,13 +388,13 @@ function TimingsTab({ temple }: { temple: Temple }) {
                 </td>
                 <td className="px-4 py-3 text-[#6B7280]">
                   {timing.closed
-                    ? <span className="font-medium text-danger">Closed</span>
+                    ? <span className="font-medium text-danger">{tr.common.closed}</span>
                     : <span className="flex items-center gap-1"><Clock size={12} className="text-primary" />{timing.morning}</span>
                   }
                 </td>
                 <td className="px-4 py-3 text-[#6B7280]">
                   {timing.closed
-                    ? <span className="font-medium text-danger">Closed</span>
+                    ? <span className="font-medium text-danger">{tr.common.closed}</span>
                     : <span className="flex items-center gap-1"><Clock size={12} className="text-primary" />{timing.evening}</span>
                   }
                 </td>
@@ -408,7 +408,7 @@ function TimingsTab({ temple }: { temple: Temple }) {
       <div className="flex items-start gap-2.5 p-3 rounded-xl bg-amber-50 border border-amber-100">
         <Info size={14} className="text-warning shrink-0 mt-0.5" />
         <p className="text-xs text-[#6B7280] leading-relaxed">
-          Timings may vary on festival days, amavasai, and ekadasi. Please confirm with the temple office before visiting.
+          {tr.profile.timingsNote}
         </p>
       </div>
     </div>
@@ -426,7 +426,7 @@ function PoojasTab({ temple }: { temple: Temple }) {
     <div className="p-4 space-y-3">
       <div className="flex items-center gap-2 mb-1">
         <CalendarDays size={15} className="text-primary" />
-        <h2 className="text-sm font-semibold text-[#111827]">Daily Poojas</h2>
+        <h2 className="text-sm font-semibold text-[#111827]">{tr.profile.dailyPoojas}</h2>
       </div>
       {temple.poojas.map((pooja) => (
         <Card key={pooja.id}>
@@ -436,7 +436,7 @@ function PoojasTab({ temple }: { temple: Temple }) {
                 <h3 className="text-sm font-semibold text-[#111827]">{lang === 'ta' ? (pooja.nameTa || pooja.name) : pooja.name}</h3>
                 <span className="text-xs text-[#6B7280]">{lang === 'ta' ? pooja.name : pooja.nameTa}</span>
               </div>
-              <p className="text-xs text-primary mt-0.5 font-medium">Deity: {pooja.deity}</p>
+              <p className="text-xs text-primary mt-0.5 font-medium">{tr.profile.deityLabel}: {pooja.deity}</p>
               <p className="text-sm text-[#6B7280] mt-1.5 leading-snug">{pooja.description}</p>
               <div className="flex items-center gap-3 mt-2 text-xs text-[#6B7280]">
                 <span className="flex items-center gap-1">
@@ -462,7 +462,7 @@ function PoojasTab({ temple }: { temple: Temple }) {
                   {tr.profile.book}
                 </Button>
               ) : (
-                <span className="text-xs text-[#6B7280] italic">Walk-in only</span>
+                <span className="text-xs text-[#6B7280] italic">{tr.profile.walkinOnly}</span>
               )}
             </div>
           </div>
@@ -495,6 +495,11 @@ function ServicesTab({ temple }: { temple: Temple }) {
   }
 
   const categories: TempleService['category'][] = ['Ritual', 'Offering', 'Charitable']
+  const CAT_LABELS: Record<TempleService['category'], string> = {
+    Ritual:     tr.profile.categoryRitual,
+    Offering:   tr.profile.categoryOffering,
+    Charitable: tr.profile.categoryCharitable,
+  }
 
   return (
     <div className="p-4 space-y-6">
@@ -502,7 +507,7 @@ function ServicesTab({ temple }: { temple: Temple }) {
       <div className="flex items-start gap-2.5 p-3 rounded-xl bg-light-violet border border-primary/10">
         <Sparkles size={14} className="text-primary shrink-0 mt-0.5" />
         <p className="text-xs text-[#6B7280] leading-relaxed">
-          Book personalised services performed by trained temple priests. All services include prasad and a receipt.
+          {tr.profile.servicesIntro}
         </p>
       </div>
 
@@ -512,7 +517,7 @@ function ServicesTab({ temple }: { temple: Temple }) {
           <section key={cat}>
             <div className="flex items-center gap-2 mb-3">
               <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold border ${CATEGORY_COLORS[cat]}`}>
-                {cat}
+                {CAT_LABELS[cat]}
               </span>
             </div>
             <div className="space-y-3">
@@ -549,7 +554,7 @@ function ServicesTab({ temple }: { temple: Temple }) {
                             )}
                             <span className="flex items-center gap-1">
                               <Building2 size={11} className="text-primary" />
-                              At temple
+                              {tr.profile.atTemple}
                             </span>
                           </div>
                         </div>
@@ -567,10 +572,10 @@ function ServicesTab({ temple }: { temple: Temple }) {
                               onClick={() => !isBooked && handleBook(service.id)}
                               disabled={isBooked}
                             >
-                              {isBooked ? 'Booked' : tr.profile.book}
+                              {isBooked ? tr.profile.booked : tr.profile.book}
                             </Button>
                           ) : (
-                            <span className="text-xs text-[#6B7280] italic">Walk-in</span>
+                            <span className="text-xs text-[#6B7280] italic">{tr.profile.walkin}</span>
                           )}
                         </div>
                       </div>
@@ -646,17 +651,17 @@ function DonationsTab({ temple }: { temple: Temple }) {
             <div className="w-16 h-16 rounded-full bg-green-50 flex items-center justify-center mx-auto mb-4">
               <CheckCircle2 size={32} className="text-success" />
             </div>
-            <h3 className="font-semibold text-[#111827] text-lg mb-1">Donation Successful!</h3>
+            <h3 className="font-semibold text-[#111827] text-lg mb-1">{tr.profile.donationSuccess}</h3>
             <p className="text-sm text-[#6B7280] mb-1">
               Your contribution of{' '}
               <strong className="text-[#111827]">{formatCurrency(effectiveAmount)}</strong>{' '}
               towards <strong className="text-[#111827]">{purpose}</strong> has been received.
             </p>
             {receiptNo && (
-              <p className="text-xs text-[#6B7280] mb-5">Receipt: <span className="font-mono text-primary">{receiptNo}</span></p>
+              <p className="text-xs text-[#6B7280] mb-5">{tr.profile.receipt}: <span className="font-mono text-primary">{receiptNo}</span></p>
             )}
             <Button variant="secondary" onClick={reset}>
-              Make Another Donation
+              {tr.profile.donateAgain}
             </Button>
           </Card>
         </motion.div>
@@ -675,7 +680,7 @@ function DonationsTab({ temple }: { temple: Temple }) {
         {/* Preset amounts */}
         <div className="mb-4">
           <p className="text-xs font-medium text-[#6B7280] uppercase tracking-wide mb-2">
-            Select Amount
+            {tr.profile.selectAmount}
           </p>
           <div className="flex flex-wrap gap-2">
             {DONATION_PRESETS.map((amount) => (
@@ -699,7 +704,7 @@ function DonationsTab({ temple }: { temple: Temple }) {
                   : 'bg-white text-[#111827] border-[#ECECEC] hover:border-primary hover:text-primary'
               }`}
             >
-              Custom
+              {tr.profile.customAmount}
             </button>
           </div>
         </div>
@@ -714,7 +719,7 @@ function DonationsTab({ temple }: { temple: Temple }) {
               className="mb-4 overflow-hidden"
             >
               <Input
-                label="Enter Amount (₹)"
+                label={tr.profile.enterAmount}
                 type="number"
                 min={1}
                 placeholder="e.g. 2500"
@@ -728,7 +733,7 @@ function DonationsTab({ temple }: { temple: Temple }) {
 
         {/* Purpose */}
         <div className="mb-4">
-          <label className="block text-sm font-medium text-[#111827] mb-1.5">Purpose</label>
+          <label className="block text-sm font-medium text-[#111827] mb-1.5">{tr.profile.purpose}</label>
           <select
             value={purpose}
             onChange={(e) => setPurpose(e.target.value)}
@@ -754,7 +759,7 @@ function DonationsTab({ temple }: { temple: Temple }) {
               }`}
             />
           </div>
-          <span className="text-sm text-[#6B7280]">Donate anonymously</span>
+          <span className="text-sm text-[#6B7280]">{tr.profile.donateAnonymously}</span>
         </label>
 
         {/* Summary */}
@@ -768,16 +773,16 @@ function DonationsTab({ temple }: { temple: Temple }) {
             >
               <div className="p-3 rounded-lg bg-light-violet text-sm space-y-1">
                 <div className="flex justify-between">
-                  <span className="text-[#6B7280]">Amount</span>
+                  <span className="text-[#6B7280]">{tr.profile.summaryAmount}</span>
                   <span className="font-semibold text-[#111827]">{formatCurrency(effectiveAmount)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#6B7280]">Purpose</span>
+                  <span className="text-[#6B7280]">{tr.profile.purpose}</span>
                   <span className="font-semibold text-[#111827]">{purpose}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#6B7280]">Anonymous</span>
-                  <span className="font-semibold text-[#111827]">{isAnonymous ? 'Yes' : 'No'}</span>
+                  <span className="text-[#6B7280]">{tr.profile.summaryAnonymous}</span>
+                  <span className="font-semibold text-[#111827]">{isAnonymous ? tr.common.yes : tr.common.no}</span>
                 </div>
               </div>
             </motion.div>
@@ -806,15 +811,20 @@ function DonationsTab({ temple }: { temple: Temple }) {
 function RenovationTab({ projects }: { projects: RenovationProject[] }) {
   const { lang } = useLang()
   const tr = T[lang]
+  const STATUS_LABELS: Record<string, string> = {
+    active:    tr.profile.statusActive,
+    completed: tr.profile.statusCompleted,
+    planned:   tr.profile.statusPlanned,
+  }
   if (projects.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
         <div className="w-16 h-16 rounded-full bg-light-violet flex items-center justify-center mb-4">
           <Hammer size={28} className="text-primary" />
         </div>
-        <h3 className="font-semibold text-[#111827] mb-1">No Active Projects</h3>
+        <h3 className="font-semibold text-[#111827] mb-1">{tr.profile.noRenovation}</h3>
         <p className="text-sm text-[#6B7280]">
-          There are no active renovation projects for this temple right now.
+          {tr.profile.noRenovationMsg}
         </p>
       </div>
     )
@@ -840,7 +850,7 @@ function RenovationTab({ projects }: { projects: RenovationProject[] }) {
               }
               size="sm"
             >
-              {project.status.charAt(0).toUpperCase() + project.status.slice(1)}
+              {STATUS_LABELS[project.status] ?? project.status}
             </Badge>
           </div>
 
@@ -901,7 +911,7 @@ function RenovationTab({ projects }: { projects: RenovationProject[] }) {
                 {project.sponsors.map((s) => (
                   <div key={s.id} className="flex items-center justify-between text-sm">
                     <span className={s.isAnonymous ? 'text-[#6B7280] italic' : 'text-[#111827]'}>
-                      {s.isAnonymous ? 'Anonymous Donor' : s.name}
+                      {s.isAnonymous ? tr.profile.anonymousDonor : s.name}
                     </span>
                     <span className="font-semibold text-primary">
                       {formatCurrency(s.amount)}
@@ -927,21 +937,21 @@ function HeritageTab({ temple }: { temple: Temple }) {
     {
       key:       'audio',
       label:     tr.profile.audioGuide,
-      desc:      "Guided narration about the temple's history and legends",
+      desc:      tr.profile.audioGuideDesc,
       icon:      <Volume2 size={20} className="text-primary" />,
       available: heritage.hasAudioGuide,
     },
     {
       key:       '360',
       label:     tr.profile.tour360,
-      desc:      'Walk through the entire temple complex virtually',
+      desc:      tr.profile.tour360Desc,
       icon:      <RotateCcw size={20} className="text-primary" />,
       available: heritage.has360Tour,
     },
     {
       key:       'drone',
       label:     tr.profile.droneView,
-      desc:      'Stunning aerial photography of the temple complex',
+      desc:      tr.profile.droneViewDesc,
       icon:      <Camera size={20} className="text-primary" />,
       available: heritage.hasDroneGallery,
     },
@@ -988,7 +998,7 @@ function HeritageTab({ temple }: { temple: Temple }) {
 
       {/* Explore CTA cards */}
       <section>
-        <h2 className="text-sm font-semibold text-[#111827] mb-3">Explore Digitally</h2>
+        <h2 className="text-sm font-semibold text-[#111827] mb-3">{tr.profile.exploreDigitally}</h2>
         <div className="space-y-3">
           {exploreItems.map((item) => (
             <motion.div
@@ -1007,11 +1017,11 @@ function HeritageTab({ temple }: { temple: Temple }) {
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-semibold text-[#111827]">{item.label}</p>
                 <p className="text-xs text-[#6B7280] mt-0.5">
-                  {item.available ? item.desc : 'Coming soon for this temple'}
+                  {item.available ? item.desc : tr.profile.comingSoon}
                 </p>
               </div>
               <Badge variant={item.available ? 'success' : 'ghost'} size="sm">
-                {item.available ? 'Available' : 'Soon'}
+                {item.available ? tr.profile.available : tr.profile.soon}
               </Badge>
             </motion.div>
           ))}
@@ -1204,11 +1214,11 @@ export default function TempleProfile() {
         <div className="w-16 h-16 rounded-full bg-red-50 flex items-center justify-center mb-4">
           <AlertCircle size={32} className="text-danger" />
         </div>
-        <h2 className="font-semibold text-[#111827] text-lg mb-2">Temple Not Found</h2>
+        <h2 className="font-semibold text-[#111827] text-lg mb-2">{tr.profile.notFound}</h2>
         <p className="text-sm text-[#6B7280] mb-5">
-          We couldn't find the temple you're looking for.
+          {tr.profile.notFoundMsg}
         </p>
-        <Button variant="primary" onClick={() => navigate(-1)}>Go Back</Button>
+        <Button variant="primary" onClick={() => navigate(-1)}>{tr.common.goBack}</Button>
       </div>
     )
   }
@@ -1292,7 +1302,7 @@ export default function TempleProfile() {
 
           <Badge variant={crowdBadgeVariant(temple.crowdLevel)} size="sm">
             <Users size={10} className="mr-1 inline" />
-            {temple.crowdLevel} Crowd
+            {temple.crowdLevel === 'Low' ? tr.card.quiet : temple.crowdLevel === 'Moderate' ? tr.card.moderate : tr.card.busy} {tr.profile.crowd}
           </Badge>
 
           <span
@@ -1310,12 +1320,12 @@ export default function TempleProfile() {
         {/* Row 2: Location + distance */}
         <div className="flex items-center gap-1.5 mt-2.5 text-sm text-[#6B7280]">
           <MapPin size={13} className="text-primary shrink-0" />
-          <span>{temple.city}, {lang === 'ta' ? (temple.districtTa || temple.district) : temple.district}, Tamil Nadu</span>
+          <span>{temple.city}, {lang === 'ta' ? (temple.districtTa || temple.district) : temple.district}, {tr.common.tamilNadu}</span>
           {temple.distanceKm !== undefined && temple.distanceKm > 0 && (
             <>
               <span className="text-[#ECECEC] select-none mx-0.5">·</span>
               <Navigation size={12} className="shrink-0" />
-              <span>{temple.distanceKm.toFixed(1)} km away</span>
+              <span>{temple.distanceKm.toFixed(1)} {tr.profile.nearbyKm}</span>
             </>
           )}
         </div>

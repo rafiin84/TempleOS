@@ -55,8 +55,8 @@ export default function MyTemple() {
   const [bookingFilter, setBookingFilter] = useState<BookingFilter>('all')
 
   const myTabs = [
-    { label: tr.myTemple.tabBookings,  value: 'upcoming'   },
-    { label: 'QR Tickets',             value: 'qr-tickets' },
+    { label: tr.myTemple.tabBookings,   value: 'upcoming'   },
+    { label: tr.myTemple.tabQRTickets, value: 'qr-tickets' },
     { label: tr.myTemple.tabPassport,  value: 'passport'   },
     { label: tr.myTemple.tabDonations, value: 'donations'  },
     { label: tr.myTemple.tabFollowing, value: 'following'  },
@@ -121,7 +121,7 @@ export default function MyTemple() {
               {user?.nameTa && (
                 <p className="text-sm text-primary font-medium">{user.nameTa}</p>
               )}
-              <p className="text-xs text-[#6B7280] mt-0.5">Member since {joinedDate}</p>
+              <p className="text-xs text-[#6B7280] mt-0.5">{tr.myTemple.memberSince} {joinedDate}</p>
             </div>
           </div>
 
@@ -131,7 +131,7 @@ export default function MyTemple() {
               { label: tr.myTemple.visited,   value: user?.passportEntries.length ?? 0 },
               { label: tr.myTemple.donations, value: formatCurrency(totalDonated) },
               { label: tr.myTemple.following, value: user?.following.length ?? 0 },
-              { label: 'Routes',              value: '1 started' },
+              { label: tr.myTemple.routes,   value: '1 started' },
             ].map(stat => (
               <div
                 key={stat.label}
@@ -171,7 +171,7 @@ export default function MyTemple() {
                         : 'bg-white border-[#ECECEC] text-[#6B7280]',
                     ].join(' ')}
                   >
-                    {f === 'all' ? 'All' : f.charAt(0).toUpperCase() + f.slice(1)}
+                    {f === 'all' ? tr.explore.all : f === 'confirmed' ? tr.booking.confirmed : tr.booking.pending}
                   </button>
                 ))}
               </div>
@@ -181,7 +181,7 @@ export default function MyTemple() {
                   <Calendar size={40} className="mx-auto mb-3 text-[#ECECEC]" />
                   <p className="text-sm text-[#6B7280] mb-4">{tr.myTemple.noBookings}</p>
                   <Link to="/bookings">
-                    <Button variant="primary" size="sm">Book a Pooja</Button>
+                    <Button variant="primary" size="sm">{tr.profile.bookPooja}</Button>
                   </Link>
                 </div>
               ) : (
@@ -199,7 +199,7 @@ export default function MyTemple() {
             <div className="space-y-5">
               {qrBookings.length === 0 ? (
                 <div className="text-center py-16">
-                  <p className="text-sm text-[#6B7280]">No QR tickets available</p>
+                  <p className="text-sm text-[#6B7280]">{tr.myTemple.noQRTickets}</p>
                 </div>
               ) : (
                 qrBookings.map(b => <QRCard key={b.id} booking={b} />)
@@ -214,17 +214,17 @@ export default function MyTemple() {
               <div className="grid grid-cols-2 gap-3 mb-5">
                 <div className="bg-white rounded-xl p-4 shadow-soft border border-[#ECECEC] text-center">
                   <p className="text-2xl font-black text-primary">{user?.passportEntries.length}</p>
-                  <p className="text-xs text-[#6B7280]">Temples Visited</p>
+                  <p className="text-xs text-[#6B7280]">{tr.myTemple.visited}</p>
                 </div>
                 <div className="bg-white rounded-xl p-4 shadow-soft border border-[#ECECEC] text-center">
                   <p className="text-2xl font-black text-primary">1</p>
-                  <p className="text-xs text-[#6B7280]">Route Started</p>
+                  <p className="text-xs text-[#6B7280]">{tr.myTemple.routeStarted}</p>
                 </div>
               </div>
 
               <Link to="/passport">
                 <Button variant="secondary" className="w-full mb-5">
-                  View Full Passport
+                  {tr.myTemple.viewPassport}
                 </Button>
               </Link>
 
@@ -257,7 +257,7 @@ export default function MyTemple() {
             <div>
               {/* Total */}
               <div className="bg-gradient-to-br from-primary-50 to-white rounded-xl p-5 mb-5 border border-primary/20 text-center">
-                <p className="text-xs text-[#6B7280] uppercase tracking-wider mb-1">Total Donated</p>
+                <p className="text-xs text-[#6B7280] uppercase tracking-wider mb-1">{tr.myTemple.totalDonated}</p>
                 <p className="text-4xl font-black text-primary">{formatCurrency(totalDonated)}</p>
               </div>
 
@@ -340,13 +340,13 @@ export default function MyTemple() {
                           </div>
                         </div>
                         <Badge variant={t.isOpen ? 'success' : 'danger'} size="sm">
-                          {t.isOpen ? 'Open' : 'Closed'}
+                          {t.isOpen ? tr.common.open : tr.common.closed}
                         </Badge>
                       </div>
                     ))}
                   </div>
                   <Link to="/explore">
-                    <Button variant="outline" className="w-full">Explore More</Button>
+                    <Button variant="outline" className="w-full">{tr.myTemple.exploreMore}</Button>
                   </Link>
                 </>
               )}
@@ -357,15 +357,15 @@ export default function MyTemple() {
           {activeTab === 'journey' && (
             <div>
               <h2 className="text-base font-bold text-[#111827] mb-4">
-                Your 2026 Temple Journey
+                {tr.myTemple.journeyTitle}
               </h2>
 
               {/* Summary stats */}
               <div className="grid grid-cols-3 gap-3 mb-6">
                 {[
-                  { value: user?.passportEntries.length ?? 0, label: 'Temples' },
-                  { value: '2',                                label: 'Months' },
-                  { value: '1 started',                        label: 'Route' },
+                  { value: user?.passportEntries.length ?? 0, label: tr.common.temples },
+                  { value: '2',                                label: tr.myTemple.months },
+                  { value: '1 started',                        label: tr.myTemple.routes },
                 ].map(s => (
                   <div key={s.label} className="bg-white rounded-xl p-3 shadow-soft border border-[#ECECEC] text-center">
                     <p className="text-lg font-black text-primary">{s.value}</p>
@@ -376,7 +376,7 @@ export default function MyTemple() {
 
               {/* Monthly bar chart */}
               <div className="bg-white rounded-xl p-5 border border-[#ECECEC] shadow-soft mb-5">
-                <p className="text-sm font-semibold text-[#111827] mb-5">Monthly Visits</p>
+                <p className="text-sm font-semibold text-[#111827] mb-5">{tr.myTemple.monthlyVisits}</p>
                 <div className="flex items-end gap-3 h-20">
                   {MONTHS.map((month, i) => {
                     const count = monthlyVisits[i] ?? 0
@@ -401,7 +401,7 @@ export default function MyTemple() {
 
               {/* Favorite temple */}
               <div className="bg-white rounded-xl p-4 border border-[#ECECEC] shadow-soft mb-5">
-                <p className="text-xs text-[#6B7280] mb-1">Favourite Temple</p>
+                <p className="text-xs text-[#6B7280] mb-1">{tr.myTemple.favouriteTemple}</p>
                 <p className="text-sm font-semibold text-[#111827]">Meenakshi Amman Temple</p>
                 <p className="text-xs text-primary">Most visited in 2026</p>
               </div>
@@ -413,7 +413,7 @@ export default function MyTemple() {
                 className="w-full"
                 onClick={() => alert('Journey PDF download coming soon!')}
               >
-                Download Journey
+                {tr.myTemple.downloadJourney}
               </Button>
             </div>
           )}

@@ -42,21 +42,27 @@ const WORKS = [
   {
     id: 1,
     title: 'Restoring sacred heritage',
+    titleTa: 'புனித மரபை புனரமைத்தல்',
     sub: 'Gopuram conservation · Madurai',
+    subTa: 'கோபுர பாதுகாப்பு · மதுரை',
     status: 'completed',
     image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Meenakshi_Amman_Temple_at_night.jpg/1280px-Meenakshi_Amman_Temple_at_night.jpg',
   },
   {
     id: 2,
     title: 'Better facilities for devotees',
+    titleTa: 'பக்தர்களுக்கு சிறந்த வசதிகள்',
     sub: 'Pilgrim amenities · Rameswaram',
+    subTa: 'யாத்ரீக வசதிகள் · இராமேஸ்வரம்',
     status: 'completed',
     image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Ramanathaswamy_temple7.JPG/1280px-Ramanathaswamy_temple7.JPG',
   },
   {
     id: 3,
     title: 'Reviving temple tanks',
+    titleTa: 'கோயில் குளங்களை புதுப்பித்தல்',
     sub: 'Water conservation · Thanjavur',
+    subTa: 'நீர் பாதுகாப்பு · தஞ்சாவூர்',
     status: 'ongoing',
     image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Brihadisvara_Temple%2C_Thanjavur%2C_Tamil_Nadu%2C_India_%282017%29.jpg/1280px-Brihadisvara_Temple%2C_Thanjavur%2C_Tamil_Nadu%2C_India_%282017%29.jpg',
   },
@@ -138,6 +144,7 @@ function LiveFestivalCard({ festival }: { festival: Festival }) {
   const [imgErr, setImgErr] = useState(false);
   const [thumbErr, setThumbErr] = useState(false);
   const { lang } = useLang();
+  const tr = T[lang];
 
   return (
     <motion.div
@@ -165,7 +172,7 @@ function LiveFestivalCard({ festival }: { festival: Festival }) {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-white" />
             </span>
-            LIVE NOW
+            {tr.common.liveNow}
           </span>
         </div>
 
@@ -813,7 +820,7 @@ export default function Home() {
               to="/explore"
               className="inline-flex items-center gap-2 bg-white text-primary text-sm font-bold px-7 py-3.5 rounded-xl hover:bg-primary-50 transition-colors duration-150 select-none shadow-lg"
             >
-              Explore All Temples
+              {tr.home.exploreAll}
               <ArrowRight size={16} />
             </Link>
           </motion.div>
@@ -862,8 +869,8 @@ export default function Home() {
                   </span>
                 </div>
                 <div className="absolute bottom-0 left-0 right-0 p-4">
-                  <p className="text-white font-bold text-lg leading-tight">{w.title}</p>
-                  <p className="text-white/70 text-xs mt-1">{w.sub}</p>
+                  <p className="text-white font-bold text-lg leading-tight">{lang === 'ta' ? w.titleTa : w.title}</p>
+                  <p className="text-white/70 text-xs mt-1">{lang === 'ta' ? w.subTa : w.sub}</p>
                 </div>
               </motion.div>
             ))}

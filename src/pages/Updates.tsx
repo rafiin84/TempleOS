@@ -28,6 +28,8 @@ const FILTERS: FilterDef[] = [
 
 /* ─── Pull-to-refresh banner ───────────────────────────────────────────────── */
 function RefreshBanner({ onRefresh }: { onRefresh: () => void }) {
+  const { lang } = useLang()
+  const tr = T[lang]
   return (
     <AnimatePresence>
       <motion.div
@@ -41,7 +43,7 @@ function RefreshBanner({ onRefresh }: { onRefresh: () => void }) {
           className="w-full flex items-center justify-center gap-2 py-2 text-xs font-semibold text-primary bg-light-violet rounded-lg border border-primary/20"
         >
           <RefreshCw size={12} />
-          New updates available — tap to refresh
+          {tr.updates.newAvailable}
         </button>
       </motion.div>
     </AnimatePresence>
@@ -50,6 +52,8 @@ function RefreshBanner({ onRefresh }: { onRefresh: () => void }) {
 
 /* ─── Empty state ──────────────────────────────────────────────────────────── */
 function EmptyState({ filter, onClear }: { filter: FilterType; onClear: () => void }) {
+  const { lang } = useLang()
+  const tr = T[lang]
   const filterLabel = FILTERS.find(f => f.value === filter)?.label.toLowerCase() ?? ''
 
   return (
@@ -62,11 +66,11 @@ function EmptyState({ filter, onClear }: { filter: FilterType; onClear: () => vo
         <Bell size={26} className="text-primary/40" />
       </div>
       <div>
-        <p className="text-sm font-semibold text-[#111827]">No updates here</p>
+        <p className="text-sm font-semibold text-[#111827]">{tr.updates.empty}</p>
         <p className="text-xs text-[#6B7280] mt-1">
           {filter === 'all'
-            ? 'Check back later for new updates'
-            : `No ${filterLabel} updates right now`}
+            ? tr.updates.emptyAll
+            : `${tr.updates.empty}: ${filterLabel}`}
         </p>
       </div>
       {filter !== 'all' && (
@@ -74,7 +78,7 @@ function EmptyState({ filter, onClear }: { filter: FilterType; onClear: () => vo
           onClick={onClear}
           className="text-xs text-primary font-semibold hover:underline"
         >
-          Show all updates
+          {tr.updates.showAll}
         </button>
       )}
     </motion.div>
@@ -269,7 +273,7 @@ export default function Updates() {
             {/* End of feed */}
             {!hasMore && !loadingMore && allItems.length > 3 && (
               <p className="text-center text-[11px] text-[#6B7280] py-4 font-medium tracking-wide">
-                — You're all caught up —
+                {tr.updates.allCaughtUp}
               </p>
             )}
           </>
