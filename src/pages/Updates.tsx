@@ -34,7 +34,7 @@ function RefreshBanner({ onRefresh }: { onRefresh: () => void }) {
         initial={{ opacity: 0, y: -8 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -8 }}
-        className="max-w-4xl mx-auto px-4"
+        className="max-w-3xl mx-auto px-4"
       >
         <button
           onClick={onRefresh}
@@ -167,7 +167,7 @@ export default function Updates() {
 
       {/* ── Sticky header + filter pills ── */}
       <div className="sticky top-0 z-20 bg-surface border-b border-[#ECECEC] shadow-soft">
-        <div className="max-w-4xl mx-auto px-4 pt-4 pb-2 flex items-center justify-between">
+        <div className="max-w-3xl mx-auto px-4 pt-4 pb-2 flex items-center justify-between">
           <div>
             <h1 className="text-xl font-bold text-[#111827]">{tr.updates.title}</h1>
             <p className="text-[11px] text-[#6B7280] mt-0.5">{tr.updates.subtitle}</p>
@@ -229,7 +229,7 @@ export default function Updates() {
       )}
 
       {/* ── Feed list ── */}
-      <div className="max-w-4xl mx-auto px-4 pt-4 pb-10 flex flex-col gap-3">
+      <div className="max-w-3xl mx-auto px-4 pt-4 pb-10 flex flex-col gap-3">
 
         {loading ? (
           <Skeleton variant="card" count={4} />
