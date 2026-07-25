@@ -113,9 +113,11 @@ export interface Booking {
   id: string
   templeId: string
   templeName: string
+  templeNameTa?: string
   templeImage: string
   poojaId: string
   poojaName: string
+  poojaNameTa?: string
   date: string
   slot: string
   persons: number

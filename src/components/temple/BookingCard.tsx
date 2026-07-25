@@ -11,6 +11,8 @@ import {
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import type { Booking, BookingStatus } from '@/types';
+import { useLang } from '@/contexts/LanguageContext';
+import { T } from '@/i18n/translations';
 
 type ClassValue = string | undefined | null | false;
 function cn(...classes: ClassValue[]): string {
@@ -24,12 +26,12 @@ interface StatusConfig {
   dot:     string; // tailwind text color for dot
 }
 
-const STATUS_CONFIG: Record<BookingStatus, StatusConfig> = {
-  confirmed: { label: 'Confirmed', variant: 'success', dot: 'text-success' },
-  pending:   { label: 'Pending',   variant: 'warning', dot: 'text-warning' },
-  cancelled: { label: 'Cancelled', variant: 'danger',  dot: 'text-danger'  },
-  completed: { label: 'Completed', variant: 'ghost',   dot: 'text-[#6B7280]' },
-  scanned:   { label: 'Scanned',   variant: 'primary', dot: 'text-primary'  },
+const STATUS_CONFIG: Record<BookingStatus, StatusConfig & { labelTa: string }> = {
+  confirmed: { label: 'Confirmed', labelTa: 'உறுதிப்படுத்தப்பட்டது', variant: 'success', dot: 'text-success' },
+  pending:   { label: 'Pending',   labelTa: 'நிலுவையில் உள்ளது',     variant: 'warning', dot: 'text-warning' },
+  cancelled: { label: 'Cancelled', labelTa: 'ரத்து செய்யப்பட்டது',   variant: 'danger',  dot: 'text-danger'  },
+  completed: { label: 'Completed', labelTa: 'முடிந்தது',              variant: 'ghost',   dot: 'text-[#6B7280]' },
+  scanned:   { label: 'Scanned',   labelTa: 'ஸ்கேன் செய்யப்பட்டது', variant: 'primary', dot: 'text-primary'  },
 };
 
 /* ─── Temple image ─────────────────────────────────────────────────────────── */
@@ -63,10 +65,12 @@ interface BookingCardProps {
 }
 
 export function BookingCard({ booking, onViewQR }: BookingCardProps) {
+  const { lang } = useLang();
+  const tr = T[lang];
   const statusCfg = STATUS_CONFIG[booking.status];
   const isCancelled = booking.status === 'cancelled';
 
-  const formattedDate = new Date(booking.date).toLocaleDateString('en-IN', {
+  const formattedDate = new Date(booking.date).toLocaleDateString(lang === 'ta' ? 'ta-IN' : 'en-IN', {
     weekday: 'short',
     year:    'numeric',
     month:   'short',
@@ -103,15 +107,15 @@ export function BookingCard({ booking, onViewQR }: BookingCardProps) {
             <div className="flex items-start justify-between gap-2">
               <div className="min-w-0">
                 <p className="text-sm font-semibold text-[#111827] line-clamp-1">
-                  {booking.templeName}
+                  {lang === 'ta' ? (booking.templeNameTa || booking.templeName) : booking.templeName}
                 </p>
                 <p className="text-xs text-primary font-medium mt-0.5 line-clamp-1">
-                  {booking.poojaName}
+                  {lang === 'ta' ? (booking.poojaNameTa || booking.poojaName) : booking.poojaName}
                 </p>
               </div>
               <Badge variant={statusCfg.variant} size="sm" className="shrink-0">
                 <span className={cn('mr-1', statusCfg.dot)}>●</span>
-                {statusCfg.label}
+                {lang === 'ta' ? statusCfg.labelTa : statusCfg.label}
               </Badge>
             </div>
 
@@ -134,7 +138,7 @@ export function BookingCard({ booking, onViewQR }: BookingCardProps) {
             {booking.slot}
           </InfoRow>
           <InfoRow icon={<Users size={12} />}>
-            {booking.persons} {booking.persons === 1 ? 'Person' : 'Persons'}
+            {booking.persons} {booking.persons === 1 ? tr.booking.person : tr.booking.persons}
           </InfoRow>
           <InfoRow icon={<IndianRupee size={12} />}>
             {booking.totalAmount.toLocaleString('en-IN')}
@@ -153,7 +157,7 @@ export function BookingCard({ booking, onViewQR }: BookingCardProps) {
               onClick={onViewQR}
               className="w-full justify-between"
             >
-              <span className="flex-1 text-left">View QR Ticket</span>
+              <span className="flex-1 text-left">{lang === 'ta' ? 'QR டிக்கெட் காண்க' : 'View QR Ticket'}</span>
               <ChevronRight size={14} className="text-primary opacity-60" />
             </Button>
           </>
