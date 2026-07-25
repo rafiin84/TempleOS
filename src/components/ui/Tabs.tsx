@@ -25,7 +25,7 @@ export function Tabs({ tabs, value, onChange, className, wrap }: TabsProps) {
     <div
       className={cn(
         'flex items-end gap-0 border-b border-[#ECECEC]',
-        wrap ? 'flex-wrap' : 'overflow-x-auto',
+        !wrap && 'overflow-x-auto',
         className,
       )}
     >
@@ -39,7 +39,7 @@ export function Tabs({ tabs, value, onChange, className, wrap }: TabsProps) {
               'relative py-2 transition-colors duration-150 outline-none',
               'focus-visible:ring-2 focus-visible:ring-primary/30 rounded-t-sm',
               wrap
-                ? 'px-2.5 text-xs font-medium flex-1 min-w-[18%] text-center'
+                ? 'px-1 text-[10px] font-medium flex-1 min-w-0 text-center leading-tight'
                 : 'px-4 text-sm font-medium whitespace-nowrap shrink-0',
               isActive ? 'text-primary' : 'text-[#6B7280] hover:text-[#111827]',
             )}
