@@ -412,7 +412,7 @@ export default function Home() {
         {/* Bottom fade into page background */}
         <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-background to-transparent" />
 
-        <div className="relative max-w-5xl mx-auto px-4 md:px-6 py-20 md:py-36 text-center flex flex-col items-center">
+        <div className="relative max-w-6xl mx-auto px-4 md:px-6 py-20 md:py-36 text-center flex flex-col items-center">
 
           {/* Platform pill */}
           <motion.div
@@ -440,7 +440,7 @@ export default function Home() {
             custom={0.1}
             className="font-extrabold text-white tracking-tight leading-[0.95] mb-5 select-none whitespace-pre-line"
             style={{
-              fontSize: 'clamp(3.5rem, 10vw, 6.5rem)',
+              fontSize: 'clamp(2.6rem, 5.5vw, 5rem)',
               textShadow: '0 2px 20px rgba(0,0,0,0.4)',
             }}
           >
