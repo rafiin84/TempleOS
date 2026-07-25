@@ -117,8 +117,10 @@ export default function MyTemple() {
           <div className="flex items-start gap-4 mb-5">
             <Avatar src={user?.avatar} name={user?.name} size="lg" />
             <div className="flex-1 min-w-0">
-              <h1 className="text-lg font-bold text-[#111827] leading-tight">{user?.name}</h1>
-              {user?.nameTa && (
+              <h1 className="text-lg font-bold text-[#111827] leading-tight">
+                {lang === 'ta' ? (user?.nameTa || user?.name) : user?.name}
+              </h1>
+              {user?.nameTa && lang === 'en' && (
                 <p className="text-sm text-primary font-medium">{user.nameTa}</p>
               )}
               <p className="text-xs text-[#6B7280] mt-0.5">{tr.myTemple.memberSince} {joinedDate}</p>
