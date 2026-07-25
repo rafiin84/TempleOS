@@ -30,12 +30,12 @@ const fadeUp = {
 
 /* ─── Static data ─────────────────────────────────────────────────────────── */
 const QUICK_CATS = [
-  { label: 'Shiva',      emoji: '🔱' },
-  { label: 'Vishnu',     emoji: '🪷' },
-  { label: 'Murugan',    emoji: '🦚' },
-  { label: 'Amman',      emoji: '🙏' },
-  { label: 'Navagraha',  emoji: '⭐' },
-  { label: 'Heritage',   emoji: '🏛️' },
+  { label: 'Shiva',      labelTa: 'சிவன்',      emoji: '🔱' },
+  { label: 'Vishnu',     labelTa: 'விஷ்ணு',     emoji: '🪷' },
+  { label: 'Murugan',    labelTa: 'முருகன்',    emoji: '🦚' },
+  { label: 'Amman',      labelTa: 'அம்மன்',     emoji: '🙏' },
+  { label: 'Navagraha',  labelTa: 'நவகிரகம்',  emoji: '⭐' },
+  { label: 'Heritage',   labelTa: 'பாரம்பரியம்', emoji: '🏛️' },
 ];
 
 const WORKS = [
@@ -69,14 +69,14 @@ const WORKS = [
 ];
 
 const DEITY_GRID = [
-  { label: 'Shiva',       emoji: '🔱', category: 'Shiva',       bgClass: 'bg-violet-50',  emojiSize: 'text-3xl' },
-  { label: 'Vishnu',      emoji: '🪷', category: 'Vishnu',      bgClass: 'bg-blue-50',    emojiSize: 'text-3xl' },
-  { label: 'Murugan',     emoji: '🦚', category: 'Murugan',     bgClass: 'bg-orange-50',  emojiSize: 'text-3xl' },
-  { label: 'Amman',       emoji: '🙏', category: 'Amman',       bgClass: 'bg-rose-50',    emojiSize: 'text-3xl' },
-  { label: 'Ganesha',     emoji: '🐘', category: 'Ganesha',     bgClass: 'bg-amber-50',   emojiSize: 'text-3xl' },
-  { label: 'Navagraha',   emoji: '⭐', category: 'Navagraha',   bgClass: 'bg-cyan-50',    emojiSize: 'text-3xl' },
-  { label: 'Divya Desam', emoji: '🏛️', category: 'Divya Desam', bgClass: 'bg-emerald-50', emojiSize: 'text-3xl' },
-  { label: 'Heritage',    emoji: '🗺️', category: 'Heritage',    bgClass: 'bg-primary-50', emojiSize: 'text-3xl' },
+  { label: 'Shiva',       labelTa: 'சிவன்',        emoji: '🔱', category: 'Shiva',       bgClass: 'bg-violet-50',  emojiSize: 'text-3xl' },
+  { label: 'Vishnu',      labelTa: 'விஷ்ணு',       emoji: '🪷', category: 'Vishnu',      bgClass: 'bg-blue-50',    emojiSize: 'text-3xl' },
+  { label: 'Murugan',     labelTa: 'முருகன்',      emoji: '🦚', category: 'Murugan',     bgClass: 'bg-orange-50',  emojiSize: 'text-3xl' },
+  { label: 'Amman',       labelTa: 'அம்மன்',       emoji: '🙏', category: 'Amman',       bgClass: 'bg-rose-50',    emojiSize: 'text-3xl' },
+  { label: 'Ganesha',     labelTa: 'கணேசன்',       emoji: '🐘', category: 'Ganesha',     bgClass: 'bg-amber-50',   emojiSize: 'text-3xl' },
+  { label: 'Navagraha',   labelTa: 'நவகிரகம்',     emoji: '⭐', category: 'Navagraha',   bgClass: 'bg-cyan-50',    emojiSize: 'text-3xl' },
+  { label: 'Divya Desam', labelTa: 'திவ்ய தேசம்',  emoji: '🏛️', category: 'Divya Desam', bgClass: 'bg-emerald-50', emojiSize: 'text-3xl' },
+  { label: 'Heritage',    labelTa: 'பாரம்பரியம்',  emoji: '🗺️', category: 'Heritage',    bgClass: 'bg-primary-50', emojiSize: 'text-3xl' },
 ];
 
 
@@ -543,7 +543,7 @@ export default function Home() {
                   boxShadow: '0 1px 4px rgba(0,0,0,0.2)',
                 }}
               >
-                {cat.emoji} {cat.label}
+                {cat.emoji} {lang === 'ta' ? cat.labelTa : cat.label}
               </button>
             ))}
           </motion.div>
@@ -741,7 +741,7 @@ export default function Home() {
                   <span className={cn('leading-none', item.emojiSize)}>{item.emoji}</span>
                 </div>
                 <span className="text-[10px] md:text-[11px] font-semibold text-[#374151] text-center leading-tight">
-                  {item.label}
+                  {lang === 'ta' ? item.labelTa : item.label}
                 </span>
               </motion.button>
             ))}
