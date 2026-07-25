@@ -80,20 +80,30 @@ export default function Header() {
       </nav>
 
       <div className="flex-none flex items-center gap-1">
-        {/* Language toggle */}
+        {/* Language toggle pill */}
         <button
           type="button"
           onClick={toggle}
           aria-label={`Switch to ${lang === 'en' ? 'Tamil' : 'English'}`}
-          className={cn(
-            'inline-flex items-center justify-center gap-1.5 h-9 px-3 rounded-md',
-            'text-sm font-semibold transition-colors duration-150',
-            'border border-[#ECECEC] hover:border-primary/40 hover:text-primary hover:bg-light-violet',
-            lang === 'ta' ? 'text-primary bg-light-violet border-primary/30' : 'text-[#6B7280]',
-          )}
+          className="relative inline-flex items-center h-9 rounded-full border border-[#ECECEC] bg-[#F5F3FF] p-1 gap-0 transition-colors duration-150 hover:border-primary/40"
         >
-          <Globe size={15} className="shrink-0" />
-          <span>{tr.nav.langLabel}</span>
+          <span className={cn(
+            'relative z-10 px-3 py-1 rounded-full text-xs font-semibold transition-colors duration-200',
+            lang === 'ta' ? 'text-white' : 'text-[#6B7280]',
+          )}>
+            த
+          </span>
+          <span className={cn(
+            'relative z-10 px-3 py-1 rounded-full text-xs font-semibold transition-colors duration-200',
+            lang === 'en' ? 'text-white' : 'text-[#6B7280]',
+          )}>
+            EN
+          </span>
+          {/* Sliding pill */}
+          <span
+            className="absolute top-1 bottom-1 w-[calc(50%-4px)] rounded-full bg-primary transition-all duration-200"
+            style={{ left: lang === 'ta' ? '4px' : 'calc(50%)' }}
+          />
         </button>
 
         <Button variant="primary" size="sm">{tr.nav.signIn}</Button>

@@ -14,6 +14,7 @@ const EN = {
   },
   home: {
     tagline: 'Official HR&CE Digital Platform · Tamil Nadu',
+    heroTitle: "Discover Tamil Nadu's Sacred Temples",
     subtitle: "Discover Tamil Nadu's Sacred Temples",
     stats1: '38,407 temples',
     stats2: '32 districts',
@@ -49,6 +50,11 @@ const EN = {
     days: 'days',
     temples: 'temples',
     km: 'km',
+    worksEyebrow: 'Work on the Ground',
+    worksTitle: 'Every effort tells a story',
+    worksViewAll: 'View all works →',
+    worksCompleted: 'Completed',
+    worksOngoing: 'Ongoing',
   },
   explore: {
     title: 'Explore Temples',
@@ -239,6 +245,7 @@ const TA: typeof EN = {
   },
   home: {
     tagline: 'அரசு HR&CE டிஜிட்டல் தளம் · தமிழ்நாடு',
+    heroTitle: 'அனைவரும் வருக',
     subtitle: 'தமிழ்நாட்டின் புனிதத் தலங்களை கண்டறியுங்கள்',
     stats1: '38,407 கோயில்கள்',
     stats2: '32 மாவட்டங்கள்',
@@ -274,6 +281,11 @@ const TA: typeof EN = {
     days: 'நாட்கள்',
     temples: 'கோயில்கள்',
     km: 'கி.மீ',
+    worksEyebrow: 'களப் பணிகள்',
+    worksTitle: 'ஒவ்வொரு முயற்சியும் ஒரு கதை சொல்கிறது',
+    worksViewAll: 'அனைத்து பணிகளும் காண →',
+    worksCompleted: 'நிறைவு செய்யப்பட்டது',
+    worksOngoing: 'நடைபெற்றுக்கொண்டிருக்கிறது',
   },
   explore: {
     title: 'கோயில்களை தேடுக',

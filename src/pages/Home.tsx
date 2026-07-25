@@ -38,6 +38,30 @@ const QUICK_CATS = [
   { label: 'Heritage',   emoji: '🏛️' },
 ];
 
+const WORKS = [
+  {
+    id: 1,
+    title: 'Restoring sacred heritage',
+    sub: 'Gopuram conservation · Madurai',
+    status: 'completed',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Meenakshi_Amman_Temple_at_night.jpg/1280px-Meenakshi_Amman_Temple_at_night.jpg',
+  },
+  {
+    id: 2,
+    title: 'Better facilities for devotees',
+    sub: 'Pilgrim amenities · Rameswaram',
+    status: 'completed',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Ramanathaswamy_Temple_Corridor.jpg/1280px-Ramanathaswamy_Temple_Corridor.jpg',
+  },
+  {
+    id: 3,
+    title: 'Reviving temple tanks',
+    sub: 'Water conservation · Thanjavur',
+    status: 'ongoing',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Brihadisvara_Temple_during_Maha_Shivaratri-WUS03611_%28edit%29.jpg/1280px-Brihadisvara_Temple_during_Maha_Shivaratri-WUS03611_%28edit%29.jpg',
+  },
+];
+
 const DEITY_GRID = [
   { label: 'Shiva',       emoji: '🔱', category: 'Shiva',       bgClass: 'bg-violet-50',  emojiSize: 'text-3xl' },
   { label: 'Vishnu',      emoji: '🪷', category: 'Vishnu',      bgClass: 'bg-blue-50',    emojiSize: 'text-3xl' },
@@ -407,7 +431,7 @@ export default function Home() {
             {tr.home.tagline}
           </motion.div>
 
-          {/* Tamil headline */}
+          {/* Hero headline */}
           <motion.h1
             variants={fadeUp}
             initial="hidden"
@@ -419,9 +443,7 @@ export default function Home() {
               textShadow: '0 2px 20px rgba(0,0,0,0.4)',
             }}
           >
-            அனைவரும்
-            <br />
-            வருக
+            {tr.home.heroTitle}
           </motion.h1>
 
           {/* English subtitle */}
@@ -792,6 +814,57 @@ export default function Home() {
               <ArrowRight size={16} />
             </Link>
           </motion.div>
+        </div>
+      </section>
+
+      {/* ── Work on the Ground ── */}
+      <section className="py-14 bg-white">
+        <div className="max-w-6xl mx-auto px-4 md:px-8">
+          <div className="flex items-end justify-between mb-8">
+            <SectionHeader
+              eyebrow={tr.home.worksEyebrow}
+              title={tr.home.worksTitle}
+              className="mb-0"
+            />
+            <Link to="/updates" className="text-sm font-semibold text-primary hover:underline shrink-0 ml-4">
+              {tr.home.worksViewAll}
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {WORKS.map((w, i) => (
+              <motion.div
+                key={w.id}
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                custom={i * 0.08}
+                className="relative rounded-2xl overflow-hidden aspect-[4/3] group cursor-pointer"
+              >
+                <img
+                  src={w.image}
+                  alt={w.title}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0f0c29cc] via-[#1a1a3a55] to-transparent" />
+                <div className="absolute top-3 left-3">
+                  <span className={cn(
+                    'text-[11px] font-semibold px-2.5 py-1 rounded-full',
+                    w.status === 'completed'
+                      ? 'bg-white/90 text-green-700'
+                      : 'bg-amber-400/90 text-amber-900',
+                  )}>
+                    {w.status === 'completed' ? tr.home.worksCompleted : tr.home.worksOngoing}
+                  </span>
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 p-4">
+                  <p className="text-white font-bold text-lg leading-tight">{w.title}</p>
+                  <p className="text-white/70 text-xs mt-1">{w.sub}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
