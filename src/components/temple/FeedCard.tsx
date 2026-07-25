@@ -136,7 +136,7 @@ export function FeedCard({ item }: FeedCardProps) {
   const { lang } = useLang();
   const config = TYPE_CONFIG[item.type] ?? TYPE_CONFIG.announcement;
   const templeName = lang === 'ta'
-    ? (item.temple?.nameTa || item.temple?.name || item.templeName)
+    ? (item.temple?.nameTa || item.templeNameTa || item.temple?.name || item.templeName)
     : (item.temple?.name ?? item.templeName);
 
   return (

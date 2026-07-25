@@ -93,6 +93,7 @@ export interface FeedItem {
   temple?: Temple
   templeId?: string
   templeName?: string
+  templeNameTa?: string
   districtId?: string
   title: string
   titleTa?: string
