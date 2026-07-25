@@ -52,6 +52,36 @@ function facilityIcon(name: string): string {
   return FACILITY_ICONS[name] ?? '✓'
 }
 
+const FACILITY_TA: Record<string, string> = {
+  'Prasad Counter':              'பிரசாத கவுண்டர்',
+  'Wheelchair Access':           'சக்கர நாற்காலி அணுகல்',
+  'Free Parking':                'இலவச பார்க்கிங்',
+  'Paid Parking':                'கட்டண பார்க்கிங்',
+  'Cloak Room':                  'உடைமை அறை',
+  'Drinking Water':              'குடிநீர்',
+  'Restrooms':                   'கழிவறைகள்',
+  'Photography Allowed':         'புகைப்படம் எடுக்கலாம்',
+  'Gift Shop':                   'பரிசுப் பொருள் கடை',
+  'Rope Car':                    'கயிறு கார்',
+  'Winch Car':                   'வின்ச் கார்',
+  'Theertham (22 Sacred Wells)': 'தீர்த்தம் (22 புனித கிணறுகள்)',
+}
+
+const CATEGORY_TA: Record<string, string> = {
+  'Shiva':               'சிவன்',
+  'Vishnu':              'விஷ்ணு',
+  'Murugan':             'முருகன்',
+  'Amman':               'அம்மன்',
+  'Ganesha':             'கணேசன்',
+  'Navagraha':           'நவகிரகம்',
+  'Divya Desam':         'திவ்ய தேசம்',
+  'Arupadai Veedu':      'அறுபடை வீடு',
+  'Padal Petra Sthalam': 'பாடல் பெற்ற தலம்',
+  'Heritage':            'பாரம்பரியம்',
+  'Hill Temple':         'மலைக் கோயில்',
+  'Shore Temple':        'கடற்கரை கோயில்',
+}
+
 function crowdBadgeVariant(level: string): 'success' | 'warning' | 'danger' {
   if (level === 'Low')      return 'success'
   if (level === 'Moderate') return 'warning'
@@ -200,7 +230,7 @@ function OverviewTab({ temple }: { temple: Temple }) {
           <h2 className="text-sm font-semibold text-[#111827] mb-2">{tr.profile.categories}</h2>
           <div className="flex flex-wrap gap-2">
             {temple.categories.map((c) => (
-              <Badge key={c} variant="primary">{c}</Badge>
+              <Badge key={c} variant="primary">{lang === 'ta' ? (CATEGORY_TA[c] || c) : c}</Badge>
             ))}
           </div>
         </section>
@@ -217,7 +247,7 @@ function OverviewTab({ temple }: { temple: Temple }) {
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-light-violet text-xs font-medium text-primary"
               >
                 <span aria-hidden="true">{facilityIcon(f)}</span>
-                {f}
+                {lang === 'ta' ? (FACILITY_TA[f] || f) : f}
               </span>
             ))}
           </div>
