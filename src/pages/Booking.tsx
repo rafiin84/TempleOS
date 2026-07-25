@@ -21,7 +21,7 @@ function cn(...c: (string | undefined | false | null)[]): string {
 /* ─── Step indicator ─────────────────────────────────────────────────────── */
 function StepIndicator({ step, labels }: { step: number; labels: string[] }) {
   return (
-    <div className="flex items-center justify-center px-4 py-3 overflow-x-auto scrollbar-hide gap-0 max-w-lg mx-auto w-full">
+    <div className="flex items-center justify-center px-4 py-3 overflow-x-auto scrollbar-hide gap-0 max-w-2xl mx-auto w-full">
       {labels.map((label, i) => {
         const num    = i + 1
         const active = num === step
@@ -394,7 +394,7 @@ export default function Booking() {
             exit="exit"
             className="w-full"
           >
-            <div className="max-w-lg mx-auto px-4 pt-6 pb-12">
+            <div className="max-w-2xl mx-auto px-4 pt-6 pb-12">
 
               {/* ═══════════════════════════════════════════════════════════
                   STEP 1 — Choose Temple
