@@ -155,9 +155,9 @@ function OverviewTab({ temple }: { temple: Temple }) {
   const { lang } = useLang()
   const tr = T[lang]
   const facts = [
-    { label: tr.profile.yearBuilt,  value: temple.yearBuilt },
-    { label: tr.profile.dynasty,    value: temple.dynasty },
-    { label: tr.profile.style,      value: temple.architecturalStyle },
+    { label: tr.profile.yearBuilt,  value: lang === 'ta' ? (temple.yearBuiltTa || temple.yearBuilt) : temple.yearBuilt },
+    { label: tr.profile.dynasty,    value: lang === 'ta' ? (temple.dynastyTa || temple.dynasty) : temple.dynasty },
+    { label: tr.profile.style,      value: lang === 'ta' ? (temple.architecturalStyleTa || temple.architecturalStyle) : temple.architecturalStyle },
     { label: tr.profile.visitCount, value: formatNumber(temple.visitCount) },
     { label: tr.profile.followers,  value: formatNumber(temple.followCount) },
     { label: tr.profile.reviews,    value: formatNumber(temple.reviewCount) },
@@ -1281,13 +1281,13 @@ export default function TempleProfile() {
           <p className="text-white/80 text-sm mt-0.5">{lang === 'ta' ? (temple.deityTa || temple.deity) : temple.deity}</p>
           <div className="flex flex-wrap gap-2 mt-2.5">
             <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-white/15 backdrop-blur-sm border border-white/40 text-white text-xs font-medium">
-              {temple.dynasty}
+              {lang === 'ta' ? (temple.dynastyTa || temple.dynasty) : temple.dynasty}
             </span>
             <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-white/15 backdrop-blur-sm border border-white/40 text-white text-xs font-medium">
-              {temple.yearBuilt}
+              {lang === 'ta' ? (temple.yearBuiltTa || temple.yearBuilt) : temple.yearBuilt}
             </span>
             <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-white/15 backdrop-blur-sm border border-white/40 text-white text-xs font-medium">
-              {temple.architecturalStyle}
+              {lang === 'ta' ? (temple.architecturalStyleTa || temple.architecturalStyle) : temple.architecturalStyle}
             </span>
           </div>
         </div>

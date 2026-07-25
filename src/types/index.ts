@@ -25,8 +25,11 @@ export interface Temple {
   categories: TempleCategory[]
   heritage: Heritage
   dynasty: string
+  dynastyTa?: string
   yearBuilt: string
+  yearBuiltTa?: string
   architecturalStyle: string
+  architecturalStyleTa?: string
   location: { lat: number; lng: number }
   isOpen: boolean
   crowdLevel: CrowdLevel
