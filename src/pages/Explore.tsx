@@ -109,6 +109,8 @@ function MapMarker({
   onClick: () => void;
   style: React.CSSProperties;
 }) {
+  const { lang } = useLang();
+  const tr = T[lang];
   return (
     <motion.button
       onClick={onClick}
@@ -140,11 +142,11 @@ function MapMarker({
             transition={{ duration: 0.18 }}
             className="absolute top-12 z-30 bg-white rounded-xl shadow-elevated border border-[#ECECEC] p-3 w-56 text-left"
           >
-            <p className="text-xs font-semibold text-[#111827] line-clamp-1">{temple.name}</p>
-            <p className="text-[10px] text-[#6B7280] mt-0.5">{temple.deity}</p>
+            <p className="text-xs font-semibold text-[#111827] line-clamp-1">{lang === 'ta' ? (temple.nameTa || temple.name) : temple.name}</p>
+            <p className="text-[10px] text-[#6B7280] mt-0.5">{lang === 'ta' ? (temple.deityTa || temple.deity) : temple.deity}</p>
             <div className="flex items-center gap-1.5 mt-1.5">
               <MapPin size={9} className="text-primary shrink-0" />
-              <span className="text-[10px] text-[#6B7280]">{temple.district}</span>
+              <span className="text-[10px] text-[#6B7280]">{lang === 'ta' ? (temple.districtTa || temple.district) : temple.district}</span>
               <span className="text-[10px] text-amber-500 ml-auto flex items-center gap-0.5">
                 <Star size={9} fill="currentColor" />
                 {temple.rating.toFixed(1)}
@@ -152,7 +154,7 @@ function MapMarker({
             </div>
             <div className="flex items-center gap-1 mt-1">
               <Badge variant={temple.isOpen ? 'success' : 'danger'} size="sm">
-                {temple.isOpen ? '● Open' : '● Closed'}
+                ● {temple.isOpen ? tr.common.open : tr.common.closed}
               </Badge>
             </div>
           </motion.div>
@@ -177,6 +179,8 @@ function MapView({
   onTempleClick: (temple: Temple) => void;
 }) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const { lang } = useLang();
+  const tr = T[lang];
 
   // Tamil Nadu bounding box: lat ~8–13, lng ~77–80.3
   // Normalise to [0..100] for positioning within the map container
@@ -305,13 +309,13 @@ function MapView({
             <div className="flex items-center gap-2 mb-1.5">
               <span className="text-base">🛕</span>
               <Badge variant={temple.isOpen ? 'success' : 'danger'} size="sm">
-                {temple.isOpen ? 'Open' : 'Closed'}
+                {temple.isOpen ? tr.common.open : tr.common.closed}
               </Badge>
             </div>
-            <p className="text-xs font-semibold text-[#111827] line-clamp-1">{temple.name}</p>
+            <p className="text-xs font-semibold text-[#111827] line-clamp-1">{lang === 'ta' ? (temple.nameTa || temple.name) : temple.name}</p>
             <p className="text-[10px] text-[#6B7280] mt-0.5 flex items-center gap-1">
               <MapPin size={8} className="text-primary" />
-              {temple.district}
+              {lang === 'ta' ? (temple.districtTa || temple.district) : temple.district}
             </p>
             <div className="flex items-center gap-0.5 mt-1 text-[10px] text-amber-500 font-medium">
               <Star size={9} fill="currentColor" />
