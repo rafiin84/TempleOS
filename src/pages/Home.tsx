@@ -79,10 +79,12 @@ function SectionHeader({
   eyebrow,
   title,
   href,
+  className,
 }: {
   eyebrow?: string;
   title: string;
   href?: string;
+  className?: string;
 }) {
   const { lang } = useLang();
   const tr = T[lang];
@@ -92,7 +94,7 @@ function SectionHeader({
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: '-60px' }}
-      className="flex items-end justify-between mb-6"
+      className={cn('flex items-end justify-between mb-6', className)}
     >
       <div>
         {eyebrow && (

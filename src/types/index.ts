@@ -167,6 +167,7 @@ export interface Festival {
   nameTa: string
   templeId: string
   templeName: string
+  templeNameTa?: string
   templeImage: string
   startDate: string
   endDate: string
@@ -174,6 +175,7 @@ export interface Festival {
   image: string
   isLive: boolean
   district: string
+  districtTa?: string
 }
 
 export interface RenovationProject {
