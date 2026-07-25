@@ -51,14 +51,14 @@ const WORKS = [
     title: 'Better facilities for devotees',
     sub: 'Pilgrim amenities · Rameswaram',
     status: 'completed',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Ramanathaswamy_Temple_Corridor.jpg/1280px-Ramanathaswamy_Temple_Corridor.jpg',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Ramanathaswamy_temple7.JPG/1280px-Ramanathaswamy_temple7.JPG',
   },
   {
     id: 3,
     title: 'Reviving temple tanks',
     sub: 'Water conservation · Thanjavur',
     status: 'ongoing',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Brihadisvara_Temple_during_Maha_Shivaratri-WUS03611_%28edit%29.jpg/1280px-Brihadisvara_Temple_during_Maha_Shivaratri-WUS03611_%28edit%29.jpg',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Brihadisvara_Temple%2C_Thanjavur%2C_Tamil_Nadu%2C_India_%282017%29.jpg/1280px-Brihadisvara_Temple%2C_Thanjavur%2C_Tamil_Nadu%2C_India_%282017%29.jpg',
   },
 ];
 
@@ -135,6 +135,7 @@ function TempleCardSkeleton() {
 function LiveFestivalCard({ festival }: { festival: Festival }) {
   const [imgErr, setImgErr] = useState(false);
   const [thumbErr, setThumbErr] = useState(false);
+  const { lang } = useLang();
 
   return (
     <motion.div
@@ -169,16 +170,16 @@ function LiveFestivalCard({ festival }: { festival: Festival }) {
         {/* District badge */}
         <div className="absolute top-3 right-3">
           <Badge variant="ghost" size="sm" className="bg-black/30 text-white border-white/20">
-            {festival.district}
+            {lang === 'ta' ? (festival.districtTa || festival.district) : festival.district}
           </Badge>
         </div>
 
         {/* Title overlay */}
         <div className="absolute bottom-0 left-0 right-0 p-4">
           <h3 className="text-white font-bold text-base leading-snug line-clamp-1">
-            {festival.name}
+            {lang === 'ta' ? (festival.nameTa || festival.name) : festival.name}
           </h3>
-          <p className="text-white/70 text-xs font-medium mt-0.5">{festival.nameTa}</p>
+          {lang === 'en' && <p className="text-white/70 text-xs font-medium mt-0.5">{festival.nameTa}</p>}
         </div>
       </div>
 
@@ -196,7 +197,7 @@ function LiveFestivalCard({ festival }: { festival: Festival }) {
             )}
           </div>
           <p className="text-xs font-medium text-[#374151] line-clamp-1 min-w-0">
-            {festival.templeName}
+            {lang === 'ta' ? (festival.templeNameTa || festival.templeName) : festival.templeName}
           </p>
         </div>
         <div className="flex items-center gap-1 text-[11px] text-[#6B7280] shrink-0 ml-3">
@@ -437,7 +438,7 @@ export default function Home() {
             initial="hidden"
             animate="visible"
             custom={0.1}
-            className="font-extrabold text-white tracking-tight leading-[0.95] mb-5 select-none"
+            className="font-extrabold text-white tracking-tight leading-[0.95] mb-5 select-none whitespace-pre-line"
             style={{
               fontSize: 'clamp(3.5rem, 10vw, 6.5rem)',
               textShadow: '0 2px 20px rgba(0,0,0,0.4)',

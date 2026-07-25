@@ -14,7 +14,7 @@ const EN = {
   },
   home: {
     tagline: 'Official HR&CE Digital Platform · Tamil Nadu',
-    heroTitle: "Discover Tamil Nadu's Sacred Temples",
+    heroTitle: "Discover Tamil Nadu's\nSacred Temples",
     subtitle: "Discover Tamil Nadu's Sacred Temples",
     stats1: '38,407 temples',
     stats2: '32 districts',

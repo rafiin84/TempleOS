@@ -499,8 +499,8 @@ export default function Booking() {
                   </div>
 
                   {poojaId && (
-                    <Button variant="primary" size="lg" className="w-full mt-6" onClick={() => advance()}>
-                      {tr.booking.next} <ChevronRight size={16} />
+                    <Button variant="primary" size="lg" className="w-full mt-6" icon={<ChevronRight size={16} />} iconPosition="right" onClick={() => advance()}>
+                      {tr.booking.next}
                     </Button>
                   )}
                 </div>
@@ -534,9 +534,11 @@ export default function Booking() {
                     size="lg"
                     className="w-full"
                     disabled={!date}
+                    icon={<ChevronRight size={16} />}
+                    iconPosition="right"
                     onClick={() => advance()}
                   >
-                    {tr.booking.next} <ChevronRight size={16} />
+                    {tr.booking.next}
                   </Button>
                 </div>
               )}
@@ -607,8 +609,8 @@ export default function Booking() {
                   )}
 
                   {slotId && (
-                    <Button variant="primary" size="lg" className="w-full mt-6" onClick={() => advance()}>
-                      {tr.booking.next} <ChevronRight size={16} />
+                    <Button variant="primary" size="lg" className="w-full mt-6" icon={<ChevronRight size={16} />} iconPosition="right" onClick={() => advance()}>
+                      {tr.booking.next}
                     </Button>
                   )}
                 </div>
@@ -681,8 +683,8 @@ export default function Booking() {
                     </div>
                   </div>
 
-                  <Button variant="primary" size="lg" className="w-full" onClick={() => advance()}>
-                    {tr.booking.next} <ChevronRight size={16} />
+                  <Button variant="primary" size="lg" className="w-full" icon={<ChevronRight size={16} />} iconPosition="right" onClick={() => advance()}>
+                    {tr.booking.next}
                   </Button>
                 </div>
               )}
