@@ -1,5 +1,6 @@
+import { useState, useRef, useEffect } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import { Globe } from 'lucide-react';
+import { MoreVertical } from 'lucide-react';
 import { Button } from '@/components/ui';
 import { useLang } from '@/contexts/LanguageContext';
 import { T } from '@/i18n/translations';
@@ -69,6 +70,18 @@ function FontSizeControl({ compact = false }: { compact?: boolean }) {
 export default function Header() {
   const { lang, toggle } = useLang();
   const tr = T[lang];
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setMenuOpen(false);
+      }
+    }
+    if (menuOpen) document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [menuOpen]);
 
   const NAV_LINKS = [
     { label: tr.nav.home,      to: '/',          end: true },
@@ -85,29 +98,61 @@ export default function Header() {
       <Link to="/" aria-label="HR&CE home">
         <HRCELogo />
       </Link>
-      <div className="flex items-center gap-2">
-        <FontSizeControl compact />
-        {/* Language toggle pill */}
+
+      {/* 3-dot menu */}
+      <div className="relative" ref={menuRef}>
         <button
           type="button"
-          onClick={toggle}
-          aria-label={`Switch to ${lang === 'en' ? 'Tamil' : 'English'}`}
-          className="relative inline-flex items-center h-8 rounded-full border border-[#ECECEC] bg-[#F5F3FF] p-1 gap-0"
+          onClick={() => setMenuOpen((v) => !v)}
+          aria-label="More options"
+          className="w-9 h-9 flex items-center justify-center rounded-full text-[#6B7280] hover:bg-light-violet hover:text-primary transition-colors"
         >
-          <span className={cn(
-            'relative z-10 px-2.5 py-0.5 rounded-full text-[11px] font-semibold transition-colors duration-200',
-            lang === 'ta' ? 'text-white' : 'text-[#6B7280]',
-          )}>த</span>
-          <span className={cn(
-            'relative z-10 px-2.5 py-0.5 rounded-full text-[11px] font-semibold transition-colors duration-200',
-            lang === 'en' ? 'text-white' : 'text-[#6B7280]',
-          )}>EN</span>
-          <span
-            className="absolute top-1 bottom-1 w-[calc(50%-4px)] rounded-full bg-primary transition-all duration-200"
-            style={{ left: lang === 'ta' ? '4px' : 'calc(50%)' }}
-          />
+          <MoreVertical size={20} />
         </button>
-        <Button variant="primary" size="sm">{tr.nav.signIn}</Button>
+
+        {menuOpen && (
+          <div className="absolute right-0 top-11 w-56 bg-white border border-[#ECECEC] rounded-2xl shadow-lg p-4 flex flex-col gap-4 z-50">
+            {/* Font size */}
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-[#6B7280] font-medium">Text Size</span>
+              <FontSizeControl compact />
+            </div>
+
+            {/* Language toggle */}
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-[#6B7280] font-medium">Language</span>
+              <button
+                type="button"
+                onClick={toggle}
+                aria-label={`Switch to ${lang === 'en' ? 'Tamil' : 'English'}`}
+                className="relative inline-flex items-center h-8 rounded-full border border-[#ECECEC] bg-[#F5F3FF] p-1"
+              >
+                <span className={cn(
+                  'relative z-10 px-2.5 py-0.5 rounded-full text-[11px] font-semibold transition-colors duration-200',
+                  lang === 'ta' ? 'text-white' : 'text-[#6B7280]',
+                )}>த</span>
+                <span className={cn(
+                  'relative z-10 px-2.5 py-0.5 rounded-full text-[11px] font-semibold transition-colors duration-200',
+                  lang === 'en' ? 'text-white' : 'text-[#6B7280]',
+                )}>EN</span>
+                <span
+                  className="absolute top-1 bottom-1 w-[calc(50%-4px)] rounded-full bg-primary transition-all duration-200"
+                  style={{ left: lang === 'ta' ? '4px' : 'calc(50%)' }}
+                />
+              </button>
+            </div>
+
+            {/* Sign in */}
+            <Button
+              variant="primary"
+              size="sm"
+              className="w-full"
+              onClick={() => setMenuOpen(false)}
+            >
+              {tr.nav.signIn}
+            </Button>
+          </div>
+        )}
       </div>
     </div>
 
