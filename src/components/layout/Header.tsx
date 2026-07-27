@@ -10,7 +10,7 @@ function cn(...classes: ClassValue[]): string {
   return classes.filter(Boolean).join(' ');
 }
 
-function TempleOSLogo() {
+function HRCELogo() {
   return (
     <div className="flex items-center gap-2 select-none">
       <svg width="30" height="30" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -24,7 +24,7 @@ function TempleOSLogo() {
         <rect x="14" y="21" width="4" height="7" rx="1" fill="#F5F3FF" />
       </svg>
       <span className="text-[18px] font-bold tracking-tight text-[#111827]">
-        Temple<span className="text-primary">OS</span>
+        HR<span className="text-primary">&CE</span>
       </span>
     </div>
   );
@@ -82,8 +82,8 @@ export default function Header() {
     <>
     {/* ── Mobile top bar ── */}
     <div className="md:hidden sticky top-0 z-40 bg-surface border-b border-[#ECECEC] h-14 flex items-center justify-between px-4">
-      <Link to="/" aria-label="TempleOS home">
-        <TempleOSLogo />
+      <Link to="/" aria-label="HR&CE home">
+        <HRCELogo />
       </Link>
       <div className="flex items-center gap-2">
         <FontSizeControl compact />
@@ -114,8 +114,8 @@ export default function Header() {
     {/* ── Desktop header ── */}
     <header className="hidden md:flex sticky top-0 z-40 bg-surface border-b border-[#ECECEC] h-16 items-center px-6 gap-6">
 
-      <Link to="/" aria-label="TempleOS home" className="shrink-0">
-        <TempleOSLogo />
+      <Link to="/" aria-label="HR&CE home" className="shrink-0">
+        <HRCELogo />
       </Link>
 
       <nav className="flex-1 flex items-center justify-center gap-0.5" aria-label="Main navigation">

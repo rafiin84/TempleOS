@@ -922,7 +922,7 @@ export default function Booking() {
                   </Button>
 
                   <p className="text-center text-[10px] text-[#6B7280] mt-3">
-                    Secured by TempleOS · Mock payment — no real charge
+                    Secured by HR&CE · Mock payment — no real charge
                   </p>
                 </div>
               )}
